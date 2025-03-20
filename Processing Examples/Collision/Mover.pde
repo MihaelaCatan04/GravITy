@@ -1,11 +1,11 @@
 class Mover {
     PVector pos;
     PVector vel;
-    float bounce = 1.0;  // No energy loss when bouncing off walls
+    float bounce = 1.0;
     float r;
     float mass;
     boolean colliding = false;
-    int[] fillColor; // RGB color array
+    int[] fillColor;
 
     Mover(float radius, float m, PVector v, PVector l, int rC, int gC, int bC) {
         r = radius;
@@ -27,17 +27,17 @@ class Mover {
 
     void borders() {
         if (pos.y > height) {
-            vel.y *= -1; // No energy loss
+            vel.y *= -1;
             pos.y = height;
         } else if (pos.y < 0) {
-            vel.y *= -1; // No energy loss
+            vel.y *= -1;
             pos.y = 0;
         }
         if (pos.x > width) {
-            vel.x *= -1; // No energy loss
+            vel.x *= -1;
             pos.x = width;
         } else if (pos.x < 0) {
-            vel.x *= -1; // No energy loss
+            vel.x *= -1;
             pos.x = 0;
         }
     }
@@ -48,7 +48,6 @@ class Mover {
         fill(fillColor[0], fillColor[1], fillColor[2]);
         ellipse(pos.x, pos.y, r * 2, r * 2);
 
-        // Display velocity vector and text
         if (showVectors) {
             drawVector(vel, pos, 10);
             fill(0);
@@ -87,7 +86,6 @@ class Mover {
     }
 }
 
-// Function to extract component of vector along another vector
 PVector componentVector(PVector vector, PVector directionVector) {
     directionVector.normalize();
     directionVector.mult(vector.dot(directionVector));
