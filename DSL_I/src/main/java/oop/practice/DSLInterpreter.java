@@ -1,41 +1,25 @@
 package oop.practice;
+import gen.*;
 
-import gen.MyDSLLexer;
-import gen.MyDSLParser;
-import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.tree.*;
-import processing.core.PApplet;
+import org.antlr.v4.runtime.tree.ParseTree;
 
-public class SimulationDSLInterpreter {
-    public static void main(String[] args) throws Exception {
-        // Pornim thread-ul pentru interfața Processing
-        Thread processingThread = new Thread(() -> PApplet.main("oop.practice.SimulationDSLProcessingInterface"));
-        processingThread.start();
+public class DSLInterpreter extends MyDSLBaseVisitor<Object> {
+    /**
+     * Metodă care afișează structura arborelui de parsare în consolă.
+     * @param tree Arborele de parsare generat de ANTLR
+     * @param level Nivelul de indentare pentru afișarea ierarhiei nodurilor
+     */
+    public void printParseTree(ParseTree tree, int level) {
+        // Creăm indentarea bazată pe nivel
+        String indent = " ".repeat(level * 2);
 
-        // Exemplu de input pentru simulare
-        String input = """
-            simulation {
-                collision {
-                    mover {
-                        radius: 10;
-                        mass: 5;
-                        velocity { x_velocity: 2; y_velocity: 3; }
-                        position { x_position: 50; y_position: 50; }
-                        color { red_value: 255; green_value: 0; blue_value: 0; }
-                    }
-                }
-            }
-            """;
+        // Afișăm tipul nodului și textul său
+        System.out.println(indent + tree.getClass().getSimpleName() + ": " + tree.getText());
 
-        // Crearea Lexer-ului și Parser-ului pentru ANTLR
-        MyDSLLexer lexer = new MyDSLLexer(CharStreams.fromString(input));
-        MyDSLParser parser = new MyDSLParser(new CommonTokenStream(lexer));
-
-        // Parsăm inputul și obținem AST-ul
-        ParseTree tree = parser.simulation();
-
-        // Creăm visitor-ul și rulăm interpretarea
-        MyDSLVisitorImpl visitor = new MyDSLVisitorImpl();
-        visitor.visit(tree);
+        // Iterăm prin toți copiii nodului și îi vizităm recursiv
+        for (int i = 0; i < tree.getChildCount(); i++) {
+            printParseTree(tree.getChild(i), level + 1);
+        }
     }
 }
+
