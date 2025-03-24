@@ -4,7 +4,7 @@ grammar MyDSL;
 simulation: 'simulation' '{' simulation_body '}' ;
 
 // Simulation body, which contains a list of physics modules
-simulation_body: physics_module* ;
+simulation_body: physics_module ;
 
 // A physics module can be any one of the following types
 physics_module: collision
@@ -225,7 +225,7 @@ value_expr: simple_value | conditional_value | loop_value ;
 simple_value: NUMBER | IDENTIFIER | reference ;
 
 // A conditional value expression defines a condition with an 'if' statement
-conditional_value: 'if' condition 'then' simple_value 'else' simple_value ;
+conditional_value : 'if' condition 'then' simple_value 'else' simple_value ;
 
 // A loop value expression defines a repetition of a value a specific number of times
 loop_value: initial_value 'repeat' INTEGER 'times' '*' multiplier ;
