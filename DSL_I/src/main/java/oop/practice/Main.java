@@ -21,9 +21,9 @@ public class Main {
             }""";
 
         // Create a lexer and parser
-        MyDSLLexer lexer = new MyDSLLexer(CharStreams.fromString(input));
+        GravITyLexer lexer = new GravITyLexer(CharStreams.fromString(input));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
-        MyDSLParser parser = new MyDSLParser(tokens);
+        GravITyParser parser = new GravITyParser(tokens);
 
         // Start parsing from the 'program' rule
         ParseTree tree = parser.simulation();
