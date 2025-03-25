@@ -1,3 +1,0 @@
-void mousePressed() {
-  reset();
-}
