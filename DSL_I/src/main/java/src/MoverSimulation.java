@@ -1,4 +1,4 @@
-package oop.practice;
+package src;
 
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -8,7 +8,7 @@ public class MoverSimulation extends PApplet {
     boolean showVectors = true;
 
     public static void main(String[] args) {
-        PApplet.main("oop.practice.MoverSimulation");
+        PApplet.main("src.MoverSimulation");
     }
 
     public void settings() {

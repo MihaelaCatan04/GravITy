@@ -1,4 +1,4 @@
-package oop.practice;
+package src;
 import gen.*;
 
 import org.antlr.v4.runtime.*;
