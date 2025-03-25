@@ -1,5 +1,4 @@
-package oop.practice;
-import gen.*;
+package gen;
 
 import org.antlr.v4.runtime.tree.ParseTree;
 
