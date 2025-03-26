@@ -1,6 +1,6 @@
 # GravITy: A DSL for Physics Representation
 
-![Gravity Project Logo](/logo.png)
+![Gravity Project Logo](logo.png)
 
 ## Project Overview
 
