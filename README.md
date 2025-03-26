@@ -1,7 +1,5 @@
 # GravITy: A DSL for Physics Representation
 
-![Gravity Project Logo](logo.png)
-
 ## Project Overview
 
 Gravity is an advanced Domain-Specific Language (DSL) for Physics simulations, designed to make complex physical modeling accessible and intuitive. The project leverages ANTLR for lexical analysis and parsing, and Processing (Java) for rich, interactive visualizations.
