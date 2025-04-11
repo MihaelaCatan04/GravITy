@@ -12,7 +12,7 @@ public class Main {
                 collision {
                     mover {
                         radius: 10
-                        mass: 5
+                        mass: if radius > 1 then 1 else 3
                         velocity { x_velocity: 2 y_velocity: 3 }
                         position { x_position: 50 y_position: 50 }
                         color { red_value: 255 green_value: 0 blue_value: 0 }
