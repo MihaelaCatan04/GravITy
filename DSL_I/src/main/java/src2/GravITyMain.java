@@ -3,30 +3,25 @@ package src2;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 import gen.*;
+import processing.core.PApplet;
 
 import java.util.*;
 
+// this function is for collision simulations !!!
 public class GravITyMain {
     public static void main(String[] args) {
         String input = """
-            simulation {
-                collision {
-                    mover {
-                        radius: 10
-                        mass: 3
-                        velocity { x_velocity: 2 y_velocity: 3 }
-                        position { x_position: 50 y_position: 50 }
-                        color { red_value: 255 green_value: 0 blue_value: 0 }
-                    }
-                    mover {
-                        radius: 1
-                        mass: 30
-                        velocity { x_velocity: 20 y_velocity: 30 }
-                        position { x_position: 50 y_position: 50 }
-                        color { red_value: 255 green_value: 0 blue_value: 0 }
+                simulation{
+                    pendulum{
+                        length: 200
+                        ball_radius: 20
+                        initial_angle: 4
+                        angular_velocity: 1
+                        angular_acceleration: 0
+                        air_resistance: 0
                     }
                 }
-            }""";
+                """;
 
         // Creăm lexer și parser
         CharStream charStream = CharStreams.fromString(input);
@@ -66,6 +61,34 @@ public class GravITyMain {
                 System.out.println("  Color: R=" + color.get("r") + ", G=" + color.get("g") + ", B=" + color.get("b"));
             }
         }
+
+
+        if (simulation.containsKey("collision")) {
+            Map<String, Object> collision = (Map<String, Object>) simulation.get("collision");
+            List<Map<String, Object>> movers = (List<Map<String, Object>>) collision.get("movers");
+
+            // Construim argumentele pentru Processing
+            List<String> argsList = new ArrayList<>();
+            argsList.add("src2.Collision"); // numele clasei Processing
+
+            for (Map<String, Object> mover : movers) {
+                float radius = Float.parseFloat(mover.get("radius").toString());
+                float mass = Float.parseFloat(mover.get("mass").toString());
+
+                Map<String, String> velocity = (Map<String, String>) mover.get("velocity");
+                Map<String, String> position = (Map<String, String>) mover.get("position");
+                Map<String, String> color = (Map<String, String>) mover.get("color");
+
+                argsList.add(radius + "," + mass + "," +
+                        velocity.get("x") + "," + velocity.get("y") + "," +
+                        position.get("x") + "," + position.get("y") + "," +
+                        color.get("r") + "," + color.get("g") + "," + color.get("b"));
+            }
+
+            //System.out.println(argsList);
+            processing.core.PApplet.main(argsList.toArray(new String[0]));
+        }
+
     }
 }
 
