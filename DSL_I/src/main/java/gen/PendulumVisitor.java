@@ -14,7 +14,7 @@ public class PendulumVisitor extends GravITyBaseVisitor<Object> {
 
     @Override
     public Object visitSimulation_body(GravITyParser.Simulation_bodyContext ctx) {
-        // Căutăm primul modul pendulum
+        // Search Pendulum module
         for (GravITyParser.Physics_moduleContext moduleCtx : ctx.physics_module()) {
             if (moduleCtx.pendulum() != null) {
                 return visit(moduleCtx.pendulum());
@@ -27,7 +27,7 @@ public class PendulumVisitor extends GravITyBaseVisitor<Object> {
     public Object visitPendulum(GravITyParser.PendulumContext ctx) {
         Map<String, Object> pendulumModule = new HashMap<>();
 
-        // Extragem fiecare expresie disponibilă și o adăugăm în hartă
+        // Extract every available expression and add it to the map
         if (ctx.length_expr() != null) {
             pendulumModule.put("length", ctx.length_expr().value_expr().getText());
         }

@@ -1,4 +1,4 @@
-package src2;
+package src;
 
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Pendulum extends PApplet {
 
-    // Parametri setați prin main
+    // Parameters received from main
     float r;
     float angle;
     float angleV;
@@ -25,7 +25,7 @@ public class Pendulum extends PApplet {
     boolean dragging = false;
     boolean running = true;
 
-    // Metodă statică pentru a porni simularea cu parametrii personalizați
+    // Static method to run simulation with given parameters
     public static void runPendulum(float length, float ballRadius, float initialAngle,
                                    float angularVelocity, float angularAcceleration, float airResistance) {
         Pendulum instance = new Pendulum();
@@ -34,7 +34,7 @@ public class Pendulum extends PApplet {
         instance.angle = initialAngle;
         instance.angleV = angularVelocity;
         instance.angleA = angularAcceleration;
-        instance.damping = 1.0f - airResistance; // transformăm rezistența într-un factor de amortizare
+        instance.damping = 1.0f - airResistance;
 
         PApplet.runSketch(new String[]{"Pendulum"}, instance);
     }
