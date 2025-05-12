@@ -1,4 +1,3 @@
-// Generated from C:/Users/ionvo/OneDrive/Desktop/DSL_I/src/main/antlr4/GravITy.g4 by ANTLR 4.13.2
 package gen;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;

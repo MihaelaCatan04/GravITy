@@ -1,7 +1,6 @@
 package gen;
 
 
-// Generated from C:/Users/ionvo/OneDrive/Desktop/DSL_I/src/main/antlr4/GravITy.g4 by ANTLR 4.13.2
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.*;
