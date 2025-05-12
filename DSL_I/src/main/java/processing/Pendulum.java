@@ -1,4 +1,4 @@
-package src;
+package processing;
 
 import processing.core.PApplet;
 import processing.core.PVector;

@@ -3,6 +3,8 @@ package src;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 import gen.*;
+import processing.Pendulum;
+import visitors.PendulumVisitor;
 
 import java.util.*;
 
@@ -50,5 +52,6 @@ public class GravITyMainPendulum {
             // Pornește simularea cu parametrii
             Pendulum.runPendulum(length, radius, angle, angleV, angleA, airResistance);
         }
+
     }
 }

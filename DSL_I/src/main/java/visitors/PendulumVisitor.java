@@ -1,4 +1,7 @@
-package gen;
+package visitors;
+
+import gen.GravITyBaseVisitor;
+import gen.GravITyParser;
 
 import java.util.HashMap;
 import java.util.Map;
