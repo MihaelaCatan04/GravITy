@@ -50,7 +50,7 @@ public class AttractionForceVisitor extends GravITyBaseVisitor<Object> {
 
         float[] velocity = new float[2];
         velocity[0] = Float.parseFloat(ctx.velocity_expr().x_velocity_expr().value_expr().getText());
-        velocity[1] = Float.parseFloat(ctx.velocity_expr().y_velocity_expr().getText());
+        velocity[1] = Float.parseFloat(ctx.velocity_expr().y_velocity_expr().value_expr().getText());
         mover.put("velocity", velocity);
 
         return mover;

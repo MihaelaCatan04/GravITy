@@ -16,19 +16,44 @@ public class GravITyMain {
     public static void main(String[] args) {
         String input = """
                 simulation {
-                    accelerated_motion {
-                        mover {
-                            radius: 10
-                            color {
-                                red_value: 255
-                                green_value: 0
-                                blue_value: 0
-                            }
-                        }
-                        initial_speed: 5 
-                        initial_acceleration: 2.0
-                    }
+                   attraction_force {
+                       mover1 {
+                           radius: 10
+                           mass: 3.5
+                           velocity {
+                               x_velocity: 1
+                               y_velocity: 1
+                           }
+                           position {
+                               x_position: 100
+                               y_position: 150
+                           }
+                           color {
+                               red_value: 255
+                               green_value: 0
+                               blue_value: 0
+                           }
+                       }
+                       mover2 {
+                           radius: 15
+                           mass: 4.0
+                           velocity {
+                               x_velocity: 1
+                               y_velocity: 5
+                           }
+                           position {
+                               x_position: 300
+                               y_position: 200
+                           }
+                           color {
+                               red_value: 255
+                               green_value: 0
+                               blue_value: 0
+                           }
+                       }
+                   }
                 }
+                
                 """;
 
         // Create lexer and parser
