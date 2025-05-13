@@ -12,13 +12,18 @@ public class GravITyMain {
     public static void main(String[] args) {
         String input = """
                 simulation {
-                   wave {
-                       start_angle: 5
-                       angle_velocity: 5
-                       amplitude: 30
-                       frequency: 6
-                       phase_shift: 4
-                   }
+                    circular_motion {
+                        radius: 67
+                        angular_speed: 0.2
+                        ball {
+                            radius: 8
+                            color {
+                                red_value: 22
+                                green_value: 255
+                                blue_value: 45
+                            }
+                        }
+                    }
                 }
                 """;
 
@@ -56,6 +61,10 @@ public class GravITyMain {
             UniformMotionVisitor motionVisitor = new UniformMotionVisitor();
             motionVisitor.visit(tree);
             sim = motionVisitor.getSimulation();
+        } else if (input.contains("circular_motion")) {
+            CircularMotionVisitor circularMotionVisitor = new CircularMotionVisitor();
+            circularMotionVisitor.visit(tree);
+            sim = circularMotionVisitor.getSimulation();
         } else {
             System.err.println("Error: Unsupported simulation type.");
             return;
@@ -285,11 +294,9 @@ public class GravITyMain {
                 return;
             }
 
-            // CRITICAL FIX: Extract and print radius for debugging
             float radius = 0;
             if (mover.containsKey("radius")) {
                 radius = Float.parseFloat(mover.get("radius").toString());
-                System.out.println("Extracted radius from DSL: " + radius);
             } else {
                 System.err.println("Error: radius for mover is missing");
                 return;
@@ -304,19 +311,12 @@ public class GravITyMain {
                             colorMap.getOrDefault("green_value", 100),
                             colorMap.getOrDefault("blue_value", 0)
                     };
-                    System.out.println("Extracted color from DSL: " + color[0] + " " + color[1] + " " + color[2]);
                 } else {
                     System.err.println("Error: color for mover is missing");
                     return;
                 }
             }
 
-            // Print information before running the simulation
-            System.out.println("Running UniformMotion with: radius=" + radius +
-                    ", color=[" + color[0] + "," + color[1] + "," + color[2] +
-                    "], speed=" + initialSpeed);
-
-            // Run the simulation
             UniformMotion.runUniformMotion(radius, color, initialSpeed);
         }
         if (sim.containsKey("wave")) {
@@ -360,6 +360,43 @@ public class GravITyMain {
             Wave.runWave(
                     start_angle, angle_velocity, amplitude, frequency, phase_shift
             );
+        }
+        if (sim.containsKey("circular_motion")) {
+            Map<String, Object> module = (Map<String, Object>) sim.get("circular_motion");
+            float radius = 0;
+            if (module.containsKey("radius")) {
+                radius = Float.parseFloat(module.get("radius").toString());
+            } else {
+                System.err.println("Error: radius is missing");
+            }
+            float angular_speed = 0;
+            if (module.containsKey("angular_speed")) {
+                angular_speed = Float.parseFloat(module.get("angular_speed").toString());
+            } else {
+                System.err.println("Error: angular_speed is missing");
+            }
+            Map<String, Object> mover = (Map<String, Object>) module.get("ball");
+            if (mover == null) {
+                System.err.println("Error: ball is missing");
+                return;
+            }
+            int[] color = {255, 100, 0};
+            if (mover.containsKey("color")) {
+                Map<String, Integer> colorMap = (Map<String, Integer>) mover.get("color");
+                if (colorMap != null) {
+                    color = new int[]{
+                            colorMap.getOrDefault("red_value", 255),
+                            colorMap.getOrDefault("green_value", 100),
+                            colorMap.getOrDefault("blue_value", 0)
+                    };
+                } else {
+                    System.err.println("Error: color for mover is missing");
+                    return;
+                }
+                CircularMotion.runCircularMotion(
+                        radius, angular_speed, color, radius
+                );
+            }
         }
     }
 }
