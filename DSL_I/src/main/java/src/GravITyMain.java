@@ -6,9 +6,11 @@ import gen.*;
 import processing.AcceleratedUniformMotion;
 import processing.AttractionForce;
 import processing.Pendulum;
+import processing.Wave;
 import visitors.AcceleratedUniformMotionVisitor;
 import visitors.AttractionForceVisitor;
 import visitors.PendulumVisitor;
+import visitors.WaveVisitor;
 
 import java.util.*;
 
@@ -16,44 +18,14 @@ public class GravITyMain {
     public static void main(String[] args) {
         String input = """
                 simulation {
-                   attraction_force {
-                       mover1 {
-                           radius: 10
-                           mass: 3.5
-                           velocity {
-                               x_velocity: 1
-                               y_velocity: 1
-                           }
-                           position {
-                               x_position: 100
-                               y_position: 150
-                           }
-                           color {
-                               red_value: 255
-                               green_value: 0
-                               blue_value: 0
-                           }
-                       }
-                       mover2 {
-                           radius: 15
-                           mass: 4.0
-                           velocity {
-                               x_velocity: 1
-                               y_velocity: 5
-                           }
-                           position {
-                               x_position: 300
-                               y_position: 200
-                           }
-                           color {
-                               red_value: 255
-                               green_value: 0
-                               blue_value: 0
-                           }
-                       }
-                   }
+                    wave {
+                        start_angle: 5
+                        angle_velocity: 5
+                        amplitude: 30
+                        frequency: 6
+                        phase_shift: 4
+                    }
                 }
-                
                 """;
 
         // Create lexer and parser
@@ -82,6 +54,10 @@ public class GravITyMain {
             AcceleratedUniformMotionVisitor motionVisitor = new AcceleratedUniformMotionVisitor();
             motionVisitor.visit(tree);
             sim = motionVisitor.getSimulation();
+        } else if (input.contains("wave")) {
+            WaveVisitor waveVisitor = new WaveVisitor();
+            waveVisitor.visit(tree);
+            sim = waveVisitor.getSimulation();
         } else {
             System.err.println("Error: Unsupported simulation type.");
             return;
@@ -183,8 +159,7 @@ public class GravITyMain {
         }
         if (sim.containsKey("attraction_force")) {
             Map<String, Object> module = (Map<String, Object>) sim.get("attraction_force");
-
-// Mover 1
+            // Mover 1
             Map<String, Object> mover1 = (Map<String, Object>) module.get("mover1");
             if (mover1 == null) {
                 System.err.println("Error: mover1 is missing");
@@ -237,8 +212,7 @@ public class GravITyMain {
                     return;
                 }
             }
-
-// Mover 2
+            // Mover 2
             Map<String, Object> mover2 = (Map<String, Object>) module.get("mover2");
             if (mover2 == null) {
                 System.err.println("Error: mover2 is missing");
@@ -292,12 +266,53 @@ public class GravITyMain {
                 }
             }
 
-// Run the simulation
+            // Run the simulation
             AttractionForce.runAttractionForce(
                     radius1, mass1, position1, velocity1, radius2,
                     mass2, position2, velocity2, color1, color2
             );
+        }
+        if (sim.containsKey("wave")) {
+            Map<String, Object> module = (Map<String, Object>) sim.get("wave");
 
+            float start_angle = 0;
+            if (module.containsKey("start_angle")) {
+                start_angle = Float.parseFloat(module.get("start_angle").toString());
+            } else {
+                System.err.println("Error: start_angle is missing");
+                return;
+            }
+            float angle_velocity = 0;
+            if (module.containsKey("angle_velocity")) {
+                angle_velocity = Float.parseFloat(module.get("angle_velocity").toString());
+            } else {
+                System.err.println("Error: angle_velocity is missing");
+                return;
+            }
+            float amplitude = 0;
+            if (module.containsKey("amplitude")) {
+                amplitude = Float.parseFloat(module.get("amplitude").toString());
+            } else {
+                System.err.println("Error: amplitude is missing");
+                return;
+            }
+            float frequency = 0;
+            if (module.containsKey("frequency")) {
+                frequency = Float.parseFloat(module.get("frequency").toString());
+            } else {
+                System.err.println("Error: frequency is missing");
+                return;
+            }
+            float phase_shift = 0;
+            if (module.containsKey("phase_shift")) {
+                phase_shift = Float.parseFloat(module.get("phase_shift").toString());
+            } else {
+                System.err.println("Error: phase_shift is missing");
+                return;
+            }
+            Wave.runWave(
+                    start_angle, angle_velocity, amplitude, frequency, phase_shift
+            );
         }
     }
 }
