@@ -3,14 +3,8 @@ package src;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 import gen.*;
-import processing.AcceleratedUniformMotion;
-import processing.AttractionForce;
-import processing.Pendulum;
-import processing.Wave;
-import visitors.AcceleratedUniformMotionVisitor;
-import visitors.AttractionForceVisitor;
-import visitors.PendulumVisitor;
-import visitors.WaveVisitor;
+import processing.*;
+import visitors.*;
 
 import java.util.*;
 
@@ -18,12 +12,16 @@ public class GravITyMain {
     public static void main(String[] args) {
         String input = """
                 simulation {
-                    wave {
-                        start_angle: 5
-                        angle_velocity: 5
-                        amplitude: 30
-                        frequency: 6
-                        phase_shift: 4
+                    uniform_motion {
+                        mover {
+                            radius: 20
+                            color {
+                                red_value: 50
+                                green_value: 0
+                                blue_value: 0
+                            }
+                        }
+                        initial_speed: 2
                     }
                 }
                 """;
@@ -58,6 +56,10 @@ public class GravITyMain {
             WaveVisitor waveVisitor = new WaveVisitor();
             waveVisitor.visit(tree);
             sim = waveVisitor.getSimulation();
+        } else if (input.contains("uniform_motion")) {
+            UniformMotionVisitor motionVisitor = new UniformMotionVisitor();
+            motionVisitor.visit(tree);
+            sim = motionVisitor.getSimulation();
         } else {
             System.err.println("Error: Unsupported simulation type.");
             return;
@@ -66,7 +68,6 @@ public class GravITyMain {
         // If value exists in the DSL, it is replaced with the actual value
         // Else if null, it is initialized with zero
         // Else throw an error in case of a typo
-
         if (sim.containsKey("pendulum")) {
             Map<String, Object> module = (Map<String, Object>) sim.get("pendulum");
 
@@ -272,47 +273,55 @@ public class GravITyMain {
                     mass2, position2, velocity2, color1, color2
             );
         }
-        if (sim.containsKey("wave")) {
-            Map<String, Object> module = (Map<String, Object>) sim.get("wave");
+        if (sim.containsKey("uniform_motion")) {
+            Map<String, Object> module = (Map<String, Object>) sim.get("uniform_motion");
+            float initialSpeed = 0;
+            if (module.containsKey("initial_speed")) {
+                initialSpeed = Float.parseFloat(module.get("initial_speed").toString());
+            } else {
+                System.err.println("Error: initial_speed is missing");
+                return;
+            }
 
-            float start_angle = 0;
-            if (module.containsKey("start_angle")) {
-                start_angle = Float.parseFloat(module.get("start_angle").toString());
-            } else {
-                System.err.println("Error: start_angle is missing");
+            Map<String, Object> mover = (Map<String, Object>) module.get("mover");
+            if (mover == null) {
+                System.err.println("Error: mover is missing");
                 return;
             }
-            float angle_velocity = 0;
-            if (module.containsKey("angle_velocity")) {
-                angle_velocity = Float.parseFloat(module.get("angle_velocity").toString());
+
+            // CRITICAL FIX: Extract and print radius for debugging
+            float radius = 0;
+            if (mover.containsKey("radius")) {
+                radius = Float.parseFloat(mover.get("radius").toString());
+                System.out.println("Extracted radius from DSL: " + radius);
             } else {
-                System.err.println("Error: angle_velocity is missing");
+                System.err.println("Error: radius for mover is missing");
                 return;
             }
-            float amplitude = 0;
-            if (module.containsKey("amplitude")) {
-                amplitude = Float.parseFloat(module.get("amplitude").toString());
-            } else {
-                System.err.println("Error: amplitude is missing");
-                return;
+
+            int[] color = {255, 100, 0};
+            if (mover.containsKey("color")) {
+                Map<String, Integer> colorMap = (Map<String, Integer>) mover.get("color");
+                if (colorMap != null) {
+                    color = new int[]{
+                            colorMap.getOrDefault("red_value", 255),
+                            colorMap.getOrDefault("green_value", 100),
+                            colorMap.getOrDefault("blue_value", 0)
+                    };
+                    System.out.println("Extracted color from DSL: " + color[0] + " " + color[1] + " " + color[2]);
+                } else {
+                    System.err.println("Error: color for mover is missing");
+                    return;
+                }
             }
-            float frequency = 0;
-            if (module.containsKey("frequency")) {
-                frequency = Float.parseFloat(module.get("frequency").toString());
-            } else {
-                System.err.println("Error: frequency is missing");
-                return;
-            }
-            float phase_shift = 0;
-            if (module.containsKey("phase_shift")) {
-                phase_shift = Float.parseFloat(module.get("phase_shift").toString());
-            } else {
-                System.err.println("Error: phase_shift is missing");
-                return;
-            }
-            Wave.runWave(
-                    start_angle, angle_velocity, amplitude, frequency, phase_shift
-            );
+
+            // Print information before running the simulation
+            System.out.println("Running UniformMotion with: radius=" + radius +
+                    ", color=[" + color[0] + "," + color[1] + "," + color[2] +
+                    "], speed=" + initialSpeed);
+
+            // Run the simulation
+            UniformMotion.runUniformMotion(radius, color, initialSpeed);
         }
     }
 }
