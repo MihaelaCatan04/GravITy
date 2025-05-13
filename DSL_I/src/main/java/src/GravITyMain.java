@@ -21,7 +21,7 @@ public class GravITyMain {
                                 blue_value: 0
                             }
                         }
-                        initial_speed: 2
+                        initial_speed: 4
                     }
                 }
                 """;
