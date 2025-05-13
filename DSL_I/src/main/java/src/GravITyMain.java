@@ -12,17 +12,13 @@ public class GravITyMain {
     public static void main(String[] args) {
         String input = """
                 simulation {
-                    uniform_motion {
-                        mover {
-                            radius: 20
-                            color {
-                                red_value: 50
-                                green_value: 0
-                                blue_value: 0
-                            }
-                        }
-                        initial_speed: 4
-                    }
+                   wave {
+                       start_angle: 5
+                       angle_velocity: 5
+                       amplitude: 30
+                       frequency: 6
+                       phase_shift: 4
+                   }
                 }
                 """;
 
@@ -322,6 +318,48 @@ public class GravITyMain {
 
             // Run the simulation
             UniformMotion.runUniformMotion(radius, color, initialSpeed);
+        }
+        if (sim.containsKey("wave")) {
+            Map<String, Object> module = (Map<String, Object>) sim.get("wave");
+
+            float start_angle = 0;
+            if (module.containsKey("start_angle")) {
+                start_angle = Float.parseFloat(module.get("start_angle").toString());
+            } else {
+                System.err.println("Error: start_angle is missing");
+                return;
+            }
+            float angle_velocity = 0;
+            if (module.containsKey("angle_velocity")) {
+                angle_velocity = Float.parseFloat(module.get("angle_velocity").toString());
+            } else {
+                System.err.println("Error: angle_velocity is missing");
+                return;
+            }
+            float amplitude = 0;
+            if (module.containsKey("amplitude")) {
+                amplitude = Float.parseFloat(module.get("amplitude").toString());
+            } else {
+                System.err.println("Error: amplitude is missing");
+                return;
+            }
+            float frequency = 0;
+            if (module.containsKey("frequency")) {
+                frequency = Float.parseFloat(module.get("frequency").toString());
+            } else {
+                System.err.println("Error: frequency is missing");
+                return;
+            }
+            float phase_shift = 0;
+            if (module.containsKey("phase_shift")) {
+                phase_shift = Float.parseFloat(module.get("phase_shift").toString());
+            } else {
+                System.err.println("Error: phase_shift is missing");
+                return;
+            }
+            Wave.runWave(
+                    start_angle, angle_velocity, amplitude, frequency, phase_shift
+            );
         }
     }
 }
