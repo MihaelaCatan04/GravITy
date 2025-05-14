@@ -12,15 +12,17 @@ public class GravITyMain {
     public static void main(String[] args) {
         String input = """
                 simulation {
-                    circular_motion {
-                        radius: 67
-                        angular_speed: 0.2
-                        ball {
-                            radius: 8
-                            color {
-                                red_value: 22
-                                green_value: 255
-                                blue_value: 45
+                    gravity {
+                        earth {
+                            position {
+                                x_position: 245
+                                y_position: 355
+                            }
+                        }
+                        moon {
+                            position {
+                                x_position: 100
+                                y_position: 50
                             }
                         }
                     }
@@ -65,6 +67,10 @@ public class GravITyMain {
             CircularMotionVisitor circularMotionVisitor = new CircularMotionVisitor();
             circularMotionVisitor.visit(tree);
             sim = circularMotionVisitor.getSimulation();
+        } else if (input.contains("gravity")) {
+            GravityVisitor gravityVisitor = new GravityVisitor();
+            gravityVisitor.visit(tree);
+            sim = gravityVisitor.getSimulation();
         } else {
             System.err.println("Error: Unsupported simulation type.");
             return;
@@ -397,6 +403,57 @@ public class GravITyMain {
                         radius, angular_speed, color, radius
                 );
             }
+        }
+        if (sim.containsKey("gravity")) {
+            Map<String, Object> module = (Map<String, Object>) sim.get("gravity");
+
+            Map<String, Object> earth = (Map<String, Object>) module.get("earth");
+            Map<String, Object> moon = (Map<String, Object>) module.get("moon");
+
+            if (earth == null || moon == null) {
+                System.err.println("Error: earth or moon position is missing");
+                return;
+            }
+
+            Map<String, String> earthPos = (Map<String, String>) earth.get("position");
+            Map<String, String> moonPos = (Map<String, String>) moon.get("position");
+
+            if (earthPos == null || moonPos == null) {
+                System.err.println("Error: position is missing for earth or moon");
+                return;
+            }
+
+            float earthX = 0;
+            if (earthPos.containsKey("x_position")) {
+                earthX = Float.parseFloat(earthPos.get("x_position").toString());
+            } else {
+                System.err.println("Error: Earth x_position is missing");
+                return;
+            }
+            float earthY = 0;
+            if (earthPos.containsKey("y_position")) {
+                earthY = Float.parseFloat(earthPos.get("y_position").toString());
+            } else {
+                System.err.println("Error: Earth y_position is missing");
+                return;
+            }
+            float moonX = 0;
+            if (moonPos.containsKey("x_position")) {
+                moonX = Float.parseFloat(moonPos.get("x_position").toString());
+            } else {
+                System.err.println("Error: moon x_position is missing");
+                return;
+            }
+            float moonY = 0;
+            if (moonPos.containsKey("y_position")) {
+                moonY = Float.parseFloat(moonPos.get("y_position").toString());
+            } else {
+                System.err.println("Error: moon y_position is missing");
+                return;
+            }
+
+            Gravity.runGravity(earthX, earthY, moonX, moonY);
+
         }
     }
 }
