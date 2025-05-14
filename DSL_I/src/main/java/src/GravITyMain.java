@@ -12,18 +12,17 @@ public class GravITyMain {
     public static void main(String[] args) {
         String input = """
                 simulation {
-                    gravity {
-                        earth {
-                            position {
-                                x_position: 245
-                                y_position: 355
-                            }
+                    drag_force {
+                        mover_color {
+                            red_value: 100
+                            green_value: 0
+                            blue_value: 75
                         }
-                        moon {
-                            position {
-                                x_position: 100
-                                y_position: 50
-                            }
+                        drag_coefficient: 0.1
+                        liquid_color {
+                            red_value: 50
+                            green_value: 100
+                            blue_value: 150
                         }
                     }
                 }
@@ -71,6 +70,10 @@ public class GravITyMain {
             GravityVisitor gravityVisitor = new GravityVisitor();
             gravityVisitor.visit(tree);
             sim = gravityVisitor.getSimulation();
+        } else if (input.contains("drag_force")) {
+            DragForceVisitor dragForceVisitor = new DragForceVisitor();
+            dragForceVisitor.visit(tree);
+            sim = dragForceVisitor.getSimulation();
         } else {
             System.err.println("Error: Unsupported simulation type.");
             return;
@@ -455,5 +458,77 @@ public class GravITyMain {
             Gravity.runGravity(earthX, earthY, moonX, moonY);
 
         }
+        if (sim.containsKey("drag_force")) {
+            Map<String, Object> module = (Map<String, Object>) sim.get("drag_force");
+            Map<String, Object> mover = (Map<String, Object>) module.get("mover_color");
+
+            float dragCoefficient = 0;
+            if (module.containsKey("drag_coefficient")) {
+                dragCoefficient = Float.parseFloat(module.get("drag_coefficient").toString());
+            } else {
+                System.err.println("Error: drag_coefficient is missing");
+                return;
+            }
+
+            Map<String, String> moverColor = (Map<String, String>) module.get("mover_color");
+            if (moverColor == null) {
+                System.err.println("Error: mover_color is missing");
+                return;
+            }
+
+            int[] mColor = {0, 0, 0};
+            if (moverColor.containsKey("red_value")) {
+                mColor[0] = Integer.parseInt(moverColor.get("red_value"));
+            } else {
+                System.err.println("Error: mover_color red_value is missing");
+                return;
+            }
+
+            if (moverColor.containsKey("green_value")) {
+                mColor[1] = Integer.parseInt(moverColor.get("green_value"));
+            } else {
+                System.err.println("Error: mover_color green_value is missing");
+                return;
+            }
+
+            if (moverColor.containsKey("blue_value")) {
+                mColor[2] = Integer.parseInt(moverColor.get("blue_value"));
+            } else {
+                System.err.println("Error: mover_color blue_value is missing");
+                return;
+            }
+
+            Map<String, String> liquidColor = (Map<String, String>) module.get("liquid_color");
+            if (liquidColor == null) {
+                System.err.println("Error: liquid_color is missing");
+                return;
+            }
+
+            int[] lColor = {0, 0, 0};
+
+            if (liquidColor.containsKey("red_value")) {
+                lColor[0] = Integer.parseInt(liquidColor.get("red_value"));
+            } else {
+                System.err.println("Error: liquid_color red_value is missing");
+                return;
+            }
+
+            if (liquidColor.containsKey("green_value")) {
+                lColor[1] = Integer.parseInt(liquidColor.get("green_value"));
+            } else {
+                System.err.println("Error: liquid_color green_value is missing");
+                return;
+            }
+
+            if (liquidColor.containsKey("blue_value")) {
+                lColor[2] = Integer.parseInt(liquidColor.get("blue_value"));
+            } else {
+                System.err.println("Error: liquid_color blue_value is missing");
+                return;
+            }
+
+            DragForce.runDragForce(mColor, dragCoefficient, lColor);
+        }
+
     }
 }
