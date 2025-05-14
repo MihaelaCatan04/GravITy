@@ -9,7 +9,6 @@ Gravity is an advanced Domain-Specific Language (DSL) for Physics simulations, d
 
 - Catan Mihaela, FAF-231
 - Cebotari Daniela, FAF-231
-- Cebotari Daniil, FAF-231
 - Gurschi Gheorghe, FAF-231
 - Vornicescu Ion, FAF-231
 
