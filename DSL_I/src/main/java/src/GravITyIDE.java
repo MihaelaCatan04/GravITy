@@ -395,7 +395,7 @@ public class GravITyIDE extends JFrame {
                        "        mover {\n" +
                        "            radius: 30\n" +
                        "            color {\n" +
-                       "                red_value: 255\n" +
+                       "                red_value: 0\n" +
                        "                green_value: 100\n" +
                        "                blue_value: 0\n" +
                        "            }\n" +
@@ -745,17 +745,22 @@ case "Attraction Force":
                     }
                     
                     @SuppressWarnings("unchecked")
-                    Map<String, Object> mover = (Map<String, Object>) module.get("mover");
-                    if (mover != null) {
-                        if (mover.containsKey("radius")) {
-                            radius = Float.parseFloat(mover.get("radius").toString());
-                        }
-                        int[] extractedColor = getColor(mover);
-                        if (extractedColor != null) {
-                            color = extractedColor;
-                        }
-                    }
-                }
+Map<String, Object> mover = (Map<String, Object>) module.get("mover");
+if (mover != null) {
+    if (mover.containsKey("radius")) {
+        radius = Float.parseFloat(mover.get("radius").toString());
+    }
+    
+    // Extract color from the nested color object
+    @SuppressWarnings("unchecked")
+    Map<String, Object> colorMap = (Map<String, Object>) mover.get("color");
+    if (colorMap != null) {
+        int[] extractedColor = getColor(colorMap);
+        if (extractedColor != null) {
+            color = extractedColor;
+        }
+    }
+}}
             }
             
             outputArea.append("Simulation parameters extracted successfully.\n");
@@ -777,58 +782,72 @@ case "Attraction Force":
     }
     
     private void handleCircularMotionSimulation(ParseTree tree, String code) {
-        outputArea.append("Detected circular motion simulation\n");
-        try {
-            CircularMotionVisitor circularMotionVisitor = new CircularMotionVisitor();
-            circularMotionVisitor.visit(tree);
-            Map<String, Object> sim = circularMotionVisitor.getSimulation();
+    outputArea.append("Detected circular motion simulation\n");
+    try {
+        CircularMotionVisitor circularMotionVisitor = new CircularMotionVisitor();
+        circularMotionVisitor.visit(tree);
+        Map<String, Object> sim = circularMotionVisitor.getSimulation();
+        
+        float radius = 100f;
+        float angularSpeed = 0.05f;
+        int[] color = {255, 100, 0};
+        float ballRadius = 20f; // Default ball radius
+        
+        if (sim != null && sim.containsKey("circular_motion")) {
+            @SuppressWarnings("unchecked")
+            Map<String, Object> module = (Map<String, Object>) sim.get("circular_motion");
             
-            float radius = 100f;
-            float angularSpeed = 0.05f;
-            int[] color = {255, 100, 0};
-            
-            if (sim != null && sim.containsKey("circular_motion")) {
-                @SuppressWarnings("unchecked")
-                Map<String, Object> module = (Map<String, Object>) sim.get("circular_motion");
-                
-                if (module != null) {
-                    if (module.containsKey("radius")) {
-                        radius = Float.parseFloat(module.get("radius").toString());
-                    }
-                    
-                    if (module.containsKey("angular_speed")) {
-                        angularSpeed = Float.parseFloat(module.get("angular_speed").toString());
-                    }
-                    
-                    @SuppressWarnings("unchecked")
-                    Map<String, Object> ball = (Map<String, Object>) module.get("ball");
-                    if (ball != null) {
-                        int[] extractedColor = getColor(ball);
-                        if (extractedColor != null) {
-                            color = extractedColor;
-                        }
-                    }
+            if (module != null) {
+                if (module.containsKey("radius")) {
+                    radius = Float.parseFloat(module.get("radius").toString());
                 }
-            }
-            
-            outputArea.append("Simulation parameters extracted successfully.\n");
-            outputArea.append("Radius: " + radius + "\n");
-            outputArea.append("Angular Speed: " + angularSpeed + "\n");
-            outputArea.append("Simulation started. Check the display panel for visual output.\n");
-            
-            CircularMotionPanel panel = new CircularMotionPanel(radius, angularSpeed, color);
-            replaceSimulationPanel(panel);
-            startAnimation(panel);
-            
-        } catch (Exception ex) {
-            outputArea.append("ERROR processing circular motion simulation: " + ex.getMessage() + "\n");
-            ex.printStackTrace();
-            
-            CircularMotionPanel panel = new CircularMotionPanel(100f, 0.05f, new int[]{255, 100, 0});
-            replaceSimulationPanel(panel);
-            startAnimation(panel);
+                
+                if (module.containsKey("angular_speed")) {
+                    angularSpeed = Float.parseFloat(module.get("angular_speed").toString());
+                }
+                
+                @SuppressWarnings("unchecked")
+Map<String, Object> ball = (Map<String, Object>) module.get("ball");
+if (ball != null) {
+    // Extract ball radius
+    if (ball.containsKey("radius")) {
+        ballRadius = Float.parseFloat(ball.get("radius").toString());
+    }
+    
+    // Extract color from the nested color object
+    @SuppressWarnings("unchecked")
+    Map<String, Object> colorMap = (Map<String, Object>) ball.get("color");
+    if (colorMap != null) {
+        int[] extractedColor = getColor(colorMap);
+        if (extractedColor != null) {
+            color = extractedColor;
         }
     }
+}
+            }
+        }
+        
+        outputArea.append("Simulation parameters extracted successfully.\n");
+        outputArea.append("Orbit Radius: " + radius + "\n");
+        outputArea.append("Angular Speed: " + angularSpeed + "\n");
+        outputArea.append("Ball Radius: " + ballRadius + "\n");
+        outputArea.append("Simulation started. Check the display panel for visual output.\n");
+        
+        // Pass the ball radius to the CircularMotionPanel constructor
+        CircularMotionPanel panel = new CircularMotionPanel(radius, angularSpeed, color, ballRadius);
+        replaceSimulationPanel(panel);
+        startAnimation(panel);
+        
+    } catch (Exception ex) {
+        outputArea.append("ERROR processing circular motion simulation: " + ex.getMessage() + "\n");
+        ex.printStackTrace();
+        
+        // Use default values
+        CircularMotionPanel panel = new CircularMotionPanel(100f, 0.05f, new int[]{255, 100, 0}, 20f);
+        replaceSimulationPanel(panel);
+        startAnimation(panel);
+    }
+}
     
     private void handleGravitySimulation(ParseTree tree, String code) {
         outputArea.append("Detected gravity simulation\n");
@@ -920,50 +939,62 @@ case "Attraction Force":
                 
                 if (module != null) {
                     @SuppressWarnings("unchecked")
-                    Map<String, Object> mover1 = (Map<String, Object>) module.get("mover1");
-                    if (mover1 != null) {
-                        if (mover1.containsKey("radius")) {
-                            radius1 = Float.parseFloat(mover1.get("radius").toString());
-                        }
-                        if (mover1.containsKey("mass")) {
-                            mass1 = Float.parseFloat(mover1.get("mass").toString());
-                        }
-                        float[] extractedPosition = getPosition(mover1);
-                        if (extractedPosition != null) {
-                            position1 = extractedPosition;
-                        }
-                        float[] extractedVelocity = getVelocity(mover1);
-                        if (extractedVelocity != null) {
-                            velocity1 = extractedVelocity;
-                        }
-                        int[] extractedColor = getColor(mover1);
-                        if (extractedColor != null) {
-                            color1 = extractedColor;
-                        }
-                    }
-                    
-                    @SuppressWarnings("unchecked")
-                    Map<String, Object> mover2 = (Map<String, Object>) module.get("mover2");
-                    if (mover2 != null) {
-                        if (mover2.containsKey("radius")) {
-                            radius2 = Float.parseFloat(mover2.get("radius").toString());
-                        }
-                        if (mover2.containsKey("mass")) {
-                            mass2 = Float.parseFloat(mover2.get("mass").toString());
-                        }
-                        float[] extractedPosition = getPosition(mover2);
-                        if (extractedPosition != null) {
-                            position2 = extractedPosition;
-                        }
-                        float[] extractedVelocity = getVelocity(mover2);
-                        if (extractedVelocity != null) {
-                            velocity2 = extractedVelocity;
-                        }
-                        int[] extractedColor = getColor(mover2);
-                        if (extractedColor != null) {
-                            color2 = extractedColor;
-                        }
-                    }
+Map<String, Object> mover1 = (Map<String, Object>) module.get("mover1");
+if (mover1 != null) {
+    if (mover1.containsKey("radius")) {
+        radius1 = Float.parseFloat(mover1.get("radius").toString());
+    }
+    if (mover1.containsKey("mass")) {
+        mass1 = Float.parseFloat(mover1.get("mass").toString());
+    }
+    float[] extractedPosition = getPosition(mover1);
+    if (extractedPosition != null) {
+        position1 = extractedPosition;
+    }
+    float[] extractedVelocity = getVelocity(mover1);
+    if (extractedVelocity != null) {
+        velocity1 = extractedVelocity;
+    }
+    
+    // Extract color from the nested color object
+    @SuppressWarnings("unchecked")
+    Map<String, Object> colorMap = (Map<String, Object>) mover1.get("color");
+    if (colorMap != null) {
+        int[] extractedColor = getColor(colorMap);
+        if (extractedColor != null) {
+            color1 = extractedColor;
+        }
+    }
+}
+
+@SuppressWarnings("unchecked")
+Map<String, Object> mover2 = (Map<String, Object>) module.get("mover2");
+if (mover2 != null) {
+    if (mover2.containsKey("radius")) {
+        radius2 = Float.parseFloat(mover2.get("radius").toString());
+    }
+    if (mover2.containsKey("mass")) {
+        mass2 = Float.parseFloat(mover2.get("mass").toString());
+    }
+    float[] extractedPosition = getPosition(mover2);
+    if (extractedPosition != null) {
+        position2 = extractedPosition;
+    }
+    float[] extractedVelocity = getVelocity(mover2);
+    if (extractedVelocity != null) {
+        velocity2 = extractedVelocity;
+    }
+    
+    // Extract color from the nested color object
+    @SuppressWarnings("unchecked")
+    Map<String, Object> colorMap = (Map<String, Object>) mover2.get("color");
+    if (colorMap != null) {
+        int[] extractedColor = getColor(colorMap);
+        if (extractedColor != null) {
+            color2 = extractedColor;
+        }
+    }
+}
                 }
             }
             
@@ -1695,151 +1726,163 @@ case "Attraction Force":
     }
     
     // Updated CircularMotionPanel with mouse interaction
-    private class CircularMotionPanel extends JPanel implements AnimatedPanel {
-        private float radius;
-        private float angularSpeed;
-        private int[] color;
-        private float angle = 0;
-        private int centerX, centerY;
-        private int frameCount = 0;
-        private boolean dragging = false;
+    // Updated CircularMotionPanel with mouse interaction
+private class CircularMotionPanel extends JPanel implements AnimatedPanel {
+    private float radius;
+    private float angularSpeed;
+    private int[] color;
+    private float ballRadius = 20f; // Added default ball radius field
+    private float angle = 0;
+    private int centerX, centerY;
+    private int frameCount = 0;
+    private boolean dragging = false;
+    
+    // Modified constructor to accept ball radius
+    public CircularMotionPanel(float radius, float angularSpeed, int[] color, float ballRadius) {
+        this.radius = radius;
+        this.angularSpeed = angularSpeed;
+        this.color = color;
+        this.ballRadius = ballRadius; // Store the provided ball radius
+        setBackground(Color.WHITE);
         
-        public CircularMotionPanel(float radius, float angularSpeed, int[] color) {
-            this.radius = radius;
-            this.angularSpeed = angularSpeed;
-            this.color = color;
-            setBackground(Color.WHITE);
+        updateSimulationData();
+    }
+    
+    // Alternate constructor for backward compatibility
+    public CircularMotionPanel(float radius, float angularSpeed, int[] color) {
+        this(radius, angularSpeed, color, 20f); // Default ball radius of 20f
+    }
+    
+    @Override
+    public boolean handleMousePressed(MouseEvent e) {
+        int ballX = centerX + (int)(radius * Math.cos(angle));
+        int ballY = centerY + (int)(radius * Math.sin(angle));
+        
+        // Check if the ball was clicked
+        if (distance(e.getX(), e.getY(), ballX, ballY) <= ballRadius) {
+            dragging = true;
+            return true;
+        }
+        
+        return false;
+    }
+    
+    @Override
+    public void handleMouseDragged(MouseEvent e) {
+        if (dragging) {
+            // Calculate angle from center to mouse position
+            float dx = e.getX() - centerX;
+            float dy = e.getY() - centerY;
+            
+            angle = (float) Math.atan2(dy, dx);
+            
+            // Optionally update radius
+            float newRadius = (float) Math.sqrt(dx*dx + dy*dy);
+            radius = newRadius;
             
             updateSimulationData();
         }
+    }
+    
+    @Override
+    public void handleMouseReleased(MouseEvent e) {
+        dragging = false;
+    }
+    
+    private float distance(float x1, float y1, float x2, float y2) {
+        float dx = x1 - x2;
+        float dy = y1 - y2;
+        return (float) Math.sqrt(dx*dx + dy*dy);
+    }
+    
+    private void updateSimulationData() {
+        centerX = getWidth() / 2;
+        centerY = getHeight() / 2;
+        final float x = centerX + radius * (float) Math.cos(angle);
+        final float y = centerY + radius * (float) Math.sin(angle);
         
-        @Override
-        public boolean handleMousePressed(MouseEvent e) {
-            int ballX = centerX + (int)(radius * Math.cos(angle));
-            int ballY = centerY + (int)(radius * Math.sin(angle));
+        final float vx = -radius * angularSpeed * (float) Math.sin(angle);
+        final float vy = radius * angularSpeed * (float) Math.cos(angle);
+        final float velocity = (float) Math.sqrt(vx*vx + vy*vy);
+        
+        final float currentAngle = angle;
+        final float currentRadius = radius;
+        final float currentAngularSpeed = angularSpeed;
+        final float currentBallRadius = ballRadius; // Include ball radius in the data
+        final int currentFrameCount = frameCount;
+        
+        SwingUtilities.invokeLater(() -> {
+            String existingOutput = outputArea.getText();
+            String[] lines = existingOutput.split("\n");
+            StringBuilder newOutput = new StringBuilder();
             
-            // Check if the ball was clicked
-            if (distance(e.getX(), e.getY(), ballX, ballY) <= 20) {
-                dragging = true;
-                return true;
+            for (int i = 0; i < Math.min(4, lines.length); i++) {
+                newOutput.append(lines[i]).append("\n");
             }
             
-            return false;
-        }
-        
-        @Override
-        public void handleMouseDragged(MouseEvent e) {
-            if (dragging) {
-                // Calculate angle from center to mouse position
-                float dx = e.getX() - centerX;
-                float dy = e.getY() - centerY;
-                
-                angle = (float) Math.atan2(dy, dx);
-                
-                // Optionally update radius
-                float newRadius = (float) Math.sqrt(dx*dx + dy*dy);
-                radius = newRadius;
-                
-                updateSimulationData();
-            }
-        }
-        
-        @Override
-        public void handleMouseReleased(MouseEvent e) {
-            dragging = false;
-        }
-        
-        private float distance(float x1, float y1, float x2, float y2) {
-            float dx = x1 - x2;
-            float dy = y1 - y2;
-            return (float) Math.sqrt(dx*dx + dy*dy);
-        }
-        
-        private void updateSimulationData() {
-            centerX = getWidth() / 2;
-            centerY = getHeight() / 2;
-            final float x = centerX + radius * (float) Math.cos(angle);
-            final float y = centerY + radius * (float) Math.sin(angle);
+            newOutput.append("------ Circular Motion Data (Frame ").append(currentFrameCount).append(") ------\n");
+            newOutput.append("Orbit Radius: ").append(String.format("%.1f", currentRadius)).append("\n");
+            newOutput.append("Angular Speed: ").append(String.format("%.4f", currentAngularSpeed)).append(" rad/frame\n");
+            newOutput.append("Ball Radius: ").append(String.format("%.1f", currentBallRadius)).append("\n"); // Display ball radius
+            newOutput.append("Current Angle: ").append(String.format("%.2f", currentAngle * 180 / Math.PI)).append(" degrees\n");
+            newOutput.append("Position: (").append(String.format("%.1f", x)).append(", ")
+                     .append(String.format("%.1f", y)).append(")\n");
+            newOutput.append("Tangential Velocity: ").append(String.format("%.2f", velocity)).append("\n");
             
-            final float vx = -radius * angularSpeed * (float) Math.sin(angle);
-            final float vy = radius * angularSpeed * (float) Math.cos(angle);
-            final float velocity = (float) Math.sqrt(vx*vx + vy*vy);
-            
-            final float currentAngle = angle;
-            final float currentRadius = radius;
-            final float currentAngularSpeed = angularSpeed;
-            final int currentFrameCount = frameCount;
-            
-            SwingUtilities.invokeLater(() -> {
-                String existingOutput = outputArea.getText();
-                String[] lines = existingOutput.split("\n");
-                StringBuilder newOutput = new StringBuilder();
-                
-                for (int i = 0; i < Math.min(4, lines.length); i++) {
-                    newOutput.append(lines[i]).append("\n");
-                }
-                
-                newOutput.append("------ Circular Motion Data (Frame ").append(currentFrameCount).append(") ------\n");
-                newOutput.append("Radius: ").append(String.format("%.1f", currentRadius)).append("\n");
-                newOutput.append("Angular Speed: ").append(String.format("%.4f", currentAngularSpeed)).append(" rad/frame\n");
-                newOutput.append("Current Angle: ").append(String.format("%.2f", currentAngle * 180 / Math.PI)).append(" degrees\n");
-                newOutput.append("Position: (").append(String.format("%.1f", x)).append(", ")
-                         .append(String.format("%.1f", y)).append(")\n");
-                newOutput.append("Tangential Velocity: ").append(String.format("%.2f", velocity)).append("\n");
-                
-                outputArea.setText(newOutput.toString());
-            });
-        }
-        
-        @Override
-        public void update() {
-            if (!dragging) {
-                angle += angularSpeed;
-                if (angle > Math.PI * 2) {
-                    angle -= Math.PI * 2;
-                }
-            }
-            
-            frameCount++;
-            if (frameCount % 10 == 0) {
-                updateSimulationData();
+            outputArea.setText(newOutput.toString());
+        });
+    }
+    
+    @Override
+    public void update() {
+        if (!dragging) {
+            angle += angularSpeed;
+            if (angle > Math.PI * 2) {
+                angle -= Math.PI * 2;
             }
         }
         
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            
-            g.setColor(Color.WHITE);
-            g.fillRect(0, 0, getWidth(), getHeight());
-            
-            centerX = getWidth() / 2;
-            centerY = getHeight() / 2;
-            
-            g.setColor(Color.LIGHT_GRAY);
-            g.drawOval(centerX - (int)radius, centerY - (int)radius, (int)radius * 2, (int)radius * 2);
-            
-            int ballX = centerX + (int)(radius * Math.cos(angle));
-            int ballY = centerY + (int)(radius * Math.sin(angle));
-            
-            g.setColor(Color.BLACK);
-            g.drawLine(centerX, centerY, ballX, ballY);
-            
-            g.fillOval(centerX - 5, centerY - 5, 10, 10);
-            
-            g.setColor(new Color(color[0], color[1], color[2]));
-            int ballRadius = 20;
-            g.fillOval(ballX - ballRadius, ballY - ballRadius, ballRadius * 2, ballRadius * 2);
-            
-            g.setColor(new Color(50, 50, 50, 200));
-            g.fillRect(10, 10, 200, 80);
-            g.setColor(Color.WHITE);
-            g.setFont(new Font("Arial", Font.BOLD, 12));
-            g.drawString("Circular Motion Simulation", 20, 30);
-            g.drawString("Radius: " + String.format("%.1f", radius), 20, 50);
-            g.drawString("Angular Speed: " + String.format("%.4f", angularSpeed), 20, 70);
+        frameCount++;
+        if (frameCount % 10 == 0) {
+            updateSimulationData();
         }
     }
+    
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, getWidth(), getHeight());
+        
+        centerX = getWidth() / 2;
+        centerY = getHeight() / 2;
+        
+        g.setColor(Color.LIGHT_GRAY);
+        g.drawOval(centerX - (int)radius, centerY - (int)radius, (int)radius * 2, (int)radius * 2);
+        
+        int ballX = centerX + (int)(radius * Math.cos(angle));
+        int ballY = centerY + (int)(radius * Math.sin(angle));
+        
+        g.setColor(Color.BLACK);
+        g.drawLine(centerX, centerY, ballX, ballY);
+        
+        g.fillOval(centerX - 5, centerY - 5, 10, 10);
+        
+        g.setColor(new Color(color[0], color[1], color[2]));
+        // Use ballRadius instead of hardcoded value
+        int ballR = (int)ballRadius;
+        g.fillOval(ballX - ballR, ballY - ballR, ballR * 2, ballR * 2);
+        
+        g.setColor(new Color(50, 50, 50, 200));
+        g.fillRect(10, 10, 200, 80);
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Arial", Font.BOLD, 12));
+        g.drawString("Circular Motion Simulation", 20, 30);
+        g.drawString("Radius: " + String.format("%.1f", radius), 20, 50);
+        g.drawString("Angular Speed: " + String.format("%.4f", angularSpeed), 20, 70);
+    }
+}
     
     // Updated AttractionForcePanel with mouse interaction
     private class AttractionForcePanel extends JPanel implements AnimatedPanel {
