@@ -12,17 +12,23 @@ public class GravITyMain {
     public static void main(String[] args) {
         String input = """
                 simulation {
-                    drag_force {
-                        mover_color {
-                            red_value: 100
-                            green_value: 0
-                            blue_value: 75
+                    spring {
+                        spring_constant: 0.5
+                        damping: 0.9
+                        spring_rest_length: 100
+                        floor_friction: 0.005      
+                	ball {
+                            radius: 50
+                            color {
+                                red_value: 255
+                                green_value: 255
+                                blue_value: 255
+                            }
                         }
-                        drag_coefficient: 0.1
-                        liquid_color {
-                            red_value: 50
-                            green_value: 100
-                            blue_value: 150
+                        spring {
+                            x_anchor_position: 100
+                            y_anchor_position: 300
+                            num_coils: 50
                         }
                     }
                 }
@@ -74,6 +80,10 @@ public class GravITyMain {
             DragForceVisitor dragForceVisitor = new DragForceVisitor();
             dragForceVisitor.visit(tree);
             sim = dragForceVisitor.getSimulation();
+        }   else if (input.contains("spring")) {
+            SpringVisitor springVisitor = new SpringVisitor();
+            springVisitor.visit(tree);
+            sim = springVisitor.getSimulation();
         } else {
             System.err.println("Error: Unsupported simulation type.");
             return;
@@ -528,6 +538,109 @@ public class GravITyMain {
             }
 
             DragForce.runDragForce(mColor, dragCoefficient, lColor);
+        }
+        if (sim.containsKey("spring")) {
+            Map<String, Object> module = (Map<String, Object>) sim.get("spring");
+
+            float springConstant = 0;
+            if (module.containsKey("spring_constant")) {
+                springConstant = Float.parseFloat(module.get("spring_constant").toString());
+            } else {
+                System.err.println("Error: spring_constant is missing");
+                return;
+            }
+
+            float damping = 0;
+            if (module.containsKey("damping")) {
+                damping = Float.parseFloat(module.get("damping").toString());
+            } else {
+                System.err.println("Error: damping is missing");
+                return;
+            }
+
+            float restLength = 0;
+            if (module.containsKey("spring_rest_length")) {
+                restLength = Float.parseFloat(module.get("spring_rest_length").toString());
+            } else {
+                System.err.println("Error: spring_rest_length is missing");
+                return;
+            }
+
+            float floorFriction = 0;
+            if (module.containsKey("floor_friction")) {
+                floorFriction = Float.parseFloat(module.get("floor_friction").toString());
+            } else {
+                System.err.println("Error: floor_friction is missing");
+                return;
+            }
+
+            Map<String, Object> ball = (Map<String, Object>) module.get("ball");
+            if (ball == null) {
+                System.err.println("Error: ball properties are missing");
+                return;
+            }
+
+            float ballRadius = 0;
+            if (ball.containsKey("radius")) {
+                ballRadius = Float.parseFloat(ball.get("radius").toString());
+            } else {
+                System.err.println("Error: ball radius is missing");
+                return;
+            }
+
+            int[] fillColor = {0, 0, 0};
+            if (ball.containsKey("color")) {
+                Map<String, String> colorMap = (Map<String, String>) ball.get("color");
+                if (colorMap != null) {
+                    fillColor = new int[] {
+                            Integer.parseInt(colorMap.get("r")),
+                            Integer.parseInt(colorMap.get("g")),
+                            Integer.parseInt(colorMap.get("b"))
+                    };
+                } else {
+                    System.err.println("Error: ball color is missing");
+                    return;
+                }
+            }
+
+            Map<String, Object> springConfig = (Map<String, Object>) module.get("spring");
+            if (springConfig == null) {
+                System.err.println("Error: spring properties are missing");
+                return;
+            }
+
+            float x_anchor_position = 0;
+            if (springConfig.containsKey("x_anchor_position")) {
+                x_anchor_position = Float.parseFloat(springConfig.get("x_anchor_position").toString());
+            } else {
+                System.err.println("Error: x_anchor_position is missing");
+                return;
+            }
+
+            float y_anchor_position = 0;
+            if (springConfig.containsKey("y_anchor_position")) {
+                y_anchor_position = Float.parseFloat(springConfig.get("y_anchor_position").toString());
+            } else {
+                System.err.println("Error: y_anchor_position is missing");
+                return;
+            }
+
+            int numCoils = 0;
+            if (springConfig.containsKey("num_coils")) {
+                numCoils = Integer.parseInt(springConfig.get("num_coils").toString());
+            }
+
+            Spring.runSpring(
+                    springConstant,
+                    damping,
+                    restLength,
+                    floorFriction,
+                    ballRadius,
+                    fillColor,
+                    x_anchor_position,
+                    y_anchor_position,
+                    numCoils
+            );
         }
 
     }
