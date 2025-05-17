@@ -249,7 +249,7 @@ reference: IDENTIFIER '.' IDENTIFIER ;
 NUMBER: INTEGER | FLOAT ;
 INTEGER: [0-9]+ ;
 FLOAT: [0-9]+ '.' [0-9]+ ;
-IDENTIFIER: [a-zA-Z_][a-zA-Z0-9_]* ;
+IDENTIFIER: '_' [a-zA-Z_][a-zA-Z0-9_]* ;
 
 // Inline comments are supported with '//', and these comments are skipped in parsing
 COMMENT: '//' ~[\r\n]* -> skip ;

@@ -14,7 +14,7 @@ public class CircularMotionVisitor extends GravITyBaseVisitor<Object>{
 
     @Override
     public Object visitSimulation_body(GravITyParser.Simulation_bodyContext ctx) {
-        return visit(ctx.physics_module(0));
+        return visit(ctx.physics_module());
     }
 
     @Override

@@ -16,13 +16,14 @@ public class WaveVisitor extends GravITyBaseVisitor<Object> {
 
     @Override
     public Object visitSimulation_body(GravITyParser.Simulation_bodyContext ctx) {
-        for (GravITyParser.Physics_moduleContext moduleCtx : ctx.physics_module()) {
-            if (moduleCtx.wave() != null) {
-                return visit(moduleCtx.wave());
-            }
+        //  ctx.physics_module() returns a single Physics_moduleContext.
+        GravITyParser.Physics_moduleContext moduleCtx = ctx.physics_module();
+        if (moduleCtx.wave() != null) {
+            return visit(moduleCtx.wave());
         }
         return null;
     }
+
 
     @Override
     public Object visitWave(GravITyParser.WaveContext ctx) {
