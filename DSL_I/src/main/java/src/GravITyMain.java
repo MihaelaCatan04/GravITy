@@ -12,21 +12,9 @@ public class GravITyMain {
     public static void main(String[] args) {
         String input = """
                 simulation {
-                    rolling_uphill {
-                        gravitational_acceleration: 9.8
-                        coefficient_of_friction: 0.5
-                        bounciness: 0.2     
-                	angle: 0.5
-                        ball {
-                            radius: 30
-                            color {
-                                   red_value: 255
-                                   green_value: 0
-                                   blue_value: 0
-                                }
-                            }
-                        velocity_along_incline: 0.4
-                        }
+                    electrostatic_field {
+                        particle_radius: 35
+                        flux_resolution: 15
                     }
                 }
                 """;
@@ -77,14 +65,18 @@ public class GravITyMain {
             DragForceVisitor dragForceVisitor = new DragForceVisitor();
             dragForceVisitor.visit(tree);
             sim = dragForceVisitor.getSimulation();
-        }   else if (input.contains("spring")) {
+        } else if (input.contains("spring")) {
             SpringVisitor springVisitor = new SpringVisitor();
             springVisitor.visit(tree);
             sim = springVisitor.getSimulation();
-        }   else if (input.contains("rolling_uphill")) {
+        } else if (input.contains("rolling_uphill")) {
             RollingUphillVisitor rollingUphillVisitor = new RollingUphillVisitor();
             rollingUphillVisitor.visit(tree);
             sim = rollingUphillVisitor.getSimulation();
+        } else if (input.contains("electrostatic_field")) {
+            ElectrostaticFieldVisitor electrostaticFieldVisitor = new ElectrostaticFieldVisitor();
+            electrostaticFieldVisitor.visit(tree);
+            sim = electrostaticFieldVisitor.getSimulation();
         } else {
             System.err.println("Error: Unsupported simulation type.");
             return;
@@ -646,7 +638,6 @@ public class GravITyMain {
         if (sim.containsKey("rolling_uphill")) {
             Map<String, Object> module = (Map<String, Object>) sim.get("rolling_uphill");
 
-            // 1. Gravitational Acceleration
             float gravitationalAcceleration = 9.8f;
             if (module.containsKey("gravitational_acceleration")) {
                 gravitationalAcceleration = Float.parseFloat(module.get("gravitational_acceleration").toString());
@@ -654,7 +645,6 @@ public class GravITyMain {
                 System.err.println("Error: gravitational_acceleration is missing");
             }
 
-            // 2. Coefficient of Friction
             float friction = 0.0f;
             if (module.containsKey("coefficient_of_friction")) {
                 friction = Float.parseFloat(module.get("coefficient_of_friction").toString());
@@ -662,7 +652,6 @@ public class GravITyMain {
                 System.err.println("Error: coefficient_of_friction is missing");
             }
 
-            // 3. Bounciness
             float bounciness = 0.0f;
             if (module.containsKey("bounciness")) {
                 bounciness = Float.parseFloat(module.get("bounciness").toString());
@@ -670,7 +659,6 @@ public class GravITyMain {
                 System.err.println("Error: bounciness is missing");
             }
 
-            // 4. Angle of Incline
             float angle = 0.0f;
             if (module.containsKey("angle")) {
                 angle = Float.parseFloat(module.get("angle").toString());
@@ -678,7 +666,6 @@ public class GravITyMain {
                 System.err.println("Error: angle is missing");
             }
 
-            // 5. Initial Velocity Along Incline
             float velocity = 0.0f;
             if (module.containsKey("velocity_along_incline")) {
                 velocity = Float.parseFloat(module.get("velocity_along_incline").toString());
@@ -686,22 +673,20 @@ public class GravITyMain {
                 System.err.println("Error: velocity_along_incline is missing");
             }
 
-            // 6. Ball Properties
             Map<String, Object> ball = (Map<String, Object>) module.get("ball");
             if (ball == null) {
                 System.err.println("Error: ball is missing");
                 return;
             }
 
-            float radius = 10; // default
+            float radius = 10;
             if (ball.containsKey("radius")) {
                 radius = Float.parseFloat(ball.get("radius").toString());
             } else {
                 System.err.println("Error: radius is missing in ball");
             }
 
-            // 7. Color
-            int[] color = {255, 100, 0}; // default color
+            int[] color = {0, 0, 0};
             if (ball.containsKey("color")) {
                 Map<String, Integer> colorMap = (Map<String, Integer>) ball.get("color");
                 if (colorMap != null) {
@@ -715,7 +700,6 @@ public class GravITyMain {
                 }
             }
 
-            // 8. Run the simulation
             RollingUphill.runRollingUphill(
                     gravitationalAcceleration,
                     friction,
@@ -726,7 +710,28 @@ public class GravITyMain {
                     color
             );
         }
+        if (sim.containsKey("electrostatic_field")) {
+            Map<String, Object> module = (Map<String, Object>) sim.get("electrostatic_field");
 
+            float particle_radius = 0;
+            if (module.containsKey("particle_radius")) {
+                particle_radius = Float.parseFloat(module.get("particle_radius").toString());
+            } else {
+                System.err.println("Error: particle_radius is missing");
+            }
+
+            int flux_resolution = 0;
+            if (module.containsKey("flux_resolution")) {
+                flux_resolution = Integer.parseInt(module.get("flux_resolution").toString());
+            } else {
+                System.err.println("Error: flux_resolution is missing");
+            }
+
+
+            ElectrostaticField.runElectrostaticField(
+                    particle_radius, flux_resolution
+            );
+        }
 
     }
 }
