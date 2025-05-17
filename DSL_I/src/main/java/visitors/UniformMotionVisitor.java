@@ -17,7 +17,7 @@ public class UniformMotionVisitor extends GravITyBaseVisitor<Object> {
     @Override
     public Object visitSimulation_body(GravITyParser.Simulation_bodyContext ctx) {
         // Visit the first physics module (assuming accelerated_motion is there)
-        return visit(ctx.physics_module(0));
+        return visit(ctx.physics_module());
     }
 
     @Override

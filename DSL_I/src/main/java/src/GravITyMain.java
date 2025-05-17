@@ -12,26 +12,80 @@ public class GravITyMain {
     public static void main(String[] args) {
         String input = """
                 simulation {
-                    spring {
-                        spring_constant: 0.5
-                        damping: 0.9
-                        spring_rest_length: 100
-                        floor_friction: 0.005      
-                	ball {
-                            radius: 50
+
+                    collision {
+                        mover {
+                            radius: 10
+                            mass: 5
+                            velocity {
+                                x_velocity: 2
+                                y_velocity: 4
+                            }
+                            position {
+                                x_position: 100
+                                y_position: 200
+                            }
+                            color {
+                                red_value: 255
+                                green_value: 0
+                                blue_value: 255
+                            }
+                        }
+                        mover {
+                            radius: 30
+                            mass: 30
+                            velocity {
+                                x_velocity: 7
+                                y_velocity: 5
+                            }
+                            position {
+                                x_position: 10
+                                y_position: 20
+                            }
                             color {
                                 red_value: 255
                                 green_value: 255
                                 blue_value: 255
                             }
                         }
-                        spring {
-                            x_anchor_position: 100
-                            y_anchor_position: 300
-                            num_coils: 50
+                        mover {
+                            radius: 45
+                            mass: 45
+                            velocity {
+                                x_velocity: 7
+                                y_velocity: 2
+                            }
+                            position {
+                                x_position: 500
+                                y_position: 500
+                            }
+                            color {
+                                red_value: 125
+                                green_value: 0
+                                blue_value: 125
+                            }
+                        }
+                        mover {
+                            radius: 10
+                            mass: 5
+                            velocity {
+                                x_velocity: 2
+                                y_velocity: 4
+                            }
+                            position {
+                                x_position: 50
+                                y_position: 200
+                            }
+                            color {
+                                red_value: 0
+                                green_value: 0
+                                blue_value: 255
+                            }
+
                         }
                     }
                 }
+                
                 """;
 
         // Create lexer and parser
@@ -46,8 +100,8 @@ public class GravITyMain {
         // Create a null sim
         Map<String, Object> sim = null;
 
-        // Choose a visitor based on the simulation type
-        GravITyCustomVisitor visitor = null;
+
+
         if (input.contains("attraction_force")) {
             AttractionForceVisitor forceVisitor = new AttractionForceVisitor();
             forceVisitor.visit(tree);

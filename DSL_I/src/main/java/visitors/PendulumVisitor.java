@@ -17,12 +17,16 @@ public class PendulumVisitor extends GravITyBaseVisitor<Object> {
 
     @Override
     public Object visitSimulation_body(GravITyParser.Simulation_bodyContext ctx) {
-        // Search Pendulum module
-        for (GravITyParser.Physics_moduleContext moduleCtx : ctx.physics_module()) {
-            if (moduleCtx.pendulum() != null) {
-                return visit(moduleCtx.pendulum());
-            }
+        //  physics_module() returns a single Physics_moduleContext, not a list.
+        //  We need to check which type of physics module it is, and then visit it
+        GravITyParser.Physics_moduleContext moduleCtx = ctx.physics_module();
+        if (moduleCtx.pendulum() != null) {
+            return visit(moduleCtx.pendulum());
         }
+        //  Add checks for other physics modules if needed (e.g., collision, etc.)
+        //  else if (moduleCtx.collision() != null) {
+        //      return visit(moduleCtx.collision());
+        //  }
         return null;
     }
 
