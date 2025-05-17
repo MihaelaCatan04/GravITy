@@ -1,3 +1,5 @@
+package processing;
+
 import processing.core.PApplet;
 
 public class CircularMotion extends PApplet {
@@ -8,8 +10,14 @@ public class CircularMotion extends PApplet {
     int[] fillColor = {0, 150, 255};
     float ballRadius = 30;
 
-    public static void main(String[] args) {
-        PApplet.main("CircularMotion");
+    public static void runCircularMotion(float radius, float angularSpeed, int[] fillColor, float ballRadius) {
+        CircularMotion instance = new CircularMotion();
+        instance.radius = radius;
+        instance.angularSpeed = angularSpeed;
+        instance.fillColor = fillColor;
+        instance.ballRadius = ballRadius;
+
+        PApplet.runSketch(new String[]{"Circular Motion"}, instance);
     }
 
     public void settings() {
@@ -31,6 +39,7 @@ public class CircularMotion extends PApplet {
         drawHUD();
         displayInstructions();
     }
+
     void displayInstructions() {
         fill(100);
         textSize(12);
@@ -55,6 +64,4 @@ public class CircularMotion extends PApplet {
             angularSpeed += 0.005F;
         }
     }
-
-
 }

@@ -1,45 +1,58 @@
+package processing;
+
 import processing.core.PApplet;
 import processing.core.PVector;
 
 public class Collision extends PApplet {
-    Mover[] movers;
-    boolean showVectors = true;
+    public static Collision instance;  // static reference
+    Mover[] movers = new Mover[0];     // default empty array
+    boolean showVectors = true;  // or false, or toggled by UI
 
-    public static void main(String[] args) {
-        PApplet.main("Collision");
+    public static void runCollision() {
+        instance = new Collision();
+        PApplet.runSketch(new String[]{"Collision"}, instance);
     }
 
     public void settings() {
-        size(600, 600);
+        size(800, 600);
     }
 
     public void setup() {
-        movers = new Mover[3];
-        movers[0] = new Mover(50, 500, new PVector(3, 2), new PVector(200, 300), 255, 0, 0); // Red
-        movers[1] = new Mover(40, 40, new PVector(-2, 1), new PVector(500, 300), 0, 255, 0); // Green
-        movers[2] = new Mover(30, 30, new PVector(-1, -3), new PVector(400, 200), 0, 0, 255); // Blue
+        // Just waiting for movers to be set externally
     }
 
     public void draw() {
         background(255);
 
-        for (int i = 0; i < movers.length; i++) {
-            movers[i].go();
-            for (int j = i + 1; j < movers.length; j++) {
-                movers[i].collideWithMass(movers[j], 0.8f);
+        if (movers != null) {
+            for (int i = 0; i < movers.length; i++) {
+                movers[i].go();
+                for (int j = i + 1; j < movers.length; j++) {
+                    movers[i].collideWithMass(movers[j], 0.8f);
+                }
             }
         }
+
         drawHUD();
     }
 
-    class Mover {
+    public void setMovers(Mover[] movers) {
+        this.movers = movers;
+        for (Mover m : movers) {
+            m.parent = this;
+        }
+    }
+
+    // Your Mover class here (same as before) but remove parent from constructor:
+    public static class Mover {
         PVector pos, vel;
-        float bounce = 1.0f;
         float r, mass;
         boolean colliding = false;
         int[] fillColor;
+        Collision parent;
 
-        Mover(float radius, float m, PVector v, PVector l, int rC, int gC, int bC) {
+        // Now constructor without parent, set parent later
+        public Mover(float radius, float m, PVector v, PVector l, int rC, int gC, int bC) {
             r = radius;
             vel = v.copy();
             pos = l.copy();
@@ -58,16 +71,16 @@ public class Collision extends PApplet {
         }
 
         void borders() {
-            if (pos.y > height) {
+            if (pos.y > parent.height) {
                 vel.y *= -1;
-                pos.y = height;
+                pos.y = parent.height;
             } else if (pos.y < 0) {
                 vel.y *= -1;
                 pos.y = 0;
             }
-            if (pos.x > width) {
+            if (pos.x > parent.width) {
                 vel.x *= -1;
-                pos.x = width;
+                pos.x = parent.width;
             } else if (pos.x < 0) {
                 vel.x *= -1;
                 pos.x = 0;
@@ -75,16 +88,16 @@ public class Collision extends PApplet {
         }
 
         void display() {
-            ellipseMode(CENTER);
-            stroke(0);
-            fill(fillColor[0], fillColor[1], fillColor[2]);
-            ellipse(pos.x, pos.y, r * 2, r * 2);
+            parent.ellipseMode(CENTER);
+            parent.stroke(0);
+            parent.fill(fillColor[0], fillColor[1], fillColor[2]);
+            parent.ellipse(pos.x, pos.y, r * 2, r * 2);
 
-            if (showVectors) {
-                drawVector(vel, pos, 10);
-                fill(0);
-                textSize(12);
-                text("v: " + nf(vel.mag(), 0, 2), pos.x + 10, pos.y - 10);
+            if (parent.showVectors) {
+                parent.drawVector(vel, pos, 10);
+                parent.fill(0);
+                parent.textSize(12);
+                parent.text("v: " + parent.nf(vel.mag(), 0, 2), pos.x + 10, pos.y - 10);
             }
         }
 
@@ -99,7 +112,7 @@ public class Collision extends PApplet {
                 n.normalize();
 
                 PVector u = PVector.sub(vel, other.vel);
-                PVector un = componentVector(u, n);
+                PVector un = parent.componentVector(u, n);
 
                 float m1 = mass;
                 float m2 = other.mass;
@@ -126,17 +139,19 @@ public class Collision extends PApplet {
 
     void drawHUD() {
         fill(0, 150);
-        rect(10, 10, 220, 20 + movers.length * 30, 10);
+        rect(10, 10, 220, 20 + (movers != null ? movers.length * 30 : 0), 10);
 
         fill(255);
         textSize(14);
         text("MOVER SIMULATION", 20, 30);
-        text("Objects: " + movers.length, 20, 50);
+        text("Objects: " + (movers != null ? movers.length : 0), 20, 50);
 
         textSize(12);
-        for (int i = 0; i < movers.length; i++) {
-            text("Obj " + (i + 1) + " - Mass: " + nf(movers[i].mass, 0, 2) +
-                    ", Radius: " + nf(movers[i].r, 0, 2), 20, 70 + (i * 20));
+        if (movers != null) {
+            for (int i = 0; i < movers.length; i++) {
+                text("Obj " + (i + 1) + " - Mass: " + nf(movers[i].mass, 0, 2) +
+                        ", Radius: " + nf(movers[i].r, 0, 2), 20, 70 + (i * 20));
+            }
         }
     }
 

@@ -1,5 +1,6 @@
-import processing.core.PApplet;
+package processing;
 
+import processing.core.PApplet;
 
 public class Wave extends PApplet {
     float startAngle = 0;
@@ -7,15 +8,21 @@ public class Wave extends PApplet {
     float amplitude = 150;
     float frequency = 3;
     float phaseShift = 0;
-    public static void main(String[] args) {
-        PApplet.main("Wave");
+
+    public static void runWave(float startAngle, float angleVel, float amplitude, float frequency, float phaseShift) {
+        Wave instance = new Wave();
+        instance.startAngle = startAngle;
+        instance.angleVel = angleVel;
+        instance.amplitude = amplitude;
+        instance.frequency = frequency;
+        instance.phaseShift = phaseShift;
+
+        PApplet.runSketch(new String[]{"Wave"}, instance);
     }
 
     public void settings() {
         size(600, 600);
     }
-
-
     public void setup() {
         size(600, 600);
         frameRate(60);
@@ -66,6 +73,4 @@ public class Wave extends PApplet {
         text("Frequency (Hz): " + nf(frequency, 1, 2), 20, 95);
         text("Amplitude: " + nf(amplitude, 1, 2), 20, 110);
     }
-
-
 }

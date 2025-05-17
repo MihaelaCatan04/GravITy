@@ -1,20 +1,35 @@
+package processing;
+
 import processing.core.PApplet;
 
 public class RollingUphill extends PApplet {
-    float g = 0.1F;
-    float mu = 0.5F;
-    float restitution = 0.7F;
-    float angle = PI/6;
+    float g;
+    float mu;
+    float restitution;
+    float angle;
 
-    float ballRadius = 20;
+    float ballRadius;
     float ballMass = 1;
     float ballX, ballY;
     float ballVx = 0;
     boolean isDragging = false;
+    int[] fillColor = {0, 150, 255};
 
     float planeLength = 600;
     float planeHeight = 200;
     float planeX, planeY;
+
+    public static void runRollingUphill(float g, float mu, float restitution, float angle, float ballRadius, float ballVx, int[] fillColor) {
+        RollingUphill instance = new RollingUphill();
+        instance.g = g;
+        instance.mu = mu;
+        instance.restitution = restitution;
+        instance.angle = angle;
+        instance.ballRadius = ballRadius;
+        instance.ballVx = ballVx;
+        instance.fillColor = fillColor;
+        PApplet.runSketch(new String[]{"Rolling Uphill"}, instance);
+    }
 
     public static void main(String[] args) {
         PApplet.main("RollingUphill");
@@ -118,7 +133,7 @@ public class RollingUphill extends PApplet {
         pushMatrix();
         translate(ballX, ballWorldY);
 
-        fill(255, 50, 50);
+        fill(fillColor[0], fillColor[1], fillColor[2]);
         stroke(0);
         strokeWeight(2);
         ellipse(0, 0, ballRadius * 2, ballRadius * 2);
@@ -218,6 +233,4 @@ public class RollingUphill extends PApplet {
     float tanAngle(float a) {
         return tan(a);
     }
-
-
 }

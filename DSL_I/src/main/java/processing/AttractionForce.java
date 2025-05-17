@@ -1,10 +1,41 @@
+package processing;
+
 import processing.core.PApplet;
 import processing.core.PVector;
 
 public class AttractionForce extends PApplet {
+    float radius1, radius2;
+    float mass1, mass2;
+    float attractionConstant = 1.0F;
+    int color1;
+    int color2;
+    PVector position1, position2;
+    PVector velocity1, velocity2;
+    PVector acceleration1, acceleration2;
+    boolean simulateMotion = false;
+    boolean showForceVector = true;
+    float dampingFactor = 0.98F;
+    float velocityLimit = 10;
 
-    public static void main(String[] args) {
-        PApplet.main("AttractionForce");
+    public static void runAttractionForce(float radius1, float mass1, float[] position1, float[] velocity1,
+                                          float radius2, float mass2, float[] position2, float[] velocity2,
+                                          int[] color1, int[] color2) {
+        AttractionForce instance = new AttractionForce();
+        instance.radius1 = radius1;
+        instance.mass1 = mass1;
+        instance.position1 = new PVector(position1[0], position1[1]);
+        instance.velocity1 = new PVector(velocity1[0], velocity1[1]);
+        instance.acceleration1 = new PVector(0, 0);
+        instance.color1 = instance.color(color1[0], color1[1], color1[2]);
+
+        instance.radius2 = radius2;
+        instance.mass2 = mass2;
+        instance.position2 = new PVector(position2[0], position2[1]);
+        instance.velocity2 = new PVector(velocity2[0], velocity2[1]);
+        instance.acceleration2 = new PVector(0, 0);
+        instance.color2 = instance.color(color2[0], color2[1], color2[2]);
+
+        PApplet.runSketch(new String[]{"Attraction Force"}, instance);
     }
 
     public void settings() {
@@ -13,24 +44,9 @@ public class AttractionForce extends PApplet {
 
     float obj1X, obj1Y;
     float obj2X, obj2Y;
-    float attractionConstant = 1.0F;
-    float mass1 = 100;
-    float mass2 = 50;
-    float radius1 = 40;
-    float radius2 = 20;
-    int color1; // Change color type to int
-    int color2; // Change color type to int
     boolean dragging1 = false;
     boolean dragging2 = false;
-    boolean showForceVector = true;
     float forceScale = 0.5F;
-    boolean simulateMotion = false;
-    float dampingFactor = 0.98F;
-    float velocityLimit = 10;
-
-    PVector position1, position2;
-    PVector velocity1, velocity2;
-    PVector acceleration1, acceleration2;
 
     public void setup() {
         size(600, 600);

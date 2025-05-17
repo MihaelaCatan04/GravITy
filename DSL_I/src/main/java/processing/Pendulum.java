@@ -1,29 +1,44 @@
+package processing;
+
 import processing.core.PApplet;
 import processing.core.PVector;
+
 import java.util.ArrayList;
 
-
 public class Pendulum extends PApplet {
-    float r = 400;
-    float angle = PI/4;
-    float angleV = 0;
-    float angleA = 0;
+
+    // Parameters received from main
+    float r;
+    float angle;
+    float angleV;
+    float angleA;
     float g = 9.8F;
-    float damping = 0.995F;
-    float ballRadius = 30;
+    float damping;
+    float ballRadius;
 
     PVector origin;
     PVector bob;
 
-    ArrayList<PVector> trail = new ArrayList<PVector>();
+    ArrayList<PVector> trail = new ArrayList<>();
     int maxTrail = 100;
 
     boolean dragging = false;
     boolean running = true;
 
-    public static void main(String[] args) {
-        PApplet.main("Pendulum");
+    // Static method to run simulation with given parameters
+    public static void runPendulum(float length, float ballRadius, float initialAngle,
+                                   float angularVelocity, float angularAcceleration, float airResistance) {
+        Pendulum instance = new Pendulum();
+        instance.r = length;
+        instance.ballRadius = ballRadius;
+        instance.angle = initialAngle;
+        instance.angleV = angularVelocity;
+        instance.angleA = angularAcceleration;
+        instance.damping = 1.0f - airResistance;
+
+        PApplet.runSketch(new String[]{"Pendulum"}, instance);
     }
+
 
     public void settings() {
         size(600, 600);

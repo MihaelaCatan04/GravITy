@@ -228,7 +228,7 @@ simple_value: NUMBER | IDENTIFIER | reference ;
 conditional_value : 'if' condition 'then' simple_value 'else' simple_value ;
 
 // A loop value expression defines a repetition of a value a specific number of times
-loop_value: initial_value 'repeat' INTEGER 'times' '*' multiplier ;
+loop_value: initial_value 'repeat' simple_value 'times' '*' multiplier ;
 
 // The initial value for a loop
 initial_value: NUMBER ;

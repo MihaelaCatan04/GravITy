@@ -1,5 +1,6 @@
+package processing;
+
 import processing.core.PApplet;
-import processing.core.PVector;
 
 public class Gravity extends PApplet {
     float earthX, earthY;
@@ -9,8 +10,14 @@ public class Gravity extends PApplet {
     float massMoon = 7.348e22F;
     boolean dragging = false;
 
-    public static void main(String[] args) {
-        PApplet.main("Gravity");
+    public static void runGravity(float earthX, float earthY, float moonX, float moonY) {
+        Gravity instance = new Gravity();
+        instance.moonX = moonX;
+        instance.moonY = moonY;
+        instance.earthX = earthX;
+        instance.earthY = earthY;
+
+        PApplet.runSketch(new String[]{"Gravity"}, instance);
     }
 
     public void settings() {

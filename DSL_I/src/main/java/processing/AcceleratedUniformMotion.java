@@ -1,3 +1,5 @@
+package processing;
+
 import processing.core.PApplet;
 
 public class AcceleratedUniformMotion extends PApplet {
@@ -6,9 +8,16 @@ public class AcceleratedUniformMotion extends PApplet {
     float speed;
     float acceleration = 0.005F;
     int[] fillColor = {0, 150, 255};
+    float radius;
 
-    public static void main(String[] args) {
-        PApplet.main("AcceleratedUniformMotion");
+    public static void runAcceleratedUniformMotion(float radius, int[] fillColor, float initial_speed, float initialAcceleration) {
+        AcceleratedUniformMotion instance = new AcceleratedUniformMotion();
+        instance.radius = radius;
+        instance.fillColor = fillColor;
+        instance.speed = initial_speed;
+        instance.acceleration = initialAcceleration;
+
+        PApplet.runSketch(new String[]{"Accelerated Uniform Motion"}, instance);
     }
 
     public void settings() {
@@ -18,7 +27,7 @@ public class AcceleratedUniformMotion extends PApplet {
     public void setup() {
         x = 0;
         y = (float) height / 2;
-        speed = 0;
+        // Don't reset speed here as we're taking it from parameters
     }
 
     public void draw() {
@@ -34,16 +43,18 @@ public class AcceleratedUniformMotion extends PApplet {
         }
 
         fill(fillColor[0], fillColor[1], fillColor[2]);
-        ellipse(x, y, 30, 30);
+        ellipse(x, y, radius, radius);
         drawHUD();
         displayInstructions();
     }
+
     void displayInstructions() {
         fill(100);
         textSize(12);
         text("Press Left arrow to decrease acceleration", 20, height - 60);
         text("Press Right arrow to increase acceleration", 20, height - 40);
     }
+
     void drawHUD() {
         fill(50, 50, 50, 200);
         rect(10, 10, 230, 100, 10);
@@ -55,6 +66,7 @@ public class AcceleratedUniformMotion extends PApplet {
         text("Speed: " + nf(speed, 1, 2) + (speed < 0 ? " (left)" : " (right)"), 20, 65);
         text("Acceleration: " + nf(acceleration, 1, 3), 20, 80);
     }
+
     public void keyPressed() {
         if (keyCode == LEFT) {
             acceleration -= 0.01F;
@@ -62,5 +74,4 @@ public class AcceleratedUniformMotion extends PApplet {
             acceleration += 0.01F;
         }
     }
-
 }
