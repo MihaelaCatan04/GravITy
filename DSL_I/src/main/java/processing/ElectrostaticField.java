@@ -1,17 +1,25 @@
+package processing;
+
 import processing.core.PApplet;
 import processing.core.PVector;
+
 import java.util.ArrayList;
 
 public class ElectrostaticField extends PApplet {
-    int RAD = 100;
+    float radius;
     float e0 = 8.854187e-12F;
     ArrayList<Particle> particles = new ArrayList<>();
     ArrayList<ArrayList<PVector>> fluxLines = new ArrayList<>();
     Particle selected = null;
     boolean dragging = false;
-    int fluxResolution = 10;
-    public static void main(String[] args) {
-        PApplet.main("ElectrostaticField");
+    int fluxResolution;
+
+    public static void runElectrostaticField(float radius, int fluxResolution) {
+        ElectrostaticField instance = new ElectrostaticField();
+        instance.radius = radius;
+        instance.fluxResolution = fluxResolution;
+
+        PApplet.runSketch(new String[]{"Electrostatic Field"}, instance);
     }
 
     public void settings() {
@@ -92,7 +100,7 @@ public class ElectrostaticField extends PApplet {
         for (Particle p : particles) {
             PVector r = PVector.sub(pos, p.pos);
             float rMag = r.mag();
-            if (rMag > RAD / 2) {
+            if (rMag > radius / 2) {
                 r.normalize();
                 r.mult((float) (p.charge / (rMag * rMag)));
                 result.add(r);
@@ -108,7 +116,7 @@ public class ElectrostaticField extends PApplet {
                 float angleStep = TWO_PI / fluxResolution;
                 for (int i = 0; i < fluxResolution; i++) {
                     ArrayList<PVector> line = new ArrayList<>();
-                    PVector start = PVector.fromAngle(angleStep * i).mult(RAD / 2).add(p.pos);
+                    PVector start = PVector.fromAngle(angleStep * i).mult(radius / 2).add(p.pos);
                     line.add(start);
                     fluxLines.add(line);
                 }
@@ -117,7 +125,7 @@ public class ElectrostaticField extends PApplet {
     }
     boolean isNearNegativeCharge(PVector pos) {
         for (Particle p : particles) {
-            if (p.charge < 0 && PVector.dist(pos, p.pos) < RAD / 2) {
+            if (p.charge < 0 && PVector.dist(pos, p.pos) < radius / 2) {
                 return true;
             }
         }
@@ -176,13 +184,12 @@ public class ElectrostaticField extends PApplet {
             } else {
                 fill(0, 0, 255);
             }
-            ellipse(pos.x, pos.y, RAD, RAD);
+            ellipse(pos.x, pos.y, radius, radius);
         }
 
         boolean isMouseOver(float mx, float my) {
-            return dist(mx, my, pos.x, pos.y) < (float) RAD / 2;
+            return dist(mx, my, pos.x, pos.y) < (float) radius / 2;
         }
+
     }
-
-
 }

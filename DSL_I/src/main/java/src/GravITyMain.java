@@ -4,6 +4,7 @@ import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 import gen.*;
 import processing.*;
+import processing.core.PVector;
 import visitors.*;
 
 import java.util.*;
@@ -12,80 +13,78 @@ public class GravITyMain {
     public static void main(String[] args) {
         String input = """
                 simulation {
-                    collision {
-                        mover {
-                            radius: 10
-                            mass: 5
-                            velocity {
-                                x_velocity: 2
-                                y_velocity: 4
-                            }
-                            position {
-                                x_position: 100
-                                y_position: 200
-                            }
-                            color {
-                                red_value: 255
-                                green_value: 0
-                                blue_value: 255
-                            }
-                        }
-                        mover {
-                            radius: 30
-                            mass: 30
-                            velocity {
-                                x_velocity: 7
-                                y_velocity: 5
-                            }
-                            position {
-                                x_position: 10
-                                y_position: 20
-                            }
-                            color {
-                                red_value: 255
-                                green_value: 255
-                                blue_value: 255
-                            }
-                        }
-                        mover {
-                            radius: 45
-                            mass: 45
-                            velocity {
-                                x_velocity: 7
-                                y_velocity: 2
-                            }
-                            position {
-                                x_position: 500
-                                y_position: 500
-                            }
-                            color {
-                                red_value: 125
-                                green_value: 0
-                                blue_value: 125
-                            }
-                        }
-                        mover {
-                            radius: 10
-                            mass: 5
-                            velocity {
-                                x_velocity: 2
-                                y_velocity: 4
-                            }
-                            position {
-                                x_position: 50
-                                y_position: 200
-                            }
-                            color {
-                                red_value: 0
-                                green_value: 0
-                                blue_value: 255
-                            }
-                        }
-                    }
-                }
-                
+                     collision {
+                         mover {
+                             radius: 10
+                             mass: 5
+                             velocity {
+                                 x_velocity: 2
+                                 y_velocity: 4
+                             }
+                             position {
+                                 x_position: 100
+                                 y_position: 200
+                             }
+                             color {
+                                 red_value: 255
+                                 green_value: 0
+                                 blue_value: 255
+                             }
+                         }
+                         mover {
+                             radius: 30
+                             mass: 30
+                             velocity {
+                                 x_velocity: 7
+                                 y_velocity: 5
+                             }
+                             position {
+                                 x_position: 10
+                                 y_position: 20
+                             }
+                             color {
+                                 red_value: 255
+                                 green_value: 20
+                                 blue_value: 255
+                             }
+                         }
+                         mover {
+                             radius: 45
+                             mass: 45
+                             velocity {
+                                 x_velocity: 7
+                                 y_velocity: 2
+                             }
+                             position {
+                                 x_position: 500
+                                 y_position: 500
+                             }
+                             color {
+                                 red_value: 125
+                                 green_value: 0
+                                 blue_value: 125
+                             }
+                         }
+                         mover {
+                             radius: 10
+                             mass: 5
+                             velocity {
+                                 x_velocity: 2
+                                 y_velocity: 4
+                             }
+                             position {
+                                 x_position: 50
+                                 y_position: 200
+                             }
+                             color {
+                                 red_value: 0
+                                 green_value: 0
+                                 blue_value: 255
+                             }
+                         }
+                     }
+                 }
                 """;
-
         // Create lexer and parser
         CharStream charStream = CharStreams.fromString(input);
         GravITyLexer lexer = new GravITyLexer(charStream);
@@ -98,8 +97,8 @@ public class GravITyMain {
         // Create a null sim
         Map<String, Object> sim = null;
 
-
-
+        // Choose a visitor based on the simulation type
+        GravITyCustomVisitor visitor = null;
         if (input.contains("attraction_force")) {
             AttractionForceVisitor forceVisitor = new AttractionForceVisitor();
             forceVisitor.visit(tree);
@@ -132,6 +131,22 @@ public class GravITyMain {
             DragForceVisitor dragForceVisitor = new DragForceVisitor();
             dragForceVisitor.visit(tree);
             sim = dragForceVisitor.getSimulation();
+        } else if (input.contains("spring")) {
+            SpringVisitor springVisitor = new SpringVisitor();
+            springVisitor.visit(tree);
+            sim = springVisitor.getSimulation();
+        } else if (input.contains("rolling_uphill")) {
+            RollingUphillVisitor rollingUphillVisitor = new RollingUphillVisitor();
+            rollingUphillVisitor.visit(tree);
+            sim = rollingUphillVisitor.getSimulation();
+        } else if (input.contains("electrostatic_field")) {
+            ElectrostaticFieldVisitor electrostaticFieldVisitor = new ElectrostaticFieldVisitor();
+            electrostaticFieldVisitor.visit(tree);
+            sim = electrostaticFieldVisitor.getSimulation();
+        } else if (input.contains("collision")) {
+            CollisionVisitor collisionVisitor = new CollisionVisitor();
+            collisionVisitor.visit(tree);
+            sim = collisionVisitor.getSimulation();
         } else {
             System.err.println("Error: Unsupported simulation type.");
             return;
@@ -207,10 +222,8 @@ public class GravITyMain {
                 return;
             }
 
-            // The mover should be a single object not a list in this implementation
             Map<String, Object> mover = (Map<String, Object>) module.get("mover");
 
-            // Check if 'mover' and its properties exist
             if (mover != null && mover.containsKey("radius") && mover.containsKey("color")) {
                 float radius = Float.parseFloat(mover.get("radius").toString());
 
@@ -587,6 +600,258 @@ public class GravITyMain {
 
             DragForce.runDragForce(mColor, dragCoefficient, lColor);
         }
+        if (sim.containsKey("spring")) {
+            Map<String, Object> module = (Map<String, Object>) sim.get("spring");
+
+            float springConstant = 0;
+            if (module.containsKey("spring_constant")) {
+                springConstant = Float.parseFloat(module.get("spring_constant").toString());
+            } else {
+                System.err.println("Error: spring_constant is missing");
+                return;
+            }
+
+            float damping = 0;
+            if (module.containsKey("damping")) {
+                damping = Float.parseFloat(module.get("damping").toString());
+            } else {
+                System.err.println("Error: damping is missing");
+                return;
+            }
+
+            float restLength = 0;
+            if (module.containsKey("spring_rest_length")) {
+                restLength = Float.parseFloat(module.get("spring_rest_length").toString());
+            } else {
+                System.err.println("Error: spring_rest_length is missing");
+                return;
+            }
+
+            float floorFriction = 0;
+            if (module.containsKey("floor_friction")) {
+                floorFriction = Float.parseFloat(module.get("floor_friction").toString());
+            } else {
+                System.err.println("Error: floor_friction is missing");
+                return;
+            }
+
+            Map<String, Object> ball = (Map<String, Object>) module.get("ball");
+            if (ball == null) {
+                System.err.println("Error: ball properties are missing");
+                return;
+            }
+
+            float ballRadius = 0;
+            if (ball.containsKey("radius")) {
+                ballRadius = Float.parseFloat(ball.get("radius").toString());
+            } else {
+                System.err.println("Error: ball radius is missing");
+                return;
+            }
+
+            int[] fillColor = {0, 0, 0};
+            if (ball.containsKey("color")) {
+                Map<String, String> colorMap = (Map<String, String>) ball.get("color");
+                if (colorMap != null) {
+                    fillColor = new int[] {
+                            Integer.parseInt(colorMap.get("r")),
+                            Integer.parseInt(colorMap.get("g")),
+                            Integer.parseInt(colorMap.get("b"))
+                    };
+                } else {
+                    System.err.println("Error: ball color is missing");
+                    return;
+                }
+            }
+
+            Map<String, Object> springConfig = (Map<String, Object>) module.get("spring");
+            if (springConfig == null) {
+                System.err.println("Error: spring properties are missing");
+                return;
+            }
+
+            float x_anchor_position = 0;
+            if (springConfig.containsKey("x_anchor_position")) {
+                x_anchor_position = Float.parseFloat(springConfig.get("x_anchor_position").toString());
+            } else {
+                System.err.println("Error: x_anchor_position is missing");
+                return;
+            }
+
+            float y_anchor_position = 0;
+            if (springConfig.containsKey("y_anchor_position")) {
+                y_anchor_position = Float.parseFloat(springConfig.get("y_anchor_position").toString());
+            } else {
+                System.err.println("Error: y_anchor_position is missing");
+                return;
+            }
+
+            int numCoils = 0;
+            if (springConfig.containsKey("num_coils")) {
+                numCoils = Integer.parseInt(springConfig.get("num_coils").toString());
+            }
+
+            Spring.runSpring(
+                    springConstant,
+                    damping,
+                    restLength,
+                    floorFriction,
+                    ballRadius,
+                    fillColor,
+                    x_anchor_position,
+                    y_anchor_position,
+                    numCoils
+            );
+        }
+        if (sim.containsKey("rolling_uphill")) {
+            Map<String, Object> module = (Map<String, Object>) sim.get("rolling_uphill");
+
+            float gravitationalAcceleration = 9.8f;
+            if (module.containsKey("gravitational_acceleration")) {
+                gravitationalAcceleration = Float.parseFloat(module.get("gravitational_acceleration").toString());
+            } else {
+                System.err.println("Error: gravitational_acceleration is missing");
+            }
+
+            float friction = 0.0f;
+            if (module.containsKey("coefficient_of_friction")) {
+                friction = Float.parseFloat(module.get("coefficient_of_friction").toString());
+            } else {
+                System.err.println("Error: coefficient_of_friction is missing");
+            }
+
+            float bounciness = 0.0f;
+            if (module.containsKey("bounciness")) {
+                bounciness = Float.parseFloat(module.get("bounciness").toString());
+            } else {
+                System.err.println("Error: bounciness is missing");
+            }
+
+            float angle = 0.0f;
+            if (module.containsKey("angle")) {
+                angle = Float.parseFloat(module.get("angle").toString());
+            } else {
+                System.err.println("Error: angle is missing");
+            }
+
+            float velocity = 0.0f;
+            if (module.containsKey("velocity_along_incline")) {
+                velocity = Float.parseFloat(module.get("velocity_along_incline").toString());
+            } else {
+                System.err.println("Error: velocity_along_incline is missing");
+            }
+
+            Map<String, Object> ball = (Map<String, Object>) module.get("ball");
+            if (ball == null) {
+                System.err.println("Error: ball is missing");
+                return;
+            }
+
+            float radius = 10;
+            if (ball.containsKey("radius")) {
+                radius = Float.parseFloat(ball.get("radius").toString());
+            } else {
+                System.err.println("Error: radius is missing in ball");
+            }
+
+            int[] color = {0, 0, 0};
+            if (ball.containsKey("color")) {
+                Map<String, Integer> colorMap = (Map<String, Integer>) ball.get("color");
+                if (colorMap != null) {
+                    color = new int[]{
+                            colorMap.getOrDefault("red_value", 255),
+                            colorMap.getOrDefault("green_value", 100),
+                            colorMap.getOrDefault("blue_value", 0)
+                    };
+                } else {
+                    System.err.println("Error: color map is invalid");
+                }
+            }
+
+            RollingUphill.runRollingUphill(
+                    gravitationalAcceleration,
+                    friction,
+                    bounciness,
+                    angle,
+                    radius,
+                    velocity,
+                    color
+            );
+        }
+        if (sim.containsKey("electrostatic_field")) {
+            Map<String, Object> module = (Map<String, Object>) sim.get("electrostatic_field");
+
+            float particle_radius = 0;
+            if (module.containsKey("particle_radius")) {
+                particle_radius = Float.parseFloat(module.get("particle_radius").toString());
+            } else {
+                System.err.println("Error: particle_radius is missing");
+            }
+
+            int flux_resolution = 0;
+            if (module.containsKey("flux_resolution")) {
+                flux_resolution = Integer.parseInt(module.get("flux_resolution").toString());
+            } else {
+                System.err.println("Error: flux_resolution is missing");
+            }
+
+
+            ElectrostaticField.runElectrostaticField(
+                    particle_radius, flux_resolution
+            );
+        }
+        if (sim.containsKey("collision")) {
+            Map<String, Object> module = (Map<String, Object>) sim.get("collision");
+
+            List<Map<String, Object>> moversData = (List<Map<String, Object>>) module.get("movers");
+            Collision.Mover[] movers = new Collision.Mover[moversData.size()];
+
+            for (int i = 0; i < moversData.size(); i++) {
+                Map<String, Object> moverMap = moversData.get(i);
+
+                float radius = Float.parseFloat(moverMap.get("radius").toString());
+                float mass = Float.parseFloat(moverMap.get("mass").toString());
+
+                Map<String, Object> velocity = (Map<String, Object>) moverMap.get("velocity");
+                float xVelocity = Float.parseFloat(velocity.get("x_velocity").toString());
+                float yVelocity = Float.parseFloat(velocity.get("y_velocity").toString());
+
+                Map<String, Object> position = (Map<String, Object>) moverMap.get("position");
+                float xPosition = Float.parseFloat(position.get("x_position").toString());
+                float yPosition = Float.parseFloat(position.get("y_position").toString());
+
+                Map<String, Object> color = (Map<String, Object>) moverMap.get("color");
+                int rC = Integer.parseInt(color.get("red_value").toString());
+                int gC = Integer.parseInt(color.get("green_value").toString());
+                int bC = Integer.parseInt(color.get("blue_value").toString());
+
+                PVector vel = new PVector(xVelocity, yVelocity);
+                PVector pos = new PVector(xPosition, yPosition);
+
+                movers[i] = new Collision.Mover(radius, mass, vel, pos, rC, gC, bC);
+            }
+
+            // Launch the sketch
+            Collision.runCollision();
+
+            // Wait until instance is not null and Processing is ready
+            new Thread(() -> {
+                while (Collision.instance == null) {
+                    try {
+                        Thread.sleep(50); // wait for the sketch to start
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                // Set movers into the running sketch
+                Collision.instance.setMovers(movers);
+            }).start();
+
+        } else {
+            System.err.println("No collision module found in simulation.");
+        }
+
 
     }
 }
