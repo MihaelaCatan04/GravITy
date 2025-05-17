@@ -12,23 +12,20 @@ public class GravITyMain {
     public static void main(String[] args) {
         String input = """
                 simulation {
-                    spring {
-                        spring_constant: 0.5
-                        damping: 0.9
-                        spring_rest_length: 100
-                        floor_friction: 0.005      
-                	ball {
-                            radius: 50
+                    rolling_uphill {
+                        gravitational_acceleration: 9.8
+                        coefficient_of_friction: 0.5
+                        bounciness: 0.2     
+                	angle: 0.5
+                        ball {
+                            radius: 30
                             color {
-                                red_value: 255
-                                green_value: 255
-                                blue_value: 255
+                                   red_value: 255
+                                   green_value: 0
+                                   blue_value: 0
+                                }
                             }
-                        }
-                        spring {
-                            x_anchor_position: 100
-                            y_anchor_position: 300
-                            num_coils: 50
+                        velocity_along_incline: 0.4
                         }
                     }
                 }
@@ -84,6 +81,10 @@ public class GravITyMain {
             SpringVisitor springVisitor = new SpringVisitor();
             springVisitor.visit(tree);
             sim = springVisitor.getSimulation();
+        }   else if (input.contains("rolling_uphill")) {
+            RollingUphillVisitor rollingUphillVisitor = new RollingUphillVisitor();
+            rollingUphillVisitor.visit(tree);
+            sim = rollingUphillVisitor.getSimulation();
         } else {
             System.err.println("Error: Unsupported simulation type.");
             return;
@@ -642,6 +643,90 @@ public class GravITyMain {
                     numCoils
             );
         }
+        if (sim.containsKey("rolling_uphill")) {
+            Map<String, Object> module = (Map<String, Object>) sim.get("rolling_uphill");
+
+            // 1. Gravitational Acceleration
+            float gravitationalAcceleration = 9.8f;
+            if (module.containsKey("gravitational_acceleration")) {
+                gravitationalAcceleration = Float.parseFloat(module.get("gravitational_acceleration").toString());
+            } else {
+                System.err.println("Error: gravitational_acceleration is missing");
+            }
+
+            // 2. Coefficient of Friction
+            float friction = 0.0f;
+            if (module.containsKey("coefficient_of_friction")) {
+                friction = Float.parseFloat(module.get("coefficient_of_friction").toString());
+            } else {
+                System.err.println("Error: coefficient_of_friction is missing");
+            }
+
+            // 3. Bounciness
+            float bounciness = 0.0f;
+            if (module.containsKey("bounciness")) {
+                bounciness = Float.parseFloat(module.get("bounciness").toString());
+            } else {
+                System.err.println("Error: bounciness is missing");
+            }
+
+            // 4. Angle of Incline
+            float angle = 0.0f;
+            if (module.containsKey("angle")) {
+                angle = Float.parseFloat(module.get("angle").toString());
+            } else {
+                System.err.println("Error: angle is missing");
+            }
+
+            // 5. Initial Velocity Along Incline
+            float velocity = 0.0f;
+            if (module.containsKey("velocity_along_incline")) {
+                velocity = Float.parseFloat(module.get("velocity_along_incline").toString());
+            } else {
+                System.err.println("Error: velocity_along_incline is missing");
+            }
+
+            // 6. Ball Properties
+            Map<String, Object> ball = (Map<String, Object>) module.get("ball");
+            if (ball == null) {
+                System.err.println("Error: ball is missing");
+                return;
+            }
+
+            float radius = 10; // default
+            if (ball.containsKey("radius")) {
+                radius = Float.parseFloat(ball.get("radius").toString());
+            } else {
+                System.err.println("Error: radius is missing in ball");
+            }
+
+            // 7. Color
+            int[] color = {255, 100, 0}; // default color
+            if (ball.containsKey("color")) {
+                Map<String, Integer> colorMap = (Map<String, Integer>) ball.get("color");
+                if (colorMap != null) {
+                    color = new int[]{
+                            colorMap.getOrDefault("red_value", 255),
+                            colorMap.getOrDefault("green_value", 100),
+                            colorMap.getOrDefault("blue_value", 0)
+                    };
+                } else {
+                    System.err.println("Error: color map is invalid");
+                }
+            }
+
+            // 8. Run the simulation
+            RollingUphill.runRollingUphill(
+                    gravitationalAcceleration,
+                    friction,
+                    bounciness,
+                    angle,
+                    radius,
+                    velocity,
+                    color
+            );
+        }
+
 
     }
 }
