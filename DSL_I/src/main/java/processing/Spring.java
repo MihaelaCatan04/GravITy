@@ -1,7 +1,9 @@
+package processing;
+
 import processing.core.PApplet;
 import processing.core.PVector;
-import java.util.ArrayList;
 
+import java.util.ArrayList;
 
 public class Spring extends PApplet {
     float springConstant = 0.1F;
@@ -14,15 +16,33 @@ public class Spring extends PApplet {
     PVector ballPosition;
     PVector ballVelocity;
     boolean isDragging = false;
+    int[] fillColor = {0, 150, 255};
+    float x_anchor_position;
+    float y_anchor_position;
 
     PVector anchorPosition;
     float springWidth = 20;
-    int numCoils = 10;
+    int numCoils;
 
     boolean hasLaunched = false;
     ArrayList<PVector> trajectoryPoints = new ArrayList<PVector>();
-    public static void main(String[] args) {
-        PApplet.main("Spring");
+
+    public static void runSpring(float springConstant, float damping, float restLength, float floorFriction,
+                                 float ballRadius,int[] fillColor, float x_anchor_position,
+                                 float y_anchor_position, int numCoils) {
+        Spring instance = new Spring();
+
+        instance.springConstant = springConstant;
+        instance.damping = damping;
+        instance.restLength = restLength;
+        instance.floorFriction = floorFriction;
+        instance.ballRadius = ballRadius;
+        instance.fillColor = fillColor;
+        instance.x_anchor_position = x_anchor_position;
+        instance.y_anchor_position = y_anchor_position;
+        instance.numCoils = numCoils;
+
+        PApplet.runSketch(new String[]{"Spring"}, instance);
     }
 
     public void settings() {
@@ -30,7 +50,7 @@ public class Spring extends PApplet {
     }
 
     public void setup() {
-        anchorPosition = new PVector(100, (float) height /2);
+        anchorPosition = new PVector(x_anchor_position, y_anchor_position);
         ballPosition = new PVector(anchorPosition.x + restLength, (float) height /2);
         ballVelocity = new PVector(0, 0);
     }
@@ -81,7 +101,7 @@ public class Spring extends PApplet {
 
         drawSpring(anchorPosition.x, anchorPosition.y, ballPosition.x, ballPosition.y);
 
-        fill(50, 200, 50);
+        fill(fillColor[0], fillColor[1], fillColor[2]);
         stroke(0);
         strokeWeight(2);
         ellipse(ballPosition.x, ballPosition.y, ballRadius*2, ballRadius*2);
