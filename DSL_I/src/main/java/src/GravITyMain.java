@@ -4,6 +4,7 @@ import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 import gen.*;
 import processing.*;
+import processing.core.PVector;
 import visitors.*;
 
 import java.util.*;
@@ -12,13 +13,78 @@ public class GravITyMain {
     public static void main(String[] args) {
         String input = """
                 simulation {
-                    electrostatic_field {
-                        particle_radius: 35
-                        flux_resolution: 15
-                    }
-                }
+                     collision {
+                         mover {
+                             radius: 10
+                             mass: 5
+                             velocity {
+                                 x_velocity: 2
+                                 y_velocity: 4
+                             }
+                             position {
+                                 x_position: 100
+                                 y_position: 200
+                             }
+                             color {
+                                 red_value: 255
+                                 green_value: 0
+                                 blue_value: 255
+                             }
+                         }
+                         mover {
+                             radius: 30
+                             mass: 30
+                             velocity {
+                                 x_velocity: 7
+                                 y_velocity: 5
+                             }
+                             position {
+                                 x_position: 10
+                                 y_position: 20
+                             }
+                             color {
+                                 red_value: 255
+                                 green_value: 255
+                                 blue_value: 255
+                             }
+                         }
+                         mover {
+                             radius: 45
+                             mass: 45
+                             velocity {
+                                 x_velocity: 7
+                                 y_velocity: 2
+                             }
+                             position {
+                                 x_position: 500
+                                 y_position: 500
+                             }
+                             color {
+                                 red_value: 125
+                                 green_value: 0
+                                 blue_value: 125
+                             }
+                         }
+                         mover {
+                             radius: 10
+                             mass: 5
+                             velocity {
+                                 x_velocity: 2
+                                 y_velocity: 4
+                             }
+                             position {
+                                 x_position: 50
+                                 y_position: 200
+                             }
+                             color {
+                                 red_value: 0
+                                 green_value: 0
+                                 blue_value: 255
+                             }
+                         }
+                     }
+                 }
                 """;
-
         // Create lexer and parser
         CharStream charStream = CharStreams.fromString(input);
         GravITyLexer lexer = new GravITyLexer(charStream);
@@ -77,6 +143,10 @@ public class GravITyMain {
             ElectrostaticFieldVisitor electrostaticFieldVisitor = new ElectrostaticFieldVisitor();
             electrostaticFieldVisitor.visit(tree);
             sim = electrostaticFieldVisitor.getSimulation();
+        } else if (input.contains("collision")) {
+            CollisionVisitor collisionVisitor = new CollisionVisitor();
+            collisionVisitor.visit(tree);
+            sim = collisionVisitor.getSimulation();
         } else {
             System.err.println("Error: Unsupported simulation type.");
             return;
@@ -152,10 +222,8 @@ public class GravITyMain {
                 return;
             }
 
-            // The mover should be a single object not a list in this implementation
             Map<String, Object> mover = (Map<String, Object>) module.get("mover");
 
-            // Check if 'mover' and its properties exist
             if (mover != null && mover.containsKey("radius") && mover.containsKey("color")) {
                 float radius = Float.parseFloat(mover.get("radius").toString());
 
@@ -732,6 +800,58 @@ public class GravITyMain {
                     particle_radius, flux_resolution
             );
         }
+        if (sim.containsKey("collision")) {
+            Map<String, Object> module = (Map<String, Object>) sim.get("collision");
+
+            List<Map<String, Object>> moversData = (List<Map<String, Object>>) module.get("movers");
+            Collision.Mover[] movers = new Collision.Mover[moversData.size()];
+
+            for (int i = 0; i < moversData.size(); i++) {
+                Map<String, Object> moverMap = moversData.get(i);
+
+                float radius = Float.parseFloat(moverMap.get("radius").toString());
+                float mass = Float.parseFloat(moverMap.get("mass").toString());
+
+                Map<String, Object> velocity = (Map<String, Object>) moverMap.get("velocity");
+                float xVelocity = Float.parseFloat(velocity.get("x_velocity").toString());
+                float yVelocity = Float.parseFloat(velocity.get("y_velocity").toString());
+
+                Map<String, Object> position = (Map<String, Object>) moverMap.get("position");
+                float xPosition = Float.parseFloat(position.get("x_position").toString());
+                float yPosition = Float.parseFloat(position.get("y_position").toString());
+
+                Map<String, Object> color = (Map<String, Object>) moverMap.get("color");
+                int rC = Integer.parseInt(color.get("red_value").toString());
+                int gC = Integer.parseInt(color.get("green_value").toString());
+                int bC = Integer.parseInt(color.get("blue_value").toString());
+
+                PVector vel = new PVector(xVelocity, yVelocity);
+                PVector pos = new PVector(xPosition, yPosition);
+
+                movers[i] = new Collision.Mover(radius, mass, vel, pos, rC, gC, bC);
+            }
+
+            // Launch the sketch
+            Collision.runCollision();
+
+            // Wait until instance is not null and Processing is ready
+            new Thread(() -> {
+                while (Collision.instance == null) {
+                    try {
+                        Thread.sleep(50); // wait for the sketch to start
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                // Set movers into the running sketch
+                Collision.instance.setMovers(movers);
+            }).start();
+
+        } else {
+            System.err.println("No collision module found in simulation.");
+        }
+
 
     }
 }
