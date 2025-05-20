@@ -13,77 +13,17 @@ public class GravITyMain {
     public static void main(String[] args) {
         String input = """
                 simulation {
-                     collision {
-                         mover {
-                             radius: 10
-                             mass: 5
-                             velocity {
-                                 x_velocity: 2
-                                 y_velocity: 4
-                             }
-                             position {
-                                 x_position: 100
-                                 y_position: 200
-                             }
-                             color {
-                                 red_value: 255
-                                 green_value: 0
-                                 blue_value: 255
-                             }
-                         }
-                         mover {
-                             radius: 30
-                             mass: 30
-                             velocity {
-                                 x_velocity: 7
-                                 y_velocity: 5
-                             }
-                             position {
-                                 x_position: 10
-                                 y_position: 20
-                             }
-                             color {
-                                 red_value: 255
-                                 green_value: 255
-                                 blue_value: 255
-                             }
-                         }
-                         mover {
-                             radius: 45
-                             mass: 45
-                             velocity {
-                                 x_velocity: 7
-                                 y_velocity: 2
-                             }
-                             position {
-                                 x_position: 500
-                                 y_position: 500
-                             }
-                             color {
-                                 red_value: 125
-                                 green_value: 0
-                                 blue_value: 125
-                             }
-                         }
-                         mover {
-                             radius: 10
-                             mass: 5
-                             velocity {
-                                 x_velocity: 2
-                                 y_velocity: 4
-                             }
-                             position {
-                                 x_position: 50
-                                 y_position: 200
-                             }
-                             color {
-                                 red_value: 0
-                                 green_value: 0
-                                 blue_value: 255
-                             }
-                         }
-                     }
-                 }
+                   pendulum {
+                       length: 150
+                       ball_radius: 10
+                       initial_angle: 0.78
+                       angular_velocity: 0.0
+                       angular_acceleration: 0.0
+                       air_resistance: 0.01
+                   }
+                }
+                
+                
                 """;
         // Create lexer and parser
         CharStream charStream = CharStreams.fromString(input);
@@ -455,14 +395,24 @@ public class GravITyMain {
             } else {
                 System.err.println("Error: angular_speed is missing");
             }
-            Map<String, Object> mover = (Map<String, Object>) module.get("ball");
-            if (mover == null) {
+            // Bile
+            Map<String, Object> ball = (Map<String, Object>) module.get("ball");
+            if (ball == null) {
                 System.err.println("Error: ball is missing");
                 return;
             }
+
+            float ball_radius = 0;
+            if (ball.containsKey("radius")) {
+                ball_radius = Float.parseFloat(ball.get("radius").toString());
+            } else {
+                System.err.println("Error: ball radius is missing");
+                return;
+            }
+
             int[] color = {255, 100, 0};
-            if (mover.containsKey("color")) {
-                Map<String, Integer> colorMap = (Map<String, Integer>) mover.get("color");
+            if (ball.containsKey("color")) {
+                Map<String, Integer> colorMap = (Map<String, Integer>) ball.get("color");
                 if (colorMap != null) {
                     color = new int[]{
                             colorMap.getOrDefault("red_value", 255),
@@ -474,7 +424,7 @@ public class GravITyMain {
                     return;
                 }
                 CircularMotion.runCircularMotion(
-                        radius, angular_speed, color, radius
+                        radius, angular_speed, color, ball_radius
                 );
             }
         }
@@ -848,9 +798,12 @@ public class GravITyMain {
                 Collision.instance.setMovers(movers);
             }).start();
 
-        } else {
-            System.err.println("No collision module found in simulation.");
-        }
+       }
+
+
+//        else {
+//            System.err.println("No collision module found in simulation.");
+//        }
 
 
     }

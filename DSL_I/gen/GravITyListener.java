@@ -1,789 +1,789 @@
-// Generated from C:/Users/ionvo/OneDrive/Desktop/DSL_I/src/main/antlr4/GravITy.g4 by ANTLR 4.13.2
+// Generated from C:/Users/ionvo/OneDrive/Desktop/GravITy/DSL_I/src/main/antlr4/GravITy.g4 by ANTLR 4.13.2
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
  * This interface defines a complete listener for a parse tree produced by
- * {@link MyDSLParser}.
+ * {@link GravITyParser}.
  */
-public interface MyDSLListener extends ParseTreeListener {
+public interface GravITyListener extends ParseTreeListener {
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#simulation}.
+	 * Enter a parse tree produced by {@link GravITyParser#simulation}.
 	 * @param ctx the parse tree
 	 */
-	void enterSimulation(MyDSLParser.SimulationContext ctx);
+	void enterSimulation(GravITyParser.SimulationContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#simulation}.
+	 * Exit a parse tree produced by {@link GravITyParser#simulation}.
 	 * @param ctx the parse tree
 	 */
-	void exitSimulation(MyDSLParser.SimulationContext ctx);
+	void exitSimulation(GravITyParser.SimulationContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#simulation_body}.
+	 * Enter a parse tree produced by {@link GravITyParser#simulation_body}.
 	 * @param ctx the parse tree
 	 */
-	void enterSimulation_body(MyDSLParser.Simulation_bodyContext ctx);
+	void enterSimulation_body(GravITyParser.Simulation_bodyContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#simulation_body}.
+	 * Exit a parse tree produced by {@link GravITyParser#simulation_body}.
 	 * @param ctx the parse tree
 	 */
-	void exitSimulation_body(MyDSLParser.Simulation_bodyContext ctx);
+	void exitSimulation_body(GravITyParser.Simulation_bodyContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#physics_module}.
+	 * Enter a parse tree produced by {@link GravITyParser#physics_module}.
 	 * @param ctx the parse tree
 	 */
-	void enterPhysics_module(MyDSLParser.Physics_moduleContext ctx);
+	void enterPhysics_module(GravITyParser.Physics_moduleContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#physics_module}.
+	 * Exit a parse tree produced by {@link GravITyParser#physics_module}.
 	 * @param ctx the parse tree
 	 */
-	void exitPhysics_module(MyDSLParser.Physics_moduleContext ctx);
+	void exitPhysics_module(GravITyParser.Physics_moduleContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#collision}.
+	 * Enter a parse tree produced by {@link GravITyParser#collision}.
 	 * @param ctx the parse tree
 	 */
-	void enterCollision(MyDSLParser.CollisionContext ctx);
+	void enterCollision(GravITyParser.CollisionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#collision}.
+	 * Exit a parse tree produced by {@link GravITyParser#collision}.
 	 * @param ctx the parse tree
 	 */
-	void exitCollision(MyDSLParser.CollisionContext ctx);
+	void exitCollision(GravITyParser.CollisionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#movers_list}.
+	 * Enter a parse tree produced by {@link GravITyParser#movers_list}.
 	 * @param ctx the parse tree
 	 */
-	void enterMovers_list(MyDSLParser.Movers_listContext ctx);
+	void enterMovers_list(GravITyParser.Movers_listContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#movers_list}.
+	 * Exit a parse tree produced by {@link GravITyParser#movers_list}.
 	 * @param ctx the parse tree
 	 */
-	void exitMovers_list(MyDSLParser.Movers_listContext ctx);
+	void exitMovers_list(GravITyParser.Movers_listContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#mover}.
+	 * Enter a parse tree produced by {@link GravITyParser#mover}.
 	 * @param ctx the parse tree
 	 */
-	void enterMover(MyDSLParser.MoverContext ctx);
+	void enterMover(GravITyParser.MoverContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#mover}.
+	 * Exit a parse tree produced by {@link GravITyParser#mover}.
 	 * @param ctx the parse tree
 	 */
-	void exitMover(MyDSLParser.MoverContext ctx);
+	void exitMover(GravITyParser.MoverContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#mover_properties}.
+	 * Enter a parse tree produced by {@link GravITyParser#mover_properties}.
 	 * @param ctx the parse tree
 	 */
-	void enterMover_properties(MyDSLParser.Mover_propertiesContext ctx);
+	void enterMover_properties(GravITyParser.Mover_propertiesContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#mover_properties}.
+	 * Exit a parse tree produced by {@link GravITyParser#mover_properties}.
 	 * @param ctx the parse tree
 	 */
-	void exitMover_properties(MyDSLParser.Mover_propertiesContext ctx);
+	void exitMover_properties(GravITyParser.Mover_propertiesContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#electrostatic_field}.
+	 * Enter a parse tree produced by {@link GravITyParser#electrostatic_field}.
 	 * @param ctx the parse tree
 	 */
-	void enterElectrostatic_field(MyDSLParser.Electrostatic_fieldContext ctx);
+	void enterElectrostatic_field(GravITyParser.Electrostatic_fieldContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#electrostatic_field}.
+	 * Exit a parse tree produced by {@link GravITyParser#electrostatic_field}.
 	 * @param ctx the parse tree
 	 */
-	void exitElectrostatic_field(MyDSLParser.Electrostatic_fieldContext ctx);
+	void exitElectrostatic_field(GravITyParser.Electrostatic_fieldContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#particle_radius_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#particle_radius_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterParticle_radius_expr(MyDSLParser.Particle_radius_exprContext ctx);
+	void enterParticle_radius_expr(GravITyParser.Particle_radius_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#particle_radius_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#particle_radius_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitParticle_radius_expr(MyDSLParser.Particle_radius_exprContext ctx);
+	void exitParticle_radius_expr(GravITyParser.Particle_radius_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#flux_resolution_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#flux_resolution_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterFlux_resolution_expr(MyDSLParser.Flux_resolution_exprContext ctx);
+	void enterFlux_resolution_expr(GravITyParser.Flux_resolution_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#flux_resolution_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#flux_resolution_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitFlux_resolution_expr(MyDSLParser.Flux_resolution_exprContext ctx);
+	void exitFlux_resolution_expr(GravITyParser.Flux_resolution_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#drag_force}.
+	 * Enter a parse tree produced by {@link GravITyParser#drag_force}.
 	 * @param ctx the parse tree
 	 */
-	void enterDrag_force(MyDSLParser.Drag_forceContext ctx);
+	void enterDrag_force(GravITyParser.Drag_forceContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#drag_force}.
+	 * Exit a parse tree produced by {@link GravITyParser#drag_force}.
 	 * @param ctx the parse tree
 	 */
-	void exitDrag_force(MyDSLParser.Drag_forceContext ctx);
+	void exitDrag_force(GravITyParser.Drag_forceContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#mover_color_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#mover_color_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterMover_color_expr(MyDSLParser.Mover_color_exprContext ctx);
+	void enterMover_color_expr(GravITyParser.Mover_color_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#mover_color_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#mover_color_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitMover_color_expr(MyDSLParser.Mover_color_exprContext ctx);
+	void exitMover_color_expr(GravITyParser.Mover_color_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#drag_coefficient_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#drag_coefficient_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterDrag_coefficient_expr(MyDSLParser.Drag_coefficient_exprContext ctx);
+	void enterDrag_coefficient_expr(GravITyParser.Drag_coefficient_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#drag_coefficient_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#drag_coefficient_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitDrag_coefficient_expr(MyDSLParser.Drag_coefficient_exprContext ctx);
+	void exitDrag_coefficient_expr(GravITyParser.Drag_coefficient_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#liquid_color_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#liquid_color_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterLiquid_color_expr(MyDSLParser.Liquid_color_exprContext ctx);
+	void enterLiquid_color_expr(GravITyParser.Liquid_color_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#liquid_color_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#liquid_color_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitLiquid_color_expr(MyDSLParser.Liquid_color_exprContext ctx);
+	void exitLiquid_color_expr(GravITyParser.Liquid_color_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#attraction_force}.
+	 * Enter a parse tree produced by {@link GravITyParser#attraction_force}.
 	 * @param ctx the parse tree
 	 */
-	void enterAttraction_force(MyDSLParser.Attraction_forceContext ctx);
+	void enterAttraction_force(GravITyParser.Attraction_forceContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#attraction_force}.
+	 * Exit a parse tree produced by {@link GravITyParser#attraction_force}.
 	 * @param ctx the parse tree
 	 */
-	void exitAttraction_force(MyDSLParser.Attraction_forceContext ctx);
+	void exitAttraction_force(GravITyParser.Attraction_forceContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#mover1_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#mover1_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterMover1_expr(MyDSLParser.Mover1_exprContext ctx);
+	void enterMover1_expr(GravITyParser.Mover1_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#mover1_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#mover1_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitMover1_expr(MyDSLParser.Mover1_exprContext ctx);
+	void exitMover1_expr(GravITyParser.Mover1_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#mover2_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#mover2_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterMover2_expr(MyDSLParser.Mover2_exprContext ctx);
+	void enterMover2_expr(GravITyParser.Mover2_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#mover2_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#mover2_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitMover2_expr(MyDSLParser.Mover2_exprContext ctx);
+	void exitMover2_expr(GravITyParser.Mover2_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#wave}.
+	 * Enter a parse tree produced by {@link GravITyParser#wave}.
 	 * @param ctx the parse tree
 	 */
-	void enterWave(MyDSLParser.WaveContext ctx);
+	void enterWave(GravITyParser.WaveContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#wave}.
+	 * Exit a parse tree produced by {@link GravITyParser#wave}.
 	 * @param ctx the parse tree
 	 */
-	void exitWave(MyDSLParser.WaveContext ctx);
+	void exitWave(GravITyParser.WaveContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#start_angle_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#start_angle_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterStart_angle_expr(MyDSLParser.Start_angle_exprContext ctx);
+	void enterStart_angle_expr(GravITyParser.Start_angle_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#start_angle_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#start_angle_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitStart_angle_expr(MyDSLParser.Start_angle_exprContext ctx);
+	void exitStart_angle_expr(GravITyParser.Start_angle_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#angle_velocity_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#angle_velocity_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterAngle_velocity_expr(MyDSLParser.Angle_velocity_exprContext ctx);
+	void enterAngle_velocity_expr(GravITyParser.Angle_velocity_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#angle_velocity_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#angle_velocity_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitAngle_velocity_expr(MyDSLParser.Angle_velocity_exprContext ctx);
+	void exitAngle_velocity_expr(GravITyParser.Angle_velocity_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#amplitude_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#amplitude_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterAmplitude_expr(MyDSLParser.Amplitude_exprContext ctx);
+	void enterAmplitude_expr(GravITyParser.Amplitude_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#amplitude_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#amplitude_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitAmplitude_expr(MyDSLParser.Amplitude_exprContext ctx);
+	void exitAmplitude_expr(GravITyParser.Amplitude_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#frequency_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#frequency_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterFrequency_expr(MyDSLParser.Frequency_exprContext ctx);
+	void enterFrequency_expr(GravITyParser.Frequency_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#frequency_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#frequency_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitFrequency_expr(MyDSLParser.Frequency_exprContext ctx);
+	void exitFrequency_expr(GravITyParser.Frequency_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#phase_shift_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#phase_shift_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterPhase_shift_expr(MyDSLParser.Phase_shift_exprContext ctx);
+	void enterPhase_shift_expr(GravITyParser.Phase_shift_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#phase_shift_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#phase_shift_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitPhase_shift_expr(MyDSLParser.Phase_shift_exprContext ctx);
+	void exitPhase_shift_expr(GravITyParser.Phase_shift_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#uniform_motion}.
+	 * Enter a parse tree produced by {@link GravITyParser#uniform_motion}.
 	 * @param ctx the parse tree
 	 */
-	void enterUniform_motion(MyDSLParser.Uniform_motionContext ctx);
+	void enterUniform_motion(GravITyParser.Uniform_motionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#uniform_motion}.
+	 * Exit a parse tree produced by {@link GravITyParser#uniform_motion}.
 	 * @param ctx the parse tree
 	 */
-	void exitUniform_motion(MyDSLParser.Uniform_motionContext ctx);
+	void exitUniform_motion(GravITyParser.Uniform_motionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#mover_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#mover_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterMover_expr(MyDSLParser.Mover_exprContext ctx);
+	void enterMover_expr(GravITyParser.Mover_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#mover_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#mover_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitMover_expr(MyDSLParser.Mover_exprContext ctx);
+	void exitMover_expr(GravITyParser.Mover_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#initial_speed_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#initial_speed_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterInitial_speed_expr(MyDSLParser.Initial_speed_exprContext ctx);
+	void enterInitial_speed_expr(GravITyParser.Initial_speed_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#initial_speed_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#initial_speed_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitInitial_speed_expr(MyDSLParser.Initial_speed_exprContext ctx);
+	void exitInitial_speed_expr(GravITyParser.Initial_speed_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#accelerated_motion}.
+	 * Enter a parse tree produced by {@link GravITyParser#accelerated_motion}.
 	 * @param ctx the parse tree
 	 */
-	void enterAccelerated_motion(MyDSLParser.Accelerated_motionContext ctx);
+	void enterAccelerated_motion(GravITyParser.Accelerated_motionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#accelerated_motion}.
+	 * Exit a parse tree produced by {@link GravITyParser#accelerated_motion}.
 	 * @param ctx the parse tree
 	 */
-	void exitAccelerated_motion(MyDSLParser.Accelerated_motionContext ctx);
+	void exitAccelerated_motion(GravITyParser.Accelerated_motionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#initial_acceleration_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#initial_acceleration_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterInitial_acceleration_expr(MyDSLParser.Initial_acceleration_exprContext ctx);
+	void enterInitial_acceleration_expr(GravITyParser.Initial_acceleration_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#initial_acceleration_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#initial_acceleration_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitInitial_acceleration_expr(MyDSLParser.Initial_acceleration_exprContext ctx);
+	void exitInitial_acceleration_expr(GravITyParser.Initial_acceleration_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#circular_motion}.
+	 * Enter a parse tree produced by {@link GravITyParser#circular_motion}.
 	 * @param ctx the parse tree
 	 */
-	void enterCircular_motion(MyDSLParser.Circular_motionContext ctx);
+	void enterCircular_motion(GravITyParser.Circular_motionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#circular_motion}.
+	 * Exit a parse tree produced by {@link GravITyParser#circular_motion}.
 	 * @param ctx the parse tree
 	 */
-	void exitCircular_motion(MyDSLParser.Circular_motionContext ctx);
+	void exitCircular_motion(GravITyParser.Circular_motionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#radius_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#radius_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterRadius_expr(MyDSLParser.Radius_exprContext ctx);
+	void enterRadius_expr(GravITyParser.Radius_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#radius_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#radius_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitRadius_expr(MyDSLParser.Radius_exprContext ctx);
+	void exitRadius_expr(GravITyParser.Radius_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#angular_speed_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#angular_speed_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterAngular_speed_expr(MyDSLParser.Angular_speed_exprContext ctx);
+	void enterAngular_speed_expr(GravITyParser.Angular_speed_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#angular_speed_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#angular_speed_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitAngular_speed_expr(MyDSLParser.Angular_speed_exprContext ctx);
+	void exitAngular_speed_expr(GravITyParser.Angular_speed_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#ball_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#ball_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterBall_expr(MyDSLParser.Ball_exprContext ctx);
+	void enterBall_expr(GravITyParser.Ball_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#ball_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#ball_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitBall_expr(MyDSLParser.Ball_exprContext ctx);
+	void exitBall_expr(GravITyParser.Ball_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#gravity}.
+	 * Enter a parse tree produced by {@link GravITyParser#gravity}.
 	 * @param ctx the parse tree
 	 */
-	void enterGravity(MyDSLParser.GravityContext ctx);
+	void enterGravity(GravITyParser.GravityContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#gravity}.
+	 * Exit a parse tree produced by {@link GravITyParser#gravity}.
 	 * @param ctx the parse tree
 	 */
-	void exitGravity(MyDSLParser.GravityContext ctx);
+	void exitGravity(GravITyParser.GravityContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#earth_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#earth_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterEarth_expr(MyDSLParser.Earth_exprContext ctx);
+	void enterEarth_expr(GravITyParser.Earth_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#earth_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#earth_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitEarth_expr(MyDSLParser.Earth_exprContext ctx);
+	void exitEarth_expr(GravITyParser.Earth_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#moon_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#moon_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterMoon_expr(MyDSLParser.Moon_exprContext ctx);
+	void enterMoon_expr(GravITyParser.Moon_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#moon_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#moon_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitMoon_expr(MyDSLParser.Moon_exprContext ctx);
+	void exitMoon_expr(GravITyParser.Moon_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#spring}.
+	 * Enter a parse tree produced by {@link GravITyParser#spring}.
 	 * @param ctx the parse tree
 	 */
-	void enterSpring(MyDSLParser.SpringContext ctx);
+	void enterSpring(GravITyParser.SpringContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#spring}.
+	 * Exit a parse tree produced by {@link GravITyParser#spring}.
 	 * @param ctx the parse tree
 	 */
-	void exitSpring(MyDSLParser.SpringContext ctx);
+	void exitSpring(GravITyParser.SpringContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#spring_constant_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#spring_constant_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterSpring_constant_expr(MyDSLParser.Spring_constant_exprContext ctx);
+	void enterSpring_constant_expr(GravITyParser.Spring_constant_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#spring_constant_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#spring_constant_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitSpring_constant_expr(MyDSLParser.Spring_constant_exprContext ctx);
+	void exitSpring_constant_expr(GravITyParser.Spring_constant_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#damping_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#damping_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterDamping_expr(MyDSLParser.Damping_exprContext ctx);
+	void enterDamping_expr(GravITyParser.Damping_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#damping_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#damping_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitDamping_expr(MyDSLParser.Damping_exprContext ctx);
+	void exitDamping_expr(GravITyParser.Damping_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#spring_rest_length_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#spring_rest_length_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterSpring_rest_length_expr(MyDSLParser.Spring_rest_length_exprContext ctx);
+	void enterSpring_rest_length_expr(GravITyParser.Spring_rest_length_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#spring_rest_length_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#spring_rest_length_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitSpring_rest_length_expr(MyDSLParser.Spring_rest_length_exprContext ctx);
+	void exitSpring_rest_length_expr(GravITyParser.Spring_rest_length_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#floor_friction_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#floor_friction_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterFloor_friction_expr(MyDSLParser.Floor_friction_exprContext ctx);
+	void enterFloor_friction_expr(GravITyParser.Floor_friction_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#floor_friction_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#floor_friction_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitFloor_friction_expr(MyDSLParser.Floor_friction_exprContext ctx);
+	void exitFloor_friction_expr(GravITyParser.Floor_friction_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#spring_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#spring_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterSpring_expr(MyDSLParser.Spring_exprContext ctx);
+	void enterSpring_expr(GravITyParser.Spring_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#spring_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#spring_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitSpring_expr(MyDSLParser.Spring_exprContext ctx);
+	void exitSpring_expr(GravITyParser.Spring_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#x_anchor_position_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#x_anchor_position_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterX_anchor_position_expr(MyDSLParser.X_anchor_position_exprContext ctx);
+	void enterX_anchor_position_expr(GravITyParser.X_anchor_position_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#x_anchor_position_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#x_anchor_position_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitX_anchor_position_expr(MyDSLParser.X_anchor_position_exprContext ctx);
+	void exitX_anchor_position_expr(GravITyParser.X_anchor_position_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#y_anchor_position_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#y_anchor_position_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterY_anchor_position_expr(MyDSLParser.Y_anchor_position_exprContext ctx);
+	void enterY_anchor_position_expr(GravITyParser.Y_anchor_position_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#y_anchor_position_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#y_anchor_position_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitY_anchor_position_expr(MyDSLParser.Y_anchor_position_exprContext ctx);
+	void exitY_anchor_position_expr(GravITyParser.Y_anchor_position_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#num_coils_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#num_coils_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterNum_coils_expr(MyDSLParser.Num_coils_exprContext ctx);
+	void enterNum_coils_expr(GravITyParser.Num_coils_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#num_coils_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#num_coils_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitNum_coils_expr(MyDSLParser.Num_coils_exprContext ctx);
+	void exitNum_coils_expr(GravITyParser.Num_coils_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#pendulum}.
+	 * Enter a parse tree produced by {@link GravITyParser#pendulum}.
 	 * @param ctx the parse tree
 	 */
-	void enterPendulum(MyDSLParser.PendulumContext ctx);
+	void enterPendulum(GravITyParser.PendulumContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#pendulum}.
+	 * Exit a parse tree produced by {@link GravITyParser#pendulum}.
 	 * @param ctx the parse tree
 	 */
-	void exitPendulum(MyDSLParser.PendulumContext ctx);
+	void exitPendulum(GravITyParser.PendulumContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#length_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#length_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterLength_expr(MyDSLParser.Length_exprContext ctx);
+	void enterLength_expr(GravITyParser.Length_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#length_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#length_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitLength_expr(MyDSLParser.Length_exprContext ctx);
+	void exitLength_expr(GravITyParser.Length_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#ball_radius_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#ball_radius_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterBall_radius_expr(MyDSLParser.Ball_radius_exprContext ctx);
+	void enterBall_radius_expr(GravITyParser.Ball_radius_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#ball_radius_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#ball_radius_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitBall_radius_expr(MyDSLParser.Ball_radius_exprContext ctx);
+	void exitBall_radius_expr(GravITyParser.Ball_radius_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#initial_angle_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#initial_angle_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterInitial_angle_expr(MyDSLParser.Initial_angle_exprContext ctx);
+	void enterInitial_angle_expr(GravITyParser.Initial_angle_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#initial_angle_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#initial_angle_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitInitial_angle_expr(MyDSLParser.Initial_angle_exprContext ctx);
+	void exitInitial_angle_expr(GravITyParser.Initial_angle_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#angular_velocity_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#angular_velocity_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterAngular_velocity_expr(MyDSLParser.Angular_velocity_exprContext ctx);
+	void enterAngular_velocity_expr(GravITyParser.Angular_velocity_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#angular_velocity_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#angular_velocity_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitAngular_velocity_expr(MyDSLParser.Angular_velocity_exprContext ctx);
+	void exitAngular_velocity_expr(GravITyParser.Angular_velocity_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#angular_acceleration_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#angular_acceleration_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterAngular_acceleration_expr(MyDSLParser.Angular_acceleration_exprContext ctx);
+	void enterAngular_acceleration_expr(GravITyParser.Angular_acceleration_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#angular_acceleration_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#angular_acceleration_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitAngular_acceleration_expr(MyDSLParser.Angular_acceleration_exprContext ctx);
+	void exitAngular_acceleration_expr(GravITyParser.Angular_acceleration_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#air_resistance_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#air_resistance_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterAir_resistance_expr(MyDSLParser.Air_resistance_exprContext ctx);
+	void enterAir_resistance_expr(GravITyParser.Air_resistance_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#air_resistance_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#air_resistance_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitAir_resistance_expr(MyDSLParser.Air_resistance_exprContext ctx);
+	void exitAir_resistance_expr(GravITyParser.Air_resistance_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#rolling_uphill}.
+	 * Enter a parse tree produced by {@link GravITyParser#rolling_uphill}.
 	 * @param ctx the parse tree
 	 */
-	void enterRolling_uphill(MyDSLParser.Rolling_uphillContext ctx);
+	void enterRolling_uphill(GravITyParser.Rolling_uphillContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#rolling_uphill}.
+	 * Exit a parse tree produced by {@link GravITyParser#rolling_uphill}.
 	 * @param ctx the parse tree
 	 */
-	void exitRolling_uphill(MyDSLParser.Rolling_uphillContext ctx);
+	void exitRolling_uphill(GravITyParser.Rolling_uphillContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#gravitational_acceleration_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#gravitational_acceleration_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterGravitational_acceleration_expr(MyDSLParser.Gravitational_acceleration_exprContext ctx);
+	void enterGravitational_acceleration_expr(GravITyParser.Gravitational_acceleration_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#gravitational_acceleration_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#gravitational_acceleration_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitGravitational_acceleration_expr(MyDSLParser.Gravitational_acceleration_exprContext ctx);
+	void exitGravitational_acceleration_expr(GravITyParser.Gravitational_acceleration_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#coefficient_of_friction_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#coefficient_of_friction_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterCoefficient_of_friction_expr(MyDSLParser.Coefficient_of_friction_exprContext ctx);
+	void enterCoefficient_of_friction_expr(GravITyParser.Coefficient_of_friction_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#coefficient_of_friction_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#coefficient_of_friction_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitCoefficient_of_friction_expr(MyDSLParser.Coefficient_of_friction_exprContext ctx);
+	void exitCoefficient_of_friction_expr(GravITyParser.Coefficient_of_friction_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#bounciness_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#bounciness_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterBounciness_expr(MyDSLParser.Bounciness_exprContext ctx);
+	void enterBounciness_expr(GravITyParser.Bounciness_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#bounciness_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#bounciness_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitBounciness_expr(MyDSLParser.Bounciness_exprContext ctx);
+	void exitBounciness_expr(GravITyParser.Bounciness_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#angle_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#angle_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterAngle_expr(MyDSLParser.Angle_exprContext ctx);
+	void enterAngle_expr(GravITyParser.Angle_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#angle_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#angle_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitAngle_expr(MyDSLParser.Angle_exprContext ctx);
+	void exitAngle_expr(GravITyParser.Angle_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#velocity_along_incline_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#velocity_along_incline_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterVelocity_along_incline_expr(MyDSLParser.Velocity_along_incline_exprContext ctx);
+	void enterVelocity_along_incline_expr(GravITyParser.Velocity_along_incline_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#velocity_along_incline_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#velocity_along_incline_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitVelocity_along_incline_expr(MyDSLParser.Velocity_along_incline_exprContext ctx);
+	void exitVelocity_along_incline_expr(GravITyParser.Velocity_along_incline_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#mover_basic_properties}.
+	 * Enter a parse tree produced by {@link GravITyParser#mover_basic_properties}.
 	 * @param ctx the parse tree
 	 */
-	void enterMover_basic_properties(MyDSLParser.Mover_basic_propertiesContext ctx);
+	void enterMover_basic_properties(GravITyParser.Mover_basic_propertiesContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#mover_basic_properties}.
+	 * Exit a parse tree produced by {@link GravITyParser#mover_basic_properties}.
 	 * @param ctx the parse tree
 	 */
-	void exitMover_basic_properties(MyDSLParser.Mover_basic_propertiesContext ctx);
+	void exitMover_basic_properties(GravITyParser.Mover_basic_propertiesContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#mass_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#mass_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterMass_expr(MyDSLParser.Mass_exprContext ctx);
+	void enterMass_expr(GravITyParser.Mass_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#mass_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#mass_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitMass_expr(MyDSLParser.Mass_exprContext ctx);
+	void exitMass_expr(GravITyParser.Mass_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#velocity_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#velocity_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterVelocity_expr(MyDSLParser.Velocity_exprContext ctx);
+	void enterVelocity_expr(GravITyParser.Velocity_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#velocity_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#velocity_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitVelocity_expr(MyDSLParser.Velocity_exprContext ctx);
+	void exitVelocity_expr(GravITyParser.Velocity_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#x_velocity_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#x_velocity_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterX_velocity_expr(MyDSLParser.X_velocity_exprContext ctx);
+	void enterX_velocity_expr(GravITyParser.X_velocity_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#x_velocity_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#x_velocity_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitX_velocity_expr(MyDSLParser.X_velocity_exprContext ctx);
+	void exitX_velocity_expr(GravITyParser.X_velocity_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#y_velocity_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#y_velocity_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterY_velocity_expr(MyDSLParser.Y_velocity_exprContext ctx);
+	void enterY_velocity_expr(GravITyParser.Y_velocity_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#y_velocity_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#y_velocity_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitY_velocity_expr(MyDSLParser.Y_velocity_exprContext ctx);
+	void exitY_velocity_expr(GravITyParser.Y_velocity_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#position_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#position_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterPosition_expr(MyDSLParser.Position_exprContext ctx);
+	void enterPosition_expr(GravITyParser.Position_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#position_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#position_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitPosition_expr(MyDSLParser.Position_exprContext ctx);
+	void exitPosition_expr(GravITyParser.Position_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#x_position_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#x_position_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterX_position_expr(MyDSLParser.X_position_exprContext ctx);
+	void enterX_position_expr(GravITyParser.X_position_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#x_position_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#x_position_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitX_position_expr(MyDSLParser.X_position_exprContext ctx);
+	void exitX_position_expr(GravITyParser.X_position_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#y_position_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#y_position_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterY_position_expr(MyDSLParser.Y_position_exprContext ctx);
+	void enterY_position_expr(GravITyParser.Y_position_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#y_position_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#y_position_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitY_position_expr(MyDSLParser.Y_position_exprContext ctx);
+	void exitY_position_expr(GravITyParser.Y_position_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#color_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#color_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterColor_expr(MyDSLParser.Color_exprContext ctx);
+	void enterColor_expr(GravITyParser.Color_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#color_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#color_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitColor_expr(MyDSLParser.Color_exprContext ctx);
+	void exitColor_expr(GravITyParser.Color_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#red_value_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#red_value_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterRed_value_expr(MyDSLParser.Red_value_exprContext ctx);
+	void enterRed_value_expr(GravITyParser.Red_value_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#red_value_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#red_value_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitRed_value_expr(MyDSLParser.Red_value_exprContext ctx);
+	void exitRed_value_expr(GravITyParser.Red_value_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#green_value_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#green_value_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterGreen_value_expr(MyDSLParser.Green_value_exprContext ctx);
+	void enterGreen_value_expr(GravITyParser.Green_value_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#green_value_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#green_value_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitGreen_value_expr(MyDSLParser.Green_value_exprContext ctx);
+	void exitGreen_value_expr(GravITyParser.Green_value_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#blue_value_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#blue_value_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterBlue_value_expr(MyDSLParser.Blue_value_exprContext ctx);
+	void enterBlue_value_expr(GravITyParser.Blue_value_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#blue_value_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#blue_value_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitBlue_value_expr(MyDSLParser.Blue_value_exprContext ctx);
+	void exitBlue_value_expr(GravITyParser.Blue_value_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#value_expr}.
+	 * Enter a parse tree produced by {@link GravITyParser#value_expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterValue_expr(MyDSLParser.Value_exprContext ctx);
+	void enterValue_expr(GravITyParser.Value_exprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#value_expr}.
+	 * Exit a parse tree produced by {@link GravITyParser#value_expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitValue_expr(MyDSLParser.Value_exprContext ctx);
+	void exitValue_expr(GravITyParser.Value_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#simple_value}.
+	 * Enter a parse tree produced by {@link GravITyParser#simple_value}.
 	 * @param ctx the parse tree
 	 */
-	void enterSimple_value(MyDSLParser.Simple_valueContext ctx);
+	void enterSimple_value(GravITyParser.Simple_valueContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#simple_value}.
+	 * Exit a parse tree produced by {@link GravITyParser#simple_value}.
 	 * @param ctx the parse tree
 	 */
-	void exitSimple_value(MyDSLParser.Simple_valueContext ctx);
+	void exitSimple_value(GravITyParser.Simple_valueContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#conditional_value}.
+	 * Enter a parse tree produced by {@link GravITyParser#conditional_value}.
 	 * @param ctx the parse tree
 	 */
-	void enterConditional_value(MyDSLParser.Conditional_valueContext ctx);
+	void enterConditional_value(GravITyParser.Conditional_valueContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#conditional_value}.
+	 * Exit a parse tree produced by {@link GravITyParser#conditional_value}.
 	 * @param ctx the parse tree
 	 */
-	void exitConditional_value(MyDSLParser.Conditional_valueContext ctx);
+	void exitConditional_value(GravITyParser.Conditional_valueContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#loop_value}.
+	 * Enter a parse tree produced by {@link GravITyParser#loop_value}.
 	 * @param ctx the parse tree
 	 */
-	void enterLoop_value(MyDSLParser.Loop_valueContext ctx);
+	void enterLoop_value(GravITyParser.Loop_valueContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#loop_value}.
+	 * Exit a parse tree produced by {@link GravITyParser#loop_value}.
 	 * @param ctx the parse tree
 	 */
-	void exitLoop_value(MyDSLParser.Loop_valueContext ctx);
+	void exitLoop_value(GravITyParser.Loop_valueContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#initial_value}.
+	 * Enter a parse tree produced by {@link GravITyParser#initial_value}.
 	 * @param ctx the parse tree
 	 */
-	void enterInitial_value(MyDSLParser.Initial_valueContext ctx);
+	void enterInitial_value(GravITyParser.Initial_valueContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#initial_value}.
+	 * Exit a parse tree produced by {@link GravITyParser#initial_value}.
 	 * @param ctx the parse tree
 	 */
-	void exitInitial_value(MyDSLParser.Initial_valueContext ctx);
+	void exitInitial_value(GravITyParser.Initial_valueContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#multiplier}.
+	 * Enter a parse tree produced by {@link GravITyParser#multiplier}.
 	 * @param ctx the parse tree
 	 */
-	void enterMultiplier(MyDSLParser.MultiplierContext ctx);
+	void enterMultiplier(GravITyParser.MultiplierContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#multiplier}.
+	 * Exit a parse tree produced by {@link GravITyParser#multiplier}.
 	 * @param ctx the parse tree
 	 */
-	void exitMultiplier(MyDSLParser.MultiplierContext ctx);
+	void exitMultiplier(GravITyParser.MultiplierContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#condition}.
+	 * Enter a parse tree produced by {@link GravITyParser#condition}.
 	 * @param ctx the parse tree
 	 */
-	void enterCondition(MyDSLParser.ConditionContext ctx);
+	void enterCondition(GravITyParser.ConditionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#condition}.
+	 * Exit a parse tree produced by {@link GravITyParser#condition}.
 	 * @param ctx the parse tree
 	 */
-	void exitCondition(MyDSLParser.ConditionContext ctx);
+	void exitCondition(GravITyParser.ConditionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#comparator}.
+	 * Enter a parse tree produced by {@link GravITyParser#comparator}.
 	 * @param ctx the parse tree
 	 */
-	void enterComparator(MyDSLParser.ComparatorContext ctx);
+	void enterComparator(GravITyParser.ComparatorContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#comparator}.
+	 * Exit a parse tree produced by {@link GravITyParser#comparator}.
 	 * @param ctx the parse tree
 	 */
-	void exitComparator(MyDSLParser.ComparatorContext ctx);
+	void exitComparator(GravITyParser.ComparatorContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MyDSLParser#reference}.
+	 * Enter a parse tree produced by {@link GravITyParser#reference}.
 	 * @param ctx the parse tree
 	 */
-	void enterReference(MyDSLParser.ReferenceContext ctx);
+	void enterReference(GravITyParser.ReferenceContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MyDSLParser#reference}.
+	 * Exit a parse tree produced by {@link GravITyParser#reference}.
 	 * @param ctx the parse tree
 	 */
-	void exitReference(MyDSLParser.ReferenceContext ctx);
+	void exitReference(GravITyParser.ReferenceContext ctx);
 }
