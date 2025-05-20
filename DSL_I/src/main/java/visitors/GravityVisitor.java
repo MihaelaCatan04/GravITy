@@ -9,6 +9,11 @@ import java.util.Map;
 public class GravityVisitor extends GravITyBaseVisitor<Object> {
 
     private Map<String, Object> simulation = new HashMap<>();
+    private Map<String, Double> identifiers = new HashMap<>(); // To store declared identifiers and their values
+
+    // Assuming you have these evaluators available
+    private ConditionalValueEvaluator conditionalEvaluator = new ConditionalValueEvaluator();
+    private LoopValueEvaluator loopEvaluator = new LoopValueEvaluator();
 
     @Override
     public Object visitSimulation(GravITyParser.SimulationContext ctx) {
@@ -61,12 +66,58 @@ public class GravityVisitor extends GravITyBaseVisitor<Object> {
     @Override
     public Object visitPosition_expr(GravITyParser.Position_exprContext ctx) {
         Map<String, String> position = new HashMap<>();
-        position.put("x_position", ctx.x_position_expr().value_expr().getText());
-        position.put("y_position", ctx.y_position_expr().value_expr().getText());
+
+        // Use evaluateValueExpr and store as String
+        Double xValue = evaluateValueExpr(ctx.x_position_expr().value_expr());
+        position.put("x_position", String.valueOf(xValue));
+        identifiers.put("x_position", xValue); // Store in identifiers
+
+        // Use evaluateValueExpr and store as String
+        Double yValue = evaluateValueExpr(ctx.y_position_expr().value_expr());
+        position.put("y_position", String.valueOf(yValue));
+        identifiers.put("y_position", yValue); // Store in identifiers
+
         return position;
     }
 
     public Map<String, Object> getSimulation() {
         return simulation;
+    }
+
+    // --- Helper Methods for Value Evaluation ---
+
+    private Double evaluateValueExpr(GravITyParser.Value_exprContext ctx) {
+        if (ctx.simple_value() != null) {
+            return evaluateSimpleValue(ctx.simple_value());
+        } else if (ctx.conditional_value() != null) {
+            return conditionalEvaluator.evaluate(ctx.conditional_value(), identifiers);
+        } else if (ctx.loop_value() != null) {
+            return loopEvaluator.evaluate(ctx.loop_value());
+        } else {
+            System.err.println("Warning: Unhandled value expression type: " + ctx.getText());
+            return 0.0;
+        }
+    }
+
+    private Double evaluateSimpleValue(GravITyParser.Simple_valueContext ctx) {
+        if (ctx.NUMBER() != null) {
+            return Double.parseDouble(ctx.NUMBER().getText());
+        } else if (ctx.IDENTIFIER() != null) {
+            String identifier = ctx.IDENTIFIER().getText();
+            if (identifier.startsWith("_")) {
+                identifier = identifier.substring(1);
+            }
+            if (identifiers.containsKey(identifier)) {
+                return identifiers.get(identifier);
+            } else {
+                System.err.println("Warning: Identifier '" + ctx.IDENTIFIER().getText() + "' not found. Returning 0.0");
+                return 0.0;
+            }
+        } else if (ctx.reference() != null) {
+            System.err.println("Warning: Reference '" + ctx.reference().getText() + "' handling not implemented. Returning 0.0");
+            return 0.0;
+        } else {
+            throw new IllegalArgumentException("Invalid simple value: " + ctx.getText());
+        }
     }
 }

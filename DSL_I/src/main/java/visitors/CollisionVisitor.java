@@ -70,36 +70,43 @@ public class CollisionVisitor extends GravITyBaseVisitor<Object> {
             identifiers.put("mass", (double) mass);
         }
 
-        // Velocity
+        // Velocity (as Map)
         if (ctx.velocity_expr() != null) {
-            float[] velocity = new float[2];
-            velocity[0] = evaluateValueExpr(ctx.velocity_expr().x_velocity_expr().value_expr()).floatValue();
-            velocity[1] = evaluateValueExpr(ctx.velocity_expr().y_velocity_expr().value_expr()).floatValue();
+            Map<String, Object> velocity = new HashMap<>();
+            float xVel = evaluateValueExpr(ctx.velocity_expr().x_velocity_expr().value_expr()).floatValue();
+            float yVel = evaluateValueExpr(ctx.velocity_expr().y_velocity_expr().value_expr()).floatValue();
+            velocity.put("x_velocity", xVel);
+            velocity.put("y_velocity", yVel);
             mover.put("velocity", velocity);
-            identifiers.put("x_velocity", (double) velocity[0]);
-            identifiers.put("y_velocity", (double) velocity[1]);
+            identifiers.put("x_velocity", (double) xVel);
+            identifiers.put("y_velocity", (double) yVel);
         }
 
-        // Position
+        // Position (as Map)
         if (ctx.position_expr() != null) {
-            float[] position = new float[2];
-            position[0] = evaluateValueExpr(ctx.position_expr().x_position_expr().value_expr()).floatValue();
-            position[1] = evaluateValueExpr(ctx.position_expr().y_position_expr().value_expr()).floatValue();
+            Map<String, Object> position = new HashMap<>();
+            float xPos = evaluateValueExpr(ctx.position_expr().x_position_expr().value_expr()).floatValue();
+            float yPos = evaluateValueExpr(ctx.position_expr().y_position_expr().value_expr()).floatValue();
+            position.put("x_position", xPos);
+            position.put("y_position", yPos);
             mover.put("position", position);
-            identifiers.put("x_position", (double) position[0]);
-            identifiers.put("y_position", (double) position[1]);
+            identifiers.put("x_position", (double) xPos);
+            identifiers.put("y_position", (double) yPos);
         }
 
-        // Color
+        // Color (as Map of Integers)
         if (ctx.color_expr() != null) {
-            float[] color = new float[3];
-            color[0] = evaluateValueExpr(ctx.color_expr().red_value_expr().value_expr()).floatValue();
-            color[1] = evaluateValueExpr(ctx.color_expr().green_value_expr().value_expr()).floatValue();
-            color[2] = evaluateValueExpr(ctx.color_expr().blue_value_expr().value_expr()).floatValue();
+            Map<String, Object> color = new HashMap<>();
+            int r = (int) Math.round(evaluateValueExpr(ctx.color_expr().red_value_expr().value_expr()));
+            int g = (int) Math.round(evaluateValueExpr(ctx.color_expr().green_value_expr().value_expr()));
+            int b = (int) Math.round(evaluateValueExpr(ctx.color_expr().blue_value_expr().value_expr()));
+            color.put("red_value", r);
+            color.put("green_value", g);
+            color.put("blue_value", b);
             mover.put("color", color);
-            identifiers.put("red_value", (double) color[0]);
-            identifiers.put("green_value", (double) color[1]);
-            identifiers.put("blue_value", (double) color[2]);
+            identifiers.put("red_value", (double) r);
+            identifiers.put("green_value", (double) g);
+            identifiers.put("blue_value", (double) b);
         }
 
         return mover;

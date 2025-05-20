@@ -75,6 +75,7 @@ public class CircularMotionVisitor extends GravITyBaseVisitor<Object> {
             identifiers.put("ball_radius", (double) radius);// o sa trebuiasca de schimbat pe viitor
         }
 
+
         if (ctx.color_expr() != null) {
             Map<String, Integer> color = new HashMap<>();
 

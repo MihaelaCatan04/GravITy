@@ -8,7 +8,7 @@ public class LoopValueEvaluator {
         double initialValue = evaluateSimpleValue(ctx.initial_value().getText());
         int repeatTimes = evaluateSimpleValueToInt(ctx.simple_value()); // First value_expr is repeat times
         double multiplier = evaluateSimpleValue(ctx.multiplier().getText());  // Second value_expr is multiplier
-        System.out.println(ctx.simple_value());
+        //System.out.println(ctx.simple_value());
 
         double result = initialValue;
         for (int i = 0; i < repeatTimes; i++) {

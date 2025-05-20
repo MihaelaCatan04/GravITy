@@ -104,6 +104,7 @@ public class WaveVisitor extends GravITyBaseVisitor<Object> {
         return mover;
     }
 
+
     private Double evaluateValueExpr(GravITyParser.Value_exprContext ctx) {
         if (ctx.simple_value() != null) {
             return evaluateSimpleValue(ctx.simple_value());

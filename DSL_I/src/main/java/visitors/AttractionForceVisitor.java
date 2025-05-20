@@ -99,6 +99,7 @@ public class AttractionForceVisitor extends GravITyBaseVisitor<Object> {
         }
     }
 
+
     private Double evaluateSimpleValue(GravITyParser.Simple_valueContext ctx) {
         if (ctx.NUMBER() != null) {
             return Double.parseDouble(ctx.NUMBER().getText());

@@ -9,6 +9,11 @@ import java.util.Map;
 public class DragForceVisitor extends GravITyBaseVisitor<Object> {
 
     private Map<String, Object> simulation = new HashMap<>();
+    private Map<String, Double> identifiers = new HashMap<>(); // To store declared identifiers and their values
+
+    private ConditionalValueEvaluator conditionalEvaluator = new ConditionalValueEvaluator();
+    private LoopValueEvaluator loopEvaluator = new LoopValueEvaluator();
+
 
     public Map<String, Object> getSimulation() {
         return simulation;
@@ -37,7 +42,9 @@ public class DragForceVisitor extends GravITyBaseVisitor<Object> {
         Map<String, Object> dragForceModule = new HashMap<>();
 
         if (ctx.drag_coefficient_expr() != null) {
-            dragForceModule.put("drag_coefficient", visit(ctx.drag_coefficient_expr()));
+            Double dragCoefficient = evaluateValueExpr(ctx.drag_coefficient_expr().value_expr());
+            dragForceModule.put("drag_coefficient", dragCoefficient);
+            identifiers.put("drag_coefficient", dragCoefficient);
         }
 
         if (ctx.mover_color_expr() != null) {
@@ -54,36 +61,87 @@ public class DragForceVisitor extends GravITyBaseVisitor<Object> {
 
     @Override
     public Object visitMover_color_expr(GravITyParser.Mover_color_exprContext ctx) {
+        // CHANGED: Map stores String values for color components
         Map<String, String> color = new HashMap<>();
         if (ctx.red_value_expr() != null) {
-            color.put("red_value", ctx.red_value_expr().value_expr().getText());
+            Double redValue = evaluateValueExpr(ctx.red_value_expr().value_expr());
+            // Store as String
+            color.put("red_value", String.valueOf((int) Math.round(redValue)));
+            identifiers.put("mover_red_value", redValue);
         }
         if (ctx.green_value_expr() != null) {
-            color.put("green_value", ctx.green_value_expr().value_expr().getText());
+            Double greenValue = evaluateValueExpr(ctx.green_value_expr().value_expr());
+            // Store as String
+            color.put("green_value", String.valueOf((int) Math.round(greenValue)));
+            identifiers.put("mover_green_value", greenValue);
         }
         if (ctx.blue_value_expr() != null) {
-            color.put("blue_value", ctx.blue_value_expr().value_expr().getText());
+            Double blueValue = evaluateValueExpr(ctx.blue_value_expr().value_expr());
+            // Store as String
+            color.put("blue_value", String.valueOf((int) Math.round(blueValue)));
+            identifiers.put("mover_blue_value", blueValue);
         }
         return color;
     }
 
     @Override
     public Object visitLiquid_color_expr(GravITyParser.Liquid_color_exprContext ctx) {
+        // CHANGED: Map stores String values for color components
         Map<String, String> color = new HashMap<>();
         if (ctx.red_value_expr() != null) {
-            color.put("red_value", ctx.red_value_expr().value_expr().getText());
+            Double redValue = evaluateValueExpr(ctx.red_value_expr().value_expr());
+            // Store as String
+            color.put("red_value", String.valueOf((int) Math.round(redValue)));
+            identifiers.put("liquid_red_value", redValue);
         }
         if (ctx.green_value_expr() != null) {
-            color.put("green_value", ctx.green_value_expr().value_expr().getText());
+            Double greenValue = evaluateValueExpr(ctx.green_value_expr().value_expr());
+            // Store as String
+            color.put("green_value", String.valueOf((int) Math.round(greenValue)));
+            identifiers.put("liquid_green_value", greenValue);
         }
         if (ctx.blue_value_expr() != null) {
-            color.put("blue_value", ctx.blue_value_expr().value_expr().getText());
+            Double blueValue = evaluateValueExpr(ctx.blue_value_expr().value_expr());
+            // Store as String
+            color.put("blue_value", String.valueOf((int) Math.round(blueValue)));
+            identifiers.put("liquid_blue_value", blueValue);
         }
         return color;
     }
 
-    @Override
-    public Object visitDrag_coefficient_expr(GravITyParser.Drag_coefficient_exprContext ctx) {
-        return ctx.value_expr().getText();
+    private Double evaluateValueExpr(GravITyParser.Value_exprContext ctx) {
+        if (ctx.simple_value() != null) {
+            return evaluateSimpleValue(ctx.simple_value());
+        } else if (ctx.conditional_value() != null) {
+            return conditionalEvaluator.evaluate(ctx.conditional_value(), identifiers);
+        } else if (ctx.loop_value() != null) {
+            return loopEvaluator.evaluate(ctx.loop_value());
+        } else {
+            System.err.println("Warning: Unhandled value expression type: " + ctx.getText());
+            return 0.0;
+        }
+    }
+
+    private Double evaluateSimpleValue(GravITyParser.Simple_valueContext ctx) {
+        if (ctx.NUMBER() != null) {
+            return Double.parseDouble(ctx.NUMBER().getText());
+        } else if (ctx.IDENTIFIER() != null) {
+            String identifier = ctx.IDENTIFIER().getText();
+            if (identifier.startsWith("_")) {
+                identifier = identifier.substring(1);
+            }
+
+            if (identifiers.containsKey(identifier)) {
+                return identifiers.get(identifier);
+            } else {
+                System.err.println("Warning: Identifier '" + ctx.IDENTIFIER().getText() + "' not found. Returning 0.0");
+                return 0.0;
+            }
+        } else if (ctx.reference() != null) {
+            System.err.println("Warning: Reference '" + ctx.reference().getText() + "' handling not implemented. Returning 0.0");
+            return 0.0;
+        } else {
+            throw new IllegalArgumentException("Invalid simple value: " + ctx.getText());
+        }
     }
 }

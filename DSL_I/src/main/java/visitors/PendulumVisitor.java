@@ -9,6 +9,11 @@ import java.util.Map;
 public class PendulumVisitor extends GravITyBaseVisitor<Object> {
 
     private Map<String, Object> simulation = new HashMap<>();
+    private Map<String, Double> identifiers = new HashMap<>(); // To store declared identifiers and their values
+
+    // Evaluators for conditional and loop expressions
+    private ConditionalValueEvaluator conditionalEvaluator = new ConditionalValueEvaluator();
+    private LoopValueEvaluator loopEvaluator = new LoopValueEvaluator();
 
     @Override
     public Object visitSimulation(GravITyParser.SimulationContext ctx) {
@@ -17,16 +22,10 @@ public class PendulumVisitor extends GravITyBaseVisitor<Object> {
 
     @Override
     public Object visitSimulation_body(GravITyParser.Simulation_bodyContext ctx) {
-        //  physics_module() returns a single Physics_moduleContext, not a list.
-        //  We need to check which type of physics module it is, and then visit it
         GravITyParser.Physics_moduleContext moduleCtx = ctx.physics_module();
         if (moduleCtx.pendulum() != null) {
             return visit(moduleCtx.pendulum());
         }
-        //  Add checks for other physics modules if needed (e.g., collision, etc.)
-        //  else if (moduleCtx.collision() != null) {
-        //      return visit(moduleCtx.collision());
-        //  }
         return null;
     }
 
@@ -34,24 +33,36 @@ public class PendulumVisitor extends GravITyBaseVisitor<Object> {
     public Object visitPendulum(GravITyParser.PendulumContext ctx) {
         Map<String, Object> pendulumModule = new HashMap<>();
 
-        // Extract every available expression and add it to the map
+        // Extract every available expression, evaluate, and add to the map as String
         if (ctx.length_expr() != null) {
-            pendulumModule.put("length", ctx.length_expr().value_expr().getText());
+            Double length = evaluateValueExpr(ctx.length_expr().value_expr());
+            pendulumModule.put("length", String.valueOf(length));
+            identifiers.put("length", length);
         }
         if (ctx.ball_radius_expr() != null) {
-            pendulumModule.put("ball_radius", ctx.ball_radius_expr().value_expr().getText());
+            Double ballRadius = evaluateValueExpr(ctx.ball_radius_expr().value_expr());
+            pendulumModule.put("ball_radius", String.valueOf(ballRadius));
+            identifiers.put("ball_radius", ballRadius);
         }
         if (ctx.initial_angle_expr() != null) {
-            pendulumModule.put("initial_angle", ctx.initial_angle_expr().value_expr().getText());
+            Double initialAngle = evaluateValueExpr(ctx.initial_angle_expr().value_expr());
+            pendulumModule.put("initial_angle", String.valueOf(initialAngle));
+            identifiers.put("initial_angle", initialAngle);
         }
         if (ctx.angular_velocity_expr() != null) {
-            pendulumModule.put("angular_velocity", ctx.angular_velocity_expr().value_expr().getText());
+            Double angularVelocity = evaluateValueExpr(ctx.angular_velocity_expr().value_expr());
+            pendulumModule.put("angular_velocity", String.valueOf(angularVelocity));
+            identifiers.put("angular_velocity", angularVelocity);
         }
         if (ctx.angular_acceleration_expr() != null) {
-            pendulumModule.put("angular_acceleration", ctx.angular_acceleration_expr().value_expr().getText());
+            Double angularAcceleration = evaluateValueExpr(ctx.angular_acceleration_expr().value_expr());
+            pendulumModule.put("angular_acceleration", String.valueOf(angularAcceleration));
+            identifiers.put("angular_acceleration", angularAcceleration);
         }
         if (ctx.air_resistance_expr() != null) {
-            pendulumModule.put("air_resistance", ctx.air_resistance_expr().value_expr().getText());
+            Double airResistance = evaluateValueExpr(ctx.air_resistance_expr().value_expr());
+            pendulumModule.put("air_resistance", String.valueOf(airResistance));
+            identifiers.put("air_resistance", airResistance);
         }
 
         simulation.put("pendulum", pendulumModule);
@@ -60,5 +71,42 @@ public class PendulumVisitor extends GravITyBaseVisitor<Object> {
 
     public Map<String, Object> getSimulation() {
         return simulation;
+    }
+
+    // --- Helper Methods for Value Evaluation ---
+
+    private Double evaluateValueExpr(GravITyParser.Value_exprContext ctx) {
+        if (ctx.simple_value() != null) {
+            return evaluateSimpleValue(ctx.simple_value());
+        } else if (ctx.conditional_value() != null) {
+            return conditionalEvaluator.evaluate(ctx.conditional_value(), identifiers);
+        } else if (ctx.loop_value() != null) {
+            return loopEvaluator.evaluate(ctx.loop_value());
+        } else {
+            System.err.println("Warning: Unhandled value expression type: " + ctx.getText());
+            return 0.0;
+        }
+    }
+
+    private Double evaluateSimpleValue(GravITyParser.Simple_valueContext ctx) {
+        if (ctx.NUMBER() != null) {
+            return Double.parseDouble(ctx.NUMBER().getText());
+        } else if (ctx.IDENTIFIER() != null) {
+            String identifier = ctx.IDENTIFIER().getText();
+            if (identifier.startsWith("_")) {
+                identifier = identifier.substring(1);
+            }
+            if (identifiers.containsKey(identifier)) {
+                return identifiers.get(identifier);
+            } else {
+                System.err.println("Warning: Identifier '" + ctx.IDENTIFIER().getText() + "' not found. Returning 0.0");
+                return 0.0;
+            }
+        } else if (ctx.reference() != null) {
+            System.err.println("Warning: Reference '" + ctx.reference().getText() + "' handling not implemented. Returning 0.0");
+            return 0.0;
+        } else {
+            throw new IllegalArgumentException("Invalid simple value: " + ctx.getText());
+        }
     }
 }

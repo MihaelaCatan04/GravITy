@@ -53,6 +53,7 @@ public class AcceleratedUniformMotionVisitor extends GravITyBaseVisitor<Object> 
             identifiers.put("initial_acceleration", initialAcceleration); // Store in identifiers
         }
 
+
         simulation.put("accelerated_motion", acceleratedMotionModule);
         return acceleratedMotionModule;
     }
