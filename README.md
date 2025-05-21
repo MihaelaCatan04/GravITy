@@ -3,7 +3,7 @@
 ![Gravity Project Logo](logo_final.png)
 ## Project Overview
 
-Gravity is an advanced Domain-Specific Language (DSL) for Physics simulations, designed to make complex physical modeling accessible and intuitive. The project leverages ANTLR for lexical analysis and parsing, and Processing (Java) for rich, interactive visualizations.
+Gravity is an advanced Domain-Specific Language (DSL) for Physics simulations, designed to make complex physical modeling accessible and intuitive. The project leverages ANTLR for lexical analysis and parsing, Java for interpreting and Java Swing for rich, interactive visualizations.
 
 ## Team #2
 
@@ -12,11 +12,11 @@ Gravity is an advanced Domain-Specific Language (DSL) for Physics simulations, d
 - Gurschi Gheorghe, FAF-231
 - Vornicescu Ion, FAF-231
 
-Mentored by associate prof., dr.Irina Cojuhari
+Mentored by Associate Prof., Dr.Irina Cojuhari
 
 ## Project Features
 
-Gravity supports 12 comprehensive physics simulations:
+Gravity supports 12 comprehensive Physics simulations:
 
 1. **Collision Simulation**
 2. **Electrostatic Field**
@@ -80,7 +80,7 @@ You can run any of the following simulations:
 - `Pendulum`
 - `RollingUphill`
 
-To use loops and conditionals, you can make a reference to aforementioned properties using `_` (underscore) following the structure:
+To use loops and conditionals, you can make a reference to the aforementioned properties using `_` (underscore) following the structure:
 ```
 <conditional_value> ::= "if" <condition> "then"
 <simple_value> "else" <simple_value>
