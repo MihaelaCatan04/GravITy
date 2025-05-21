@@ -67,7 +67,7 @@ Click New to start with an empty Canvas and click Run Simulation to see the outp
 You can use predefined templates to run simulations and change their parameters. In case the parameters are invalid, an error will be displayed and the simulation will run with predefined parameters.
 ![Run Simulation from template](/GIFs/gif3.gif)
 
-Replace `AcceleratedUniformMotion` with any of the following:
+You can run any of the following simulations:
 - `Collision`
 - `ElectrostaticField`
 - `DragForce`
