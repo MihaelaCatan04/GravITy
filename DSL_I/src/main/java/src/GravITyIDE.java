@@ -64,7 +64,6 @@ public class GravITyIDE extends JFrame {
         JPanel statusBar = createStatusBar();
         add(statusBar, BorderLayout.SOUTH);
 
-        // Create video dialog (initially hidden)
         videoDialog = new VideoDialog(this);
 
         setDefaultCode();
@@ -777,7 +776,6 @@ public class GravITyIDE extends JFrame {
                                             Object greenObj = colorMap.get("green_value");
                                             Object blueObj = colorMap.get("blue_value");
 
-                                            // Handle both Integer and String types
                                             if (redObj instanceof Integer) {
                                                 color[0] = (Integer) redObj;
                                                 color[1] = (Integer) greenObj;
