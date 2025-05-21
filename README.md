@@ -34,20 +34,20 @@ Gravity supports 12 comprehensive physics simulations:
 ## Technology Stack
 
 - **Lexer & Parser**: ANTLR
-- **Visualization**: Processing (Java)
+- **Intepreter:** Java
+- **Visualization**: Java Swing
+- **GUI**: JFrame
 - **Language**: Java
 
 ## Repository Structure
 
-- `DSL_I/`: Contains lexer and parser implementation
-  - `src/main/java/src/Main.java`: Running example
-- `ProcessingExamples/`: Individual simulation visualizations which will be later connected to the interpreter
+- `DSL_I/`: Contains implementation
+- `src/main/java/src/GravITyIDE.java`: Running example
 
 ## Prerequisites
 
-- Java Development Kit (JDK) 11 or higher
+- Java Development Kit (JDK) 24
 - ANTLR4
-- Processing Library
 
 ## Installation & Setup
 
@@ -57,26 +57,11 @@ git clone https://github.com/MihaelaCatan04/GravITy
 cd GravITy
 ```
 
-2. Compile the project
-```bash
-javac DSL_I/src/main/java/src/*.java
-```
-
 ## Running the Project
 
 ### Main Application
-Navigate to the project root and run:
-```bash
-java -cp DSL_I/src/main/java src.Main
-```
+Navigate to the GravITyIDE class and run GravITyIDE.
 
-### Individual Simulation Visualizations
-Navigate to `ProcessingExamples/` and run specific simulations:
-
-```bash
-# Example for Accelerated Uniform Motion
-java AcceleratedUniformMotion
-```
 
 Replace `AcceleratedUniformMotion` with any of the following:
 - `Collision`
