@@ -21,10 +21,7 @@ import gen.*;
 
 import java.awt.geom.Point2D;
 
-import processing.*;
 import visitors.*;
-
-import java.net.URL;
 
 public class GravITyIDE extends JFrame {
 
@@ -3984,7 +3981,7 @@ public class GravITyIDE extends JFrame {
 
             for (Charge charge : charges) {
                 if (charge.charge > 0) {
-                    int numLines = 16;
+                    int numLines = fluxResolution;
                     for (int i = 0; i < numLines; i++) {
                         double angle = 2 * Math.PI * i / numLines;
                         float startX = charge.x + (float) (Math.cos(angle) * (particleRadius + 5));
@@ -4161,7 +4158,6 @@ public class GravITyIDE extends JFrame {
                     }
 
                     if (nextX < 0 || nextX > getWidth() || nextY < 0 || nextY > getHeight()) {
-                        // Add boundary point
                         line.points.add(new Point2D.Float(
                                 Math.max(0, Math.min(getWidth(), nextX)),
                                 Math.max(0, Math.min(getHeight(), nextY))
@@ -4212,7 +4208,6 @@ public class GravITyIDE extends JFrame {
                         }
                     }
 
-                    // Draw glowing tip for active lines
                     if (!line.isComplete && line.points.size() > 0) {
                         Point2D.Float tip = line.points.get(line.points.size() - 1);
                         g.setColor(Color.WHITE);
@@ -4223,7 +4218,6 @@ public class GravITyIDE extends JFrame {
 
             drawFieldVectors(g);
 
-            // Draw charges
             for (int i = 0; i < charges.size(); i++) {
                 Charge charge = charges.get(i);
 
