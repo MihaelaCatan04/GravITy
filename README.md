@@ -58,6 +58,7 @@ cd GravITy
 ```
 
 ## Running the Project
+![Run GravITyIDE](/GIFs/gif1.gif)
 
 ### Main Application
 Navigate to the GravITyIDE class and run GravITyIDE.
