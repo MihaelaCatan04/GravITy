@@ -80,6 +80,18 @@ You can run any of the following simulations:
 - `Pendulum`
 - `RollingUphill`
 
+To use loops and conditionals, you can make a reference to aforementioned properties using `_` (underscore) following the structure:
+```
+<conditional_value> ::= "if" <condition> "then"
+<simple_value> "else" <simple_value>
+<loop_value> ::= <initial_value> "repeat" <integer> "times" "*" <multiplier>
+<initial_value> ::= <number>
+<multiplier> ::= <number> | <simple_value>
+<condition> ::= <simple_value> <comparator> <simple_value>
+<comparator> ::= ">" | "<" | "==" | ">=" | "<=" | "!="
+<reference> ::= "_" <identifier>
+```
+
 ## Information
 
 This project is part of the Elaboration of Domain-Specific Languages (PBL) course at the Technical University of Moldova, within the Faculty of Computers, Informatics, and Microelectronics, as part of the Software Engineering programme.
