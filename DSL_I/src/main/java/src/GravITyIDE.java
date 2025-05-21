@@ -140,7 +140,7 @@ public class GravITyIDE extends JFrame {
         JPanel simulationWrapper = new JPanel(new BorderLayout());
         simulationWrapper.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(),
-                "Afisare",
+                "Visualization",
                 TitledBorder.LEFT,
                 TitledBorder.TOP,
                 new Font("Arial", Font.BOLD, 14)
