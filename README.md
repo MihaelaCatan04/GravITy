@@ -60,9 +60,9 @@ cd GravITy
 ## Running the Project
 ![Run GravITyIDE](/GIFs/gif1.gif)
 
-### Main Application
-Navigate to the GravITyIDE class and run GravITyIDE.
-
+## Main Application
+Click New to start with an empty Canvas and click Run Simulation to see the output.
+![Run Simulation](/GIFs/gif2.gif)
 
 Replace `AcceleratedUniformMotion` with any of the following:
 - `Collision`
