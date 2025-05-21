@@ -64,6 +64,9 @@ cd GravITy
 Click New to start with an empty Canvas and click Run Simulation to see the output.
 ![Run Simulation](/GIFs/gif2.gif)
 
+You can use predefined templates to run simulations and change their parameters. In case the parameters are invalid, an error will be displayed and the simulation will run with predefined parameters.
+![Run Simulation from template](/GIFs/gif3.gif)
+
 Replace `AcceleratedUniformMotion` with any of the following:
 - `Collision`
 - `ElectrostaticField`
