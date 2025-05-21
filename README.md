@@ -94,6 +94,8 @@ To use loops and conditionals, you can make a reference to aforementioned proper
 
 ![Run Simulation with loops and conditionals](/GIFs/gif4.gif)
 
+P.S: There was an Easter Egg hidden in the IDE. Good luck finding it! <3
+
 ## Information
 
 This project is part of the Elaboration of Domain-Specific Languages (PBL) course at the Technical University of Moldova, within the Faculty of Computers, Informatics, and Microelectronics, as part of the Software Engineering programme.
