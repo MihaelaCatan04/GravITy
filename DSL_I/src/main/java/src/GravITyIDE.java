@@ -73,7 +73,7 @@ public class GravITyIDE extends JFrame {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(),
-                "Codul scris",
+                "GravITy Code",
                 TitledBorder.LEFT,
                 TitledBorder.TOP,
                 new Font("Arial", Font.BOLD, 14)
@@ -130,7 +130,7 @@ public class GravITyIDE extends JFrame {
                 g.setColor(Color.BLACK);
                 g.setFont(new Font("Arial", Font.BOLD, 16));
                 FontMetrics fm = g.getFontMetrics();
-                String message = "Simulation output will appear here";
+                String message = "Simulation output";
                 int x = (getWidth() - fm.stringWidth(message)) / 2;
                 int y = (getHeight() - fm.getHeight()) / 2 + fm.getAscent();
                 g.drawString(message, x, y);
@@ -140,7 +140,7 @@ public class GravITyIDE extends JFrame {
         JPanel simulationWrapper = new JPanel(new BorderLayout());
         simulationWrapper.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(),
-                "Afisare",
+                "Visualization",
                 TitledBorder.LEFT,
                 TitledBorder.TOP,
                 new Font("Arial", Font.BOLD, 14)
@@ -150,7 +150,7 @@ public class GravITyIDE extends JFrame {
         JPanel outputPanel = new JPanel(new BorderLayout());
         outputPanel.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(),
-                "Erori/Rezultate",
+                "Errors/Results",
                 TitledBorder.LEFT,
                 TitledBorder.TOP,
                 new Font("Arial", Font.BOLD, 14)
@@ -1526,7 +1526,6 @@ public class GravITyIDE extends JFrame {
                             @SuppressWarnings("unchecked")
                             Map<String, Object> ball = (Map<String, Object>) ballObj;
 
-                            // Extract ball radius - your visitor stores it as a string
                             if (ball.containsKey("radius")) {
                                 Object radiusObj = ball.get("radius");
                                 outputArea.append("DEBUG: Raw radius value: " + radiusObj + " (type: " + radiusObj.getClass().getSimpleName() + ")\n");
@@ -3093,7 +3092,6 @@ public class GravITyIDE extends JFrame {
                 newOutput.append("Average Speed: ").append(String.format("%.2f", averageSpeed)).append("\n");
                 newOutput.append("Coefficient of Restitution: ").append(String.format("%.2f", currentCoR)).append("\n");
 
-                // Add individual mover data
                 for (int i = 0; i < movers.size(); i++) {
                     CollisionMover mover = movers.get(i);
                     float speed = (float) Math.sqrt(mover.velocity[0] * mover.velocity[0] + mover.velocity[1] * mover.velocity[1]);
