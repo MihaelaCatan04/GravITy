@@ -3020,8 +3020,8 @@ public class GravITyIDE extends JFrame {
 
     private class CollisionPanel extends JPanel implements AnimatedPanel {
         private List<CollisionMover> movers;
-        private float coefficientOfRestitution = 0.8f;
-        private float friction = 0.99f;
+        private float coefficientOfRestitution = 1f;
+        private float friction = 1f;
         private int frameCount = 0;
         private int selectedMover = -1;
 
