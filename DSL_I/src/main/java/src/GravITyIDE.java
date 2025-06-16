@@ -334,6 +334,7 @@ public class GravITyIDE extends JFrame {
                 "Gravity",
                 "Pendulum",
                 "Rolling Downhill",
+                "Spring",
                 "Uniform Motion",
                 "Wave",
         };
