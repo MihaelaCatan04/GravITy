@@ -48,7 +48,7 @@ null
 'angular_velocity'
 'angular_acceleration'
 'air_resistance'
-'rolling_uphill'
+'rolling_downhill'
 'gravitational_acceleration'
 'coefficient_of_friction'
 'bounciness'
@@ -224,7 +224,7 @@ initial_angle_expr
 angular_velocity_expr
 angular_acceleration_expr
 air_resistance_expr
-rolling_uphill
+rolling_downhill
 gravitational_acceleration_expr
 coefficient_of_friction_expr
 bounciness_expr

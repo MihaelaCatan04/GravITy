@@ -18,7 +18,7 @@ physics_module: collision
               | gravity
               | spring
               | pendulum
-              | rolling_uphill ;
+              | rolling_downhill ;
 
 // A collision module consists of the keyword 'collision' and a list of movers inside curly braces
 collision: 'collision' '{' movers_list '}' ;
@@ -164,8 +164,8 @@ angular_acceleration_expr: 'angular_acceleration' ':' value_expr ;
 // The air resistance expression defines the resistance from air acting on the pendulum
 air_resistance_expr: 'air_resistance' ':' value_expr ;
 
-// The rolling uphill module defines parameters for a ball rolling up a hill, including gravitational acceleration, friction, bounciness, angle, and velocity
-rolling_uphill: 'rolling_uphill' '{' gravitational_acceleration_expr coefficient_of_friction_expr bounciness_expr angle_expr ball_expr velocity_along_incline_expr '}' ;
+// The rolling downhill module defines parameters for a ball rolling up a hill, including gravitational acceleration, friction, bounciness, angle, and velocity
+rolling_downhill: 'rolling_downhill' '{' gravitational_acceleration_expr coefficient_of_friction_expr bounciness_expr angle_expr ball_expr velocity_along_incline_expr '}' ;
 
 // The gravitational acceleration expression defines the strength of gravity acting on the ball
 gravitational_acceleration_expr: 'gravitational_acceleration' ':' value_expr ;

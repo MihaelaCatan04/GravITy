@@ -65,7 +65,7 @@ public class GravITyLexer extends Lexer {
 			"'spring'", "'spring_constant'", "'damping'", "'spring_rest_length'", 
 			"'floor_friction'", "'x_anchor_position'", "'y_anchor_position'", "'num_coils'", 
 			"'pendulum'", "'length'", "'ball_radius'", "'initial_angle'", "'angular_velocity'", 
-			"'angular_acceleration'", "'air_resistance'", "'rolling_uphill'", "'gravitational_acceleration'", 
+			"'angular_acceleration'", "'air_resistance'", "'rolling_downhill'", "'gravitational_acceleration'",
 			"'coefficient_of_friction'", "'bounciness'", "'angle'", "'velocity_along_incline'", 
 			"'mass'", "'velocity'", "'x_velocity'", "'y_velocity'", "'position'", 
 			"'x_position'", "'y_position'", "'color'", "'red_value'", "'green_value'", 

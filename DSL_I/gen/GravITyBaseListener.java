@@ -628,13 +628,13 @@ public class GravITyBaseListener implements GravITyListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterRolling_uphill(GravITyParser.Rolling_uphillContext ctx) { }
+	@Override public void enterRolling_downhill(GravITyParser.Rolling_downhillContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitRolling_uphill(GravITyParser.Rolling_uphillContext ctx) { }
+	@Override public void exitRolling_downhill(GravITyParser.Rolling_downhillContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

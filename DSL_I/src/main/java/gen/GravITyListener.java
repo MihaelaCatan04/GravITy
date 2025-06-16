@@ -518,15 +518,15 @@ public interface GravITyListener extends ParseTreeListener {
 	 */
 	void exitAir_resistance_expr(GravITyParser.Air_resistance_exprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link GravITyParser#rolling_uphill}.
+	 * Enter a parse tree produced by {@link GravITyParser#rolling_downhill}.
 	 * @param ctx the parse tree
 	 */
-	void enterRolling_uphill(GravITyParser.Rolling_uphillContext ctx);
+	void enterRolling_downhill(GravITyParser.Rolling_downhillContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link GravITyParser#rolling_uphill}.
+	 * Exit a parse tree produced by {@link GravITyParser#rolling_downhill}.
 	 * @param ctx the parse tree
 	 */
-	void exitRolling_uphill(GravITyParser.Rolling_uphillContext ctx);
+	void exitRolling_downhill(GravITyParser.Rolling_downhillContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link GravITyParser#gravitational_acceleration_expr}.
 	 * @param ctx the parse tree
