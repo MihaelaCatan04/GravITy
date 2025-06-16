@@ -325,18 +325,17 @@ public class GravITyIDE extends JFrame {
 
     private void loadExample() {
         String[] examples = {
+                "Accelerated Motion",
+                "Attraction Force",
+                "Circular Motion",
+                "Collision",
                 "Drag Force",
-                "Pendulum",
+                "Electrostatic Field",
                 "Gravity",
+                "Pendulum",
+                "Rolling Downhill",
                 "Uniform Motion",
                 "Wave",
-                "Circular Motion",
-                "Attraction Force",
-                "Collision",
-                "Spring",
-                "Rolling Downhill",
-                "Electrostatic Field",
-                "Accelerated Motion"
         };
 
         String selected = (String) JOptionPane.showInputDialog(
