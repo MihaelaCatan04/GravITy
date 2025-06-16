@@ -45,7 +45,7 @@ public class GravITyParser extends Parser {
 		RULE_y_anchor_position_expr = 42, RULE_num_coils_expr = 43, RULE_pendulum = 44, 
 		RULE_length_expr = 45, RULE_ball_radius_expr = 46, RULE_initial_angle_expr = 47, 
 		RULE_angular_velocity_expr = 48, RULE_angular_acceleration_expr = 49, 
-		RULE_air_resistance_expr = 50, RULE_rolling_uphill = 51, RULE_gravitational_acceleration_expr = 52, 
+		RULE_air_resistance_expr = 50, RULE_rolling_downhill = 51, RULE_gravitational_acceleration_expr = 52,
 		RULE_coefficient_of_friction_expr = 53, RULE_bounciness_expr = 54, RULE_angle_expr = 55, 
 		RULE_velocity_along_incline_expr = 56, RULE_mover_basic_properties = 57, 
 		RULE_mass_expr = 58, RULE_velocity_expr = 59, RULE_x_velocity_expr = 60, 
@@ -70,7 +70,7 @@ public class GravITyParser extends Parser {
 			"x_anchor_position_expr", "y_anchor_position_expr", "num_coils_expr", 
 			"pendulum", "length_expr", "ball_radius_expr", "initial_angle_expr", 
 			"angular_velocity_expr", "angular_acceleration_expr", "air_resistance_expr", 
-			"rolling_uphill", "gravitational_acceleration_expr", "coefficient_of_friction_expr", 
+			"rolling_downhill", "gravitational_acceleration_expr", "coefficient_of_friction_expr",
 			"bounciness_expr", "angle_expr", "velocity_along_incline_expr", "mover_basic_properties", 
 			"mass_expr", "velocity_expr", "x_velocity_expr", "y_velocity_expr", "position_expr", 
 			"x_position_expr", "y_position_expr", "color_expr", "red_value_expr", 
@@ -93,7 +93,7 @@ public class GravITyParser extends Parser {
 			"'spring'", "'spring_constant'", "'damping'", "'spring_rest_length'", 
 			"'floor_friction'", "'x_anchor_position'", "'y_anchor_position'", "'num_coils'", 
 			"'pendulum'", "'length'", "'ball_radius'", "'initial_angle'", "'angular_velocity'", 
-			"'angular_acceleration'", "'air_resistance'", "'rolling_uphill'", "'gravitational_acceleration'", 
+			"'angular_acceleration'", "'air_resistance'", "'rolling_downhill'", "'gravitational_acceleration'",
 			"'coefficient_of_friction'", "'bounciness'", "'angle'", "'velocity_along_incline'", 
 			"'mass'", "'velocity'", "'x_velocity'", "'y_velocity'", "'position'", 
 			"'x_position'", "'y_position'", "'color'", "'red_value'", "'green_value'", 
@@ -296,8 +296,8 @@ public class GravITyParser extends Parser {
 		public PendulumContext pendulum() {
 			return getRuleContext(PendulumContext.class,0);
 		}
-		public Rolling_uphillContext rolling_uphill() {
-			return getRuleContext(Rolling_uphillContext.class,0);
+		public Rolling_downhillContext rolling_downhill() {
+			return getRuleContext(Rolling_downhillContext.class,0);
 		}
 		public Physics_moduleContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -406,7 +406,7 @@ public class GravITyParser extends Parser {
 				enterOuterAlt(_localctx, 12);
 				{
 				setState(174);
-				rolling_uphill();
+				rolling_downhill();
 				}
 				break;
 			default:
@@ -2997,7 +2997,7 @@ public class GravITyParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
-	public static class Rolling_uphillContext extends ParserRuleContext {
+	public static class Rolling_downhillContext extends ParserRuleContext {
 		public Gravitational_acceleration_exprContext gravitational_acceleration_expr() {
 			return getRuleContext(Gravitational_acceleration_exprContext.class,0);
 		}
@@ -3016,28 +3016,28 @@ public class GravITyParser extends Parser {
 		public Velocity_along_incline_exprContext velocity_along_incline_expr() {
 			return getRuleContext(Velocity_along_incline_exprContext.class,0);
 		}
-		public Rolling_uphillContext(ParserRuleContext parent, int invokingState) {
+		public Rolling_downhillContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_rolling_uphill; }
+		@Override public int getRuleIndex() { return RULE_rolling_downhill; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof GravITyListener ) ((GravITyListener)listener).enterRolling_uphill(this);
+			if ( listener instanceof GravITyListener ) ((GravITyListener)listener).enterRolling_downhill(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof GravITyListener ) ((GravITyListener)listener).exitRolling_uphill(this);
+			if ( listener instanceof GravITyListener ) ((GravITyListener)listener).exitRolling_downhill(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof GravITyVisitor ) return ((GravITyVisitor<? extends T>)visitor).visitRolling_uphill(this);
+			if ( visitor instanceof GravITyVisitor ) return ((GravITyVisitor<? extends T>)visitor).visitRolling_downhill(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final Rolling_uphillContext rolling_uphill() throws RecognitionException {
-		Rolling_uphillContext _localctx = new Rolling_uphillContext(_ctx, getState());
-		enterRule(_localctx, 102, RULE_rolling_uphill);
+	public final Rolling_downhillContext rolling_downhill() throws RecognitionException {
+		Rolling_downhillContext _localctx = new Rolling_downhillContext(_ctx, getState());
+		enterRule(_localctx, 102, RULE_rolling_downhill);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{

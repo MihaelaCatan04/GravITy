@@ -39,8 +39,8 @@ public class SimulationModuleVisitor extends GravITyBaseVisitor<String> {
         if (ctx.spring() != null) {
             return "spring";
         }
-        if (ctx.rolling_uphill() != null) {
-            return "rolling_uphill";
+        if (ctx.rolling_downhill() != null) {
+            return "rolling_downhill";
         }
         return "unknown";
     }

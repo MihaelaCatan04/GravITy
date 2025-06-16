@@ -316,11 +316,11 @@ public interface GravITyVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAir_resistance_expr(GravITyParser.Air_resistance_exprContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link GravITyParser#rolling_uphill}.
+	 * Visit a parse tree produced by {@link GravITyParser#rolling_downhill}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitRolling_uphill(GravITyParser.Rolling_uphillContext ctx);
+	T visitRolling_downhill(GravITyParser.Rolling_downhillContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link GravITyParser#gravitational_acceleration_expr}.
 	 * @param ctx the parse tree

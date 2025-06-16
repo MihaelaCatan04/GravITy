@@ -334,7 +334,7 @@ public class GravITyIDE extends JFrame {
                 "Attraction Force",
                 "Collision",
                 "Spring",
-                "Rolling Uphill",
+                "Rolling Downhill",
                 "Electrostatic Field",
                 "Accelerated Motion"
         };
@@ -573,9 +573,9 @@ public class GravITyIDE extends JFrame {
                         "    }\n" +
                         "}";
 
-            case "Rolling Uphill":
+            case "Rolling Downhill":
                 return "simulation {\n" +
-                        "    rolling_uphill {\n" +
+                        "    rolling_downhill {\n" +
                         "        gravitational_acceleration: 9.8\n" +
                         "        coefficient_of_friction: 0.1\n" +
                         "        bounciness: 0.7\n" +
@@ -669,8 +669,8 @@ public class GravITyIDE extends JFrame {
                     handleCollisionSimulation(tree, code);
                 } else if (code.contains("spring")) {
                     handleSpringSimulation(tree, code);
-                } else if (code.contains("rolling_uphill")) {
-                    handleRollingUphillSimulation(tree, code);
+                } else if (code.contains("rolling_downhill")) {
+                    handleRollingDownhillSimulation(tree, code);
                 } else if (code.contains("electrostatic_field")) {
                     handleElectrostaticFieldSimulation(tree, code);
                 } else {
@@ -1434,10 +1434,10 @@ public class GravITyIDE extends JFrame {
         }
     }
 
-    private void handleRollingUphillSimulation(ParseTree tree, String code) {
-        outputArea.append("Detected rolling uphill simulation\n");
+    private void handleRollingDownhillSimulation(ParseTree tree, String code) {
+        outputArea.append("Detected rolling downhill simulation\n");
         try {
-            RollingUphillVisitor rollingVisitor = new RollingUphillVisitor();
+            RollingDownhillVisitor rollingVisitor = new RollingDownhillVisitor();
 
             rollingVisitor.visit(tree);
 
@@ -1453,11 +1453,11 @@ public class GravITyIDE extends JFrame {
             float ballRadius = 20f;
             int[] ballColor = {255, 100, 0};
 
-            if (sim != null && sim.containsKey("rolling_uphill")) {
+            if (sim != null && sim.containsKey("rolling_downhill")) {
                 @SuppressWarnings("unchecked")
-                Map<String, Object> module = (Map<String, Object>) sim.get("rolling_uphill");
+                Map<String, Object> module = (Map<String, Object>) sim.get("rolling_downhill");
 
-                outputArea.append("DEBUG: Rolling uphill module found: " + module + "\n");
+                outputArea.append("DEBUG: Rolling downhill module found: " + module + "\n");
 
                 if (module != null) {
                     if (module.containsKey("gravitational_acceleration")) {
@@ -1586,10 +1586,10 @@ public class GravITyIDE extends JFrame {
                         outputArea.append("DEBUG: Module doesn't contain 'ball' key. Available keys: " + module.keySet() + "\n");
                     }
                 } else {
-                    outputArea.append("DEBUG: Rolling uphill module is null\n");
+                    outputArea.append("DEBUG: Rolling downhill module is null\n");
                 }
             } else {
-                outputArea.append("DEBUG: No rolling_uphill module found in simulation map\n");
+                outputArea.append("DEBUG: No rolling_downhill module found in simulation map\n");
                 if (sim != null) {
                     outputArea.append("DEBUG: Available keys in simulation map: " + sim.keySet() + "\n");
                 } else {
@@ -1607,7 +1607,7 @@ public class GravITyIDE extends JFrame {
             outputArea.append("Ball color: RGB(" + ballColor[0] + ", " + ballColor[1] + ", " + ballColor[2] + ")\n");
             outputArea.append("Simulation started. Check the display panel for visual output.\n");
 
-            RollingUphillPanel panel = new RollingUphillPanel(
+            RollingDownhillPanel panel = new RollingDownhillPanel(
                     gravitationalAcceleration,
                     friction,
                     bounciness,
@@ -1620,10 +1620,10 @@ public class GravITyIDE extends JFrame {
             startAnimation(panel);
 
         } catch (Exception ex) {
-            outputArea.append("ERROR processing rolling uphill simulation: " + ex.getMessage() + "\n");
+            outputArea.append("ERROR processing rolling downhill simulation: " + ex.getMessage() + "\n");
             ex.printStackTrace();
 
-            RollingUphillPanel panel = new RollingUphillPanel(9.8f, 0.1f, 0.7f, 30f, 5f, 20f,
+            RollingDownhillPanel panel = new RollingDownhillPanel(9.8f, 0.1f, 0.7f, 30f, 5f, 20f,
                     new int[]{255, 100, 0});
             replaceSimulationPanel(panel);
             startAnimation(panel);
@@ -3510,7 +3510,7 @@ public class GravITyIDE extends JFrame {
         }
     }
 
-    private class RollingUphillPanel extends JPanel implements AnimatedPanel {
+    private class RollingDownhillPanel extends JPanel implements AnimatedPanel {
         private float gravitationalAcceleration;
         private float friction;
         private float bounciness;
@@ -3528,7 +3528,7 @@ public class GravITyIDE extends JFrame {
         private float inclineStartX, inclineStartY;
         private float inclineEndX, inclineEndY;
 
-        public RollingUphillPanel(float gravitationalAcceleration, float friction,
+        public RollingDownhillPanel(float gravitationalAcceleration, float friction,
                                   float bounciness, float angle, float velocity,
                                   float ballRadius, int[] ballColor) {
             this.gravitationalAcceleration = gravitationalAcceleration * 0.1f;
@@ -3565,8 +3565,8 @@ public class GravITyIDE extends JFrame {
             }
 
             if (frameCount == 0) {
-                ballX = inclineStartX + ballRadius;
-                ballY = inclineStartY - ballRadius;
+                ballX = getHeight() + ballRadius;
+                ballY = getWidth() - ballRadius;
 
                 velocityX = velocity * (float) Math.cos(angleRad);
                 velocityY = -velocity * (float) Math.sin(angleRad);
@@ -3620,7 +3620,7 @@ public class GravITyIDE extends JFrame {
                     newOutput.append(lines[i]).append("\n");
                 }
 
-                newOutput.append("------ Rolling Uphill Data (Frame ").append(currentFrameCount).append(") ------\n");
+                newOutput.append("------ Rolling Downhill Data (Frame ").append(currentFrameCount).append(") ------\n");
                 newOutput.append("Incline Angle: ").append(String.format("%.1f", currentAngle)).append(" degrees\n");
                 newOutput.append("Gravity: ").append(String.format("%.2f", currentGravity)).append("\n");
                 newOutput.append("Friction: ").append(String.format("%.3f", currentFriction)).append("\n");
@@ -3682,6 +3682,12 @@ public class GravITyIDE extends JFrame {
                     ballY = ballRadius;
                     velocityY *= -bounciness;
                 }
+
+                if (ballX - ballRadius <= 0) {
+                    velocityY = 0;
+                    velocityX = 0;
+                }
+
             }
 
             frameCount++;
@@ -3748,7 +3754,7 @@ public class GravITyIDE extends JFrame {
             g.fillRect(10, 10, 220, 120);
             g.setColor(Color.WHITE);
             g.setFont(new Font("Arial", Font.BOLD, 12));
-            g.drawString("Rolling Uphill Simulation", 20, 30);
+            g.drawString("Rolling Downhill Simulation", 20, 30);
             g.drawString("Angle: " + String.format("%.1f", angle) + "°", 20, 50);
             g.drawString("Friction: " + String.format("%.3f", friction), 20, 70);
             g.drawString("Bounciness: " + String.format("%.2f", bounciness), 20, 90);

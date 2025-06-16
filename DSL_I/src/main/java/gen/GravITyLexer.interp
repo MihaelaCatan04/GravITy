@@ -48,7 +48,7 @@ null
 'angular_velocity'
 'angular_acceleration'
 'air_resistance'
-'rolling_uphill'
+'rolling_downhill'
 'gravitational_acceleration'
 'coefficient_of_friction'
 'bounciness'

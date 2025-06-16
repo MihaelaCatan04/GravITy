@@ -6,7 +6,7 @@ import gen.GravITyParser;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RollingUphillVisitor extends GravITyBaseVisitor<Object> {
+public class RollingDownhillVisitor extends GravITyBaseVisitor<Object> {
     private Map<String, Object> simulation = new HashMap<>();
     private Map<String, Double> identifiers = new HashMap<>(); // To store declared identifiers and their values
 
@@ -26,53 +26,53 @@ public class RollingUphillVisitor extends GravITyBaseVisitor<Object> {
 
     @Override
     public Object visitPhysics_module(GravITyParser.Physics_moduleContext ctx) {
-        if (ctx.rolling_uphill() != null) {
-            return visit(ctx.rolling_uphill());
+        if (ctx.rolling_downhill() != null) {
+            return visit(ctx.rolling_downhill());
         }
         return null;
     }
 
     @Override
-    public Object visitRolling_uphill(GravITyParser.Rolling_uphillContext ctx) {
-        Map<String, Object> rollingUphillModule = new HashMap<>();
+    public Object visitRolling_downhill(GravITyParser.Rolling_downhillContext ctx) {
+        Map<String, Object> rollingDownhillModule = new HashMap<>();
 
         if (ctx.gravitational_acceleration_expr() != null) {
             Double value = evaluateValueExpr(ctx.gravitational_acceleration_expr().value_expr());
-            rollingUphillModule.put("gravitational_acceleration", String.valueOf(value));
+            rollingDownhillModule.put("gravitational_acceleration", String.valueOf(value));
             identifiers.put("gravitational_acceleration", value);
         }
 
         if (ctx.coefficient_of_friction_expr() != null) {
             Double value = evaluateValueExpr(ctx.coefficient_of_friction_expr().value_expr());
-            rollingUphillModule.put("coefficient_of_friction", String.valueOf(value));
+            rollingDownhillModule.put("coefficient_of_friction", String.valueOf(value));
             identifiers.put("coefficient_of_friction", value);
         }
 
         if (ctx.bounciness_expr() != null) {
             Double value = evaluateValueExpr(ctx.bounciness_expr().value_expr());
-            rollingUphillModule.put("bounciness", String.valueOf(value));
+            rollingDownhillModule.put("bounciness", String.valueOf(value));
             identifiers.put("bounciness", value);
         }
 
         if (ctx.angle_expr() != null) {
             Double value = evaluateValueExpr(ctx.angle_expr().value_expr());
-            rollingUphillModule.put("angle", String.valueOf(value));
+            rollingDownhillModule.put("angle", String.valueOf(value));
             identifiers.put("angle", value);
         }
 
         if (ctx.velocity_along_incline_expr() != null) {
             Double value = evaluateValueExpr(ctx.velocity_along_incline_expr().value_expr());
-            rollingUphillModule.put("velocity_along_incline", String.valueOf(value));
+            rollingDownhillModule.put("velocity_along_incline", String.valueOf(value));
             identifiers.put("velocity_along_incline", value);
         }
 
         if (ctx.ball_expr() != null) {
             Map<String, Object> ball = (Map<String, Object>) visit(ctx.ball_expr());
-            rollingUphillModule.put("ball", ball);
+            rollingDownhillModule.put("ball", ball);
         }
 
-        simulation.put("rolling_uphill", rollingUphillModule);
-        return rollingUphillModule;
+        simulation.put("rolling_downhill", rollingDownhillModule);
+        return rollingDownhillModule;
     }
 
     @Override
@@ -83,7 +83,7 @@ public class RollingUphillVisitor extends GravITyBaseVisitor<Object> {
 
     @Override
     public Object visitMover_expr(GravITyParser.Mover_exprContext ctx) {
-        // This method might not be directly called in 'RollingUphillVisitor' based on your grammar,
+        // This method might not be directly called in 'RollingDownhillVisitor' based on your grammar,
         // but it's good practice to ensure it uses the evaluation logic if it were.
         return visit(ctx.mover_basic_properties());
     }
