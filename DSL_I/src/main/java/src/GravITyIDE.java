@@ -3565,8 +3565,8 @@ public class GravITyIDE extends JFrame {
             }
 
             if (frameCount == 0) {
-                ballX = inclineStartX + ballRadius;
-                ballY = inclineStartY - ballRadius;
+                ballX = getHeight() + ballRadius;
+                ballY = getWidth() - ballRadius;
 
                 velocityX = velocity * (float) Math.cos(angleRad);
                 velocityY = -velocity * (float) Math.sin(angleRad);
@@ -3682,6 +3682,12 @@ public class GravITyIDE extends JFrame {
                     ballY = ballRadius;
                     velocityY *= -bounciness;
                 }
+
+                if (ballX - ballRadius <= 0) {
+                    velocityY = 0;
+                    velocityX = 0;
+                }
+
             }
 
             frameCount++;
